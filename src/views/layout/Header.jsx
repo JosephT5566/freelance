@@ -1,21 +1,22 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Container from '@material-ui/core/Container';
-
 const useStyle = makeStyles((theme) => ({
 	header: {
-		display: 'flex',
+		position: 'sticky',
+		top: '0',
 		alignItems: 'center',
-		height: theme.typography.headerHeight,
-		padding: '1em',
-		paddingRight: '4em',
-		backgroundColor: theme.palette.secondary.main,
+		height: '0',
+		width: '100vw',
+		backgroundColor: 'transparent',
 	},
 	a: {
 		display: 'flex',
 		alignItems: 'center',
-		height: '100%',
+		position: 'absolute',
+		top: '0',
+		left: '1em',
+		height: theme.typography.headerHeight,
 		textDecoration: 'none',
 		color: theme.palette.text.secondary,
 		'&:hover': {
@@ -26,16 +27,19 @@ const useStyle = makeStyles((theme) => ({
 			padding: '0 1em',
 		},
 	},
+	label: {
+		color: 'white',
+	},
 }));
 
 export default function Header() {
 	const classes = useStyle();
 	return (
-		<Container className={classes.header}>
+		<div className={classes.header}>
 			<a className={classes.a} href="/">
-				<img src={"/mega_origin.png"} alt="mega_origin" />
-				<h2>Megaport Festival</h2>
+				{/* <img src={'/mega_origin.png'} alt="mega_origin" /> */}
+				<h2 className={classes.label}>Joseph T</h2>
 			</a>
-		</Container>
+		</div>
 	);
 }
