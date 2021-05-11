@@ -13,22 +13,20 @@ const useStyle = makeStyles((theme) => ({
 	a: {
 		display: 'flex',
 		alignItems: 'center',
-		position: 'absolute',
-		top: '0',
-		left: '1em',
+		paddingLeft: '1em',
 		height: theme.typography.headerHeight,
 		textDecoration: 'none',
-		color: theme.palette.text.secondary,
-		'&:hover': {
-			color: theme.palette.primary.main,
-		},
 		'& img': {
 			height: '90%',
 			padding: '0 1em',
 		},
 	},
 	label: {
-		color: 'white',
+		fontFamily: 'Vidaloka',
+		color: theme.palette.text.primary,
+		'&:hover': {
+			color: theme.palette.primary.main,
+		},
 	},
 }));
 
@@ -38,7 +36,7 @@ export default function Header() {
 		<div className={classes.header}>
 			<a className={classes.a} href="/">
 				{/* <img src={'/mega_origin.png'} alt="mega_origin" /> */}
-				<h2 className={classes.label}>Joseph T</h2>
+				<h2 className={classes.label}>Joseph Tseng</h2>
 			</a>
 		</div>
 	);
