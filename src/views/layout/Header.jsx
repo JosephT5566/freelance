@@ -13,7 +13,7 @@ const useStyle = makeStyles((theme) => ({
 	a: {
 		display: 'flex',
 		alignItems: 'center',
-		paddingLeft: '1em',
+		paddingLeft: '2em',
 		height: theme.typography.headerHeight,
 		textDecoration: 'none',
 		'& img': {
@@ -23,6 +23,7 @@ const useStyle = makeStyles((theme) => ({
 	},
 	label: {
 		fontFamily: 'Vidaloka',
+		fontWeight: 'normal',
 		color: theme.palette.text.primary,
 		'&:hover': {
 			color: theme.palette.primary.main,
