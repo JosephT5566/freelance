@@ -27,6 +27,11 @@ export default class MyDocument extends Document {
 					<meta property="og:url" content="https://josepht5566.github.io/musicFest" />
 					<meta name="description" content="2021大港開唱，看團選擇器" />
 					<link rel="manifest" href="/manifest.json" />
+					<link rel="preconnect" href="https://fonts.gstatic.com" />
+					<link
+						href="https://fonts.googleapis.com/css2?family=Lobster&family=Vidaloka&display=swap"
+						rel="stylesheet"
+					/>
 				</Head>
 				<body>
 					<Main />
