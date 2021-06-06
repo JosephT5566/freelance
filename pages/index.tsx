@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import Cover from '../src/views/payload/cover';
+import AboutMe from '../src/views/payload/aboutMe';
 
 const useStyle = makeStyles((theme) => ({
 	home: {
@@ -23,6 +24,7 @@ export default function Home() {
 			</Head>
 
 			<Cover />
+			<AboutMe />
 		</div>
 	);
 }
