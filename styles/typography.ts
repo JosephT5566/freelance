@@ -1,9 +1,17 @@
 export const typography = {
-	fontFamily: 'Open Sans, serif',
+	fontFamily: 'Montserrat, Open Sans, serif',
 	navWidth: '15em',
 	headerHeight: '5em',
 	tableHeadHeight: '3em',
 	tableHeadMarginBottom: '1em',
 
 	letterSpacing: '2px',
+
+	h1: {
+		fontFamily: 'Vidaloka',
+		fontSize: '4rem',
+	},
+	body1: {
+		fontSize: '18px',
+	},
 };
