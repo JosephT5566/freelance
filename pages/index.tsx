@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import Cover from '../src/views/payload/cover';
 import AboutMe from '../src/views/payload/aboutMe';
+import Experiences from '../src/views/payload/experiences';
 
 const useStyle = makeStyles((theme) => ({
 	home: {
@@ -25,6 +26,7 @@ export default function Home() {
 
 			<Cover />
 			<AboutMe />
+			<Experiences />
 		</div>
 	);
 }
