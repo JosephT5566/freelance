@@ -5,8 +5,8 @@ import { useDrag } from 'react-use-gesture';
 import _ from 'lodash';
 
 import IconButton from '@material-ui/core/IconButton';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 
@@ -17,29 +17,28 @@ const useStyle = makeStyles((theme) => ({
 		width: '100%',
 		height: '100%',
 		overflow: 'hidden',
-		[theme.breakpoints.up('md')]: {
-			padding: '0 4%',
-		},
 	},
 	pagesContainer: {
 		position: 'relative',
-		width: '100%',
+		display: 'flex',
+		justifyContent: 'center',
+		margin: '0 auto',
 		height: '100%',
+		aspectRatio: '16 / 9', // decide the width
+		maxWidth: '100%',
 		overflow: 'hidden',
-		display: 'block',
 		[theme.breakpoints.up('md')]: {
 			overflow: 'initial',
 		},
 	},
 	page: {
 		position: 'absolute',
-		width: '100%',
+		width: '98%',
 		height: '100%',
 		willChange: 'transform',
-		[theme.breakpoints.up('md')]: {
-			width: '99%',
-			paddingLeft: '1%',
-		},
+		// [theme.breakpoints.up('md')]: {
+		// 	width: '98%',
+		// },
 		'& .image': {
 			touchAction: 'none',
 			borderRadius: '0.5rem',
@@ -57,15 +56,16 @@ const useStyle = makeStyles((theme) => ({
 		zIndex: 1,
 		top: '50%',
 		transform: 'translate(0, -50%)',
-		backgroundColor: 'rgba(0, 0, 0, 0.3)',
+		backgroundColor: 'white',
 		'&:hover': {
-			backgroundColor: 'rgba(0, 0, 0, 0.6)',
+			backgroundColor: theme.palette.secondary.main,
+			color: 'white',
 		},
 		'&.next': {
-			right: '0',
+			right: '5%',
 		},
 		'&.previous': {
-			left: '0',
+			left: '5%',
 		},
 	},
 	pageDots: {
@@ -209,10 +209,10 @@ export default function ViewPager(props: { pages: Page[] }) {
 	return (
 		<div className={classes.viewPager}>
 			<IconButton className={`${classes.arrowBtn} next`} onClick={handleClickNext}>
-				<NavigateNextIcon />
+				<ArrowForwardIcon />
 			</IconButton>
 			<IconButton className={`${classes.arrowBtn} previous`} onClick={handleClickPrev}>
-				<NavigateBeforeIcon />
+				<ArrowBackIcon />
 			</IconButton>
 			<div className={classes.pagesContainer} ref={containerRef}>
 				{springs.map(({ x, display }, i) => (
