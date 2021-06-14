@@ -31,6 +31,7 @@ const useStyle = makeStyles((theme) => ({
 		margin: '0 5px',
 		'&:hover': {
 			cursor: 'pointer',
+			color: theme.palette.secondary.dark,
 		},
 	},
 	copyright: {
@@ -48,11 +49,21 @@ export default function Footer() {
 		<div className={classes.footer}>
 			<Typography variant="body1">{'Elsewhere on the Internet'}</Typography>
 			<div className={classes.icons}>
-				<Behance className={classes.icon} />
-				<Flickr className={classes.icon} />
-				<Github className={classes.icon} />
-				<Instagram className={classes.icon} />
-				<Linkedin className={classes.icon} />
+				<a href="https://www.behance.net/zxp9301107b6a" target="_blank" rel="noopener noreferrer">
+					<Behance className={classes.icon} />
+				</a>
+				<a href="https://www.flickr.com/photos/joseph-t_0304/" target="_blank" rel="noopener noreferrer">
+					<Flickr className={classes.icon} />
+				</a>
+				<a href="https://github.com/JosephT5566" target="_blank" rel="noopener noreferrer">
+					<Github className={classes.icon} />
+				</a>
+				<a href="https://www.instagram.com/tsengchun34/" target="_blank" rel="noopener noreferrer">
+					<Instagram className={classes.icon} />
+				</a>
+				<a href="https://www.linkedin.com/in/joseph-tseng-50ba36136" target="_blank" rel="noopener noreferrer">
+					<Linkedin className={classes.icon} />
+				</a>
 			</div>
 			<div className={classes.copyright}>{'© Design by Joseph'}</div>
 		</div>
