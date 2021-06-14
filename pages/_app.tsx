@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../styles/theme';
 import Header from '../src/views/layout/Header'
+import Footer from '../src/views/layout/Footer'
 import Navigation from '../src/views/layout/Navigation'
 
 function MyApp({ Component, pageProps }) {
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }) {
 				<Navigation />
 				<Header />
 				<Component {...pageProps} />
+				<Footer />
 			</ThemeProvider>
 		</React.Fragment>
 	);
