@@ -11,8 +11,10 @@ const useStyle = makeStyles((theme) => ({
 		width: '100%',
 	},
 	title: {
-		padding: '0 16.6%',
-		marginBottom: '3em',
+		padding: '1em 16.6%',
+		[theme.breakpoints.down('sm')]: {
+			padding: '1em 0',
+		},
 	},
 	viewPager: {
 		marginBottom: '3em',

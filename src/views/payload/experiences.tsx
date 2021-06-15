@@ -9,36 +9,36 @@ const useStyle = makeStyles((theme) => ({
 	experiences: {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '100vw',
-		height: '100vh',
-		padding: '95px 16.6%',
+		width: '100%',
+		padding: '0 16.6%',
+		marginBottom: '95px',
+		[theme.breakpoints.down('sm')]: {
+			padding: '0',
+		},
+	},
+	title: {
+		padding: '1em 0',
 	},
 	divider: {
 		backgroundColor: theme.palette.primary.light,
-	},
-	container: {
-		display: 'relative',
 	},
 	description: {
 		display: 'grid',
 		marginBottom: '2em',
 		gridTemplateColumns: 'repeat(2, 1fr)',
+		[theme.breakpoints.down('sm')]: {
+			padding: '0 2em',
+		},
 		'& > p': {
 			gridColumn: '2 / 2',
+			[theme.breakpoints.down('sm')]: {
+				gridColumn: '1 / span 2',
+			},
 		},
 	},
-	item: {
-		display: 'grid',
-		gridTemplateColumns: 'repeat(2, 1fr)',
-		'& .year': {
-			fontFamily: 'Lobster',
-			fontSize: '4rem',
-			gridColumn: '1 / 1',
-			color: theme.palette.primary.light,
-		},
-		'& .content': {
-			gridColumn: '2 / 2',
-			alignSelf: 'center',
+	items: {
+		[theme.breakpoints.down('sm')]: {
+			padding: '0 2em',
 		},
 	},
 }));
@@ -47,7 +47,9 @@ export default function Experience() {
 	const classes = useStyle();
 	return (
 		<div className={classes.experiences}>
-			<Typography variant="h1">{'Experiences'}</Typography>
+			<Typography variant="h1" className={classes.title}>
+				{'Experiences'}
+			</Typography>
 			<div className={classes.description}>
 				<Typography variant="body1">
 					{
@@ -55,28 +57,30 @@ export default function Experience() {
 					}
 				</Typography>
 			</div>
-			<Divider className={classes.divider} />
-			<ExperienceItem
-				year={'2019'}
-				description={
-					'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-				}
-			/>
-			<Divider className={classes.divider} />
-			<ExperienceItem
-				year={'2020'}
-				description={
-					'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-				}
-			/>
-			<Divider className={classes.divider} />
-			<ExperienceItem
-				year={'2021'}
-				description={
-					'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-				}
-			/>
-			<Divider className={classes.divider} />
+			<div className={classes.items}>
+				<Divider className={classes.divider} />
+				<ExperienceItem
+					year={'2019'}
+					description={
+						'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
+					}
+				/>
+				<Divider className={classes.divider} />
+				<ExperienceItem
+					year={'2020'}
+					description={
+						'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
+					}
+				/>
+				<Divider className={classes.divider} />
+				<ExperienceItem
+					year={'2021'}
+					description={
+						'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
+					}
+				/>
+				<Divider className={classes.divider} />
+			</div>
 		</div>
 	);
 }

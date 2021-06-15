@@ -11,6 +11,7 @@ import Interests from '../src/views/payload/interests';
 
 const useStyle = makeStyles((theme) => ({
 	home: {
+		width: '100%',
 		backgroundColor: theme.palette.background.default,
 	},
 }));

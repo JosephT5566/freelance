@@ -7,6 +7,11 @@ const useStyle = makeStyles((theme) => ({
 	experienceItem: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(2, 1fr)',
+		[theme.breakpoints.down('sm')]: {
+			display: 'flex',
+			flexDirection: 'column',
+			marginBottom: '2em',
+		},
 		'& .year': {
 			fontFamily: 'Lobster',
 			fontSize: '4rem',

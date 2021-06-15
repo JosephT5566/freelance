@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Behance from '../../../public/icons/behance.svg';
 import Flickr from '../../../public/icons/flickr.svg';
@@ -26,6 +27,7 @@ const useStyle = makeStyles((theme) => ({
 		display: 'flex',
 	},
 	icon: {
+		transition: '0.5s',
 		width: '2rem',
 		color: theme.palette.secondary.main,
 		margin: '0 5px',
@@ -36,8 +38,12 @@ const useStyle = makeStyles((theme) => ({
 	},
 	copyright: {
 		position: 'absolute',
-		right: '16%',
-		bottom: '1em',
+		bottom: '0',
+		display: 'flex',
+		justifyContent: 'flex-end',
+		[theme.breakpoints.down('sm')]: {
+			justifyContent: 'center',
+		},
 		color: theme.palette.primary.light,
 	},
 }));
@@ -58,14 +64,16 @@ export default function Footer() {
 				<a href="https://github.com/JosephT5566" target="_blank" rel="noopener noreferrer">
 					<Github className={classes.icon} />
 				</a>
-				<a href="https://www.instagram.com/tsengchun34/" target="_blank" rel="noopener noreferrer">
+				{/* <a href="https://www.instagram.com/tsengchun34/" target="_blank" rel="noopener noreferrer">
 					<Instagram className={classes.icon} />
-				</a>
+				</a> */}
 				<a href="https://www.linkedin.com/in/joseph-tseng-50ba36136" target="_blank" rel="noopener noreferrer">
 					<Linkedin className={classes.icon} />
 				</a>
 			</div>
-			<div className={classes.copyright}>{'© Design by Joseph'}</div>
+			<Container className={classes.copyright}>
+				<div>{'© Design by Joseph'}</div>
+			</Container>
 		</div>
 	);
 }

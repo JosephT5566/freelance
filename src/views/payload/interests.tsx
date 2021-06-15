@@ -12,6 +12,9 @@ const useStyle = makeStyles((theme) => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	title: {
+		padding: '1em 0',
+	},
 	description: {
 		padding: '0 16.6%',
 	},
@@ -21,7 +24,9 @@ export default function Interests() {
 	const classes = useStyle();
 	return (
 		<div className={classes.interests}>
-			<Typography variant="h1">{'Interests'}</Typography>
+			<Typography variant="h1" className={classes.title}>
+				{'Interests'}
+			</Typography>
 			<div className={classes.description}>
 				<Typography variant="body1">
 					{
