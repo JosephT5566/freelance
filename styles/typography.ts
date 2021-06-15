@@ -11,6 +11,10 @@ export const typography = {
 		fontFamily: 'Vidaloka',
 		fontSize: '4rem',
 	},
+	h2: {
+		fontFamily: 'Vidaloka',
+		fontSize: '1.5rem',
+	},
 	body1: {
 		fontSize: '18px',
 	},
