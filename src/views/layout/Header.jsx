@@ -9,7 +9,7 @@ const useStyle = makeStyles((theme) => ({
 		top: '0',
 		alignItems: 'center',
 		height: '0',
-		width: '100vw',
+		width: '100%',
 		backgroundColor: 'transparent',
 		zIndex: theme.zIndex.appBar + 1,
 	},
@@ -17,7 +17,6 @@ const useStyle = makeStyles((theme) => ({
 		position: 'absolute',
 		top: '1.5em',
 		left: '2em',
-		height: theme.typography.headerHeight,
 		textDecoration: 'none',
 	},
 	label: {
