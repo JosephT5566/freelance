@@ -1,6 +1,6 @@
 export const typography = {
 	fontFamily: 'Montserrat, Open Sans, serif',
-	navWidth: '15em',
+	navWidth: '50vw',
 	headerHeight: '5em',
 	tableHeadHeight: '3em',
 	tableHeadMarginBottom: '1em',
