@@ -76,8 +76,8 @@ const Items = ({ btnClicked }) => {
 			<Button
 				index={1}
 				onClick={() => {
-					router.push(`${url.hash}`);
-					if (btnClicked) btnClicked();
+					router.push(`/projects`);
+					btnClicked && btnClicked();
 				}}
 			>
 				Projects
@@ -85,8 +85,8 @@ const Items = ({ btnClicked }) => {
 			<Button
 				index={2}
 				onClick={() => {
-					router.push(`/timeline/${url.hash}`);
-					if (btnClicked) btnClicked();
+					// router.push(`/timeline/${url.hash}`);
+					btnClicked && btnClicked();
 				}}
 			>
 				Contact me
