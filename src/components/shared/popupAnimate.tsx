@@ -10,7 +10,9 @@ export default function PupupAnimate(props: { children: ReactNode }) {
 	const springProps = useSpring({ opacity: display ? 1 : 0, y: display ? 0 : 30 });
 
 	const handleScroll = debounce(() => {
-		const { bottom, height } = animateRef.current.getBoundingClientRect();
+		const { bottom, height } = animateRef.current
+			? animateRef.current.getBoundingClientRect()
+			: { bottom: 0, height: 0 };
 		setDisplay(bottom - height / 3 <= window.innerHeight);
 	});
 
