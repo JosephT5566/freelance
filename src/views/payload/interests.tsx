@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
+import PopupAnimate from '../../components/shared/popupAnimate';
 
 const useStyle = makeStyles((theme) => ({
 	interests: {
@@ -28,11 +29,13 @@ export default function Interests() {
 				{'Interests'}
 			</Typography>
 			<div className={classes.description}>
-				<Typography variant="body1">
-					{
-						'Donec ac lorem mauris. Suspendisse nisl arcu, porttitor vel felis vitae, fermentum faucibus arcu. Sed et interdum odio. Duis cursus nec enim eu fermentum. Praesent aliquet nisi sodales, maximus ligula ut, pharetra nunc. Cras tincidunt ligula et ipsum dictum ullamcorper. Aliquam lectus diam, posuere quis nisl non, efficitur tincidunt dolor. Duis finibus egestas felis non ultrices. Nulla facilisi.'
-					}
-				</Typography>
+				<PopupAnimate>
+					<Typography variant="body1">
+						{
+							'Donec ac lorem mauris. Suspendisse nisl arcu, porttitor vel felis vitae, fermentum faucibus arcu. Sed et interdum odio. Duis cursus nec enim eu fermentum. Praesent aliquet nisi sodales, maximus ligula ut, pharetra nunc. Cras tincidunt ligula et ipsum dictum ullamcorper. Aliquam lectus diam, posuere quis nisl non, efficitur tincidunt dolor. Duis finibus egestas felis non ultrices. Nulla facilisi.'
+						}
+					</Typography>
+				</PopupAnimate>
 			</div>
 		</div>
 	);
