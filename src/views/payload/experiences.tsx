@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ExperienceItem from '../../components/shared/experienceItem';
+import PopupAnimate from '../../components/shared/popupAnimate';
 
 const useStyle = makeStyles((theme) => ({
 	experiences: {
@@ -59,26 +60,32 @@ export default function Experience() {
 			</div>
 			<div className={classes.items}>
 				<Divider className={classes.divider} />
-				<ExperienceItem
-					year={'2019'}
-					description={
-						'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-					}
-				/>
+				<PopupAnimate>
+					<ExperienceItem
+						year={'2019'}
+						description={
+							'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
+						}
+					/>
+				</PopupAnimate>
 				<Divider className={classes.divider} />
-				<ExperienceItem
-					year={'2020'}
-					description={
-						'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-					}
-				/>
+				<PopupAnimate>
+					<ExperienceItem
+						year={'2020'}
+						description={
+							'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
+						}
+					/>
+				</PopupAnimate>
 				<Divider className={classes.divider} />
-				<ExperienceItem
-					year={'2021'}
-					description={
-						'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-					}
-				/>
+				<PopupAnimate>
+					<ExperienceItem
+						year={'2021'}
+						description={
+							'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
+						}
+					/>
+				</PopupAnimate>
 				<Divider className={classes.divider} />
 			</div>
 		</div>
