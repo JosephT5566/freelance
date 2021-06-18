@@ -69,6 +69,7 @@ export default function Projects() {
 					url={''}
 					tools={['1', '2']}
 				/>
+				<Project title={'Next'} />
 			</div>
 		</div>
 	);

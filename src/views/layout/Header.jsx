@@ -37,7 +37,7 @@ export default function Header() {
 		<div className={classes.header}>
 			<a className={classes.a} href="/">
 				{/* <img src={'/mega_origin.png'} alt="mega_origin" /> */}
-				<Typography className={classes.label} variant="h2">
+				<Typography className={classes.label} variant="h3">
 					Joseph Tseng
 				</Typography>
 			</a>
