@@ -6,11 +6,13 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyle = makeStyles((theme) => ({
 	project: {
-		width: '100%',
 		[theme.breakpoints.up('md')]: {
+			width: '100vw',
 			height: '100vh',
 			padding: '7% 5%',
+			flexShrink: '0',
 		},
+		[theme.breakpoints.down('sm')]: {},
 	},
 	image: {
 		width: '50%',
