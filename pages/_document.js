@@ -8,7 +8,6 @@ export default class MyDocument extends Document {
 		return (
 			<Html lang="zh-TW">
 				<Head>
-					<title>This is Joseph</title>
 					<link rel="icon" href="/favicon.png" />
 					{/* PWA primary color */}
 					<meta name="theme-color" content={theme.palette.primary.main} />

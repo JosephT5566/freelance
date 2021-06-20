@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -115,6 +116,8 @@ export default function Function(props: {
 }) {
 	const { title, description, image, tools } = props;
 	const classes = useStyle();
+	const theme = useTheme();
+	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
 
 	return (
 		<div className={classes.project}>
@@ -125,7 +128,7 @@ export default function Function(props: {
 				<div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
 			) : (
 				<div className={`${classes.image} default`}>
-					<PopupAnimate>
+					<PopupAnimate disabled={isViewPortLarge}>
 						<Typography variant={'h1'}>{'Coming Soon...'}</Typography>
 					</PopupAnimate>
 				</div>
@@ -136,7 +139,7 @@ export default function Function(props: {
 						{'Description'}
 					</Typography>
 					<div className={classes.description}>
-						<PopupAnimate>
+						<PopupAnimate disabled={isViewPortLarge}>
 							<Typography className={'content'} variant={'body1'}>
 								{description}
 							</Typography>
