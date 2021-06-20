@@ -48,18 +48,19 @@ const useStyle = makeStyles((theme) => ({
 		},
 	},
 	description: {
+		width: '100%',
 		[theme.breakpoints.up('md')]: {
 			gridColumn: '2 / 2',
 			gridRow: '3 / span 3',
+		},
+		[theme.breakpoints.down('sm')]: {
+			padding: '0 0.5rem',
 		},
 		'& > hr': {
 			marginBottom: '1em',
 		},
 		'& .content': {
 			marginBottom: '1em',
-			[theme.breakpoints.down('sm')]: {
-				padding: '0 0.5rem',
-			},
 		},
 	},
 	image: {
@@ -87,6 +88,9 @@ const useStyle = makeStyles((theme) => ({
 			'& > h1': {
 				fontFamily: 'Lobster',
 			},
+		},
+		'&:hover': {
+			cursor: 'pointer',
 		},
 	},
 	tools: {
