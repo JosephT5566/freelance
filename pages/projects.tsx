@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import _ from 'lodash';
 
 import Project from '../src/views/payload/project';
@@ -12,6 +13,10 @@ const useStyle = makeStyles((theme) => ({
 		width: '100%',
 		height: '100%',
 		overflow: 'hidden',
+		[theme.breakpoints.down('sm')]: {
+			overflow: 'auto',
+			position: 'initial',
+		},
 	},
 	projects: {
 		position: 'absolute',
@@ -22,6 +27,10 @@ const useStyle = makeStyles((theme) => ({
 		overflow: 'hidden',
 		backgroundColor: theme.palette.background.default,
 		willChange: 'transform',
+		[theme.breakpoints.down('sm')]: {
+			flexDirection: 'column',
+			paddingTop: '5em',
+		},
 	},
 }));
 
@@ -29,6 +38,8 @@ export default function Projects() {
 	const classes = useStyle();
 	const [transX, setTransX] = useState(0);
 	const projsContRef = useRef(null);
+	const theme = useTheme();
+	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
 
 	const handleWheel = (event) => {
 		const maxTransX = projsContRef.current.clientWidth - window.innerWidth;
@@ -43,10 +54,16 @@ export default function Projects() {
 	}, []);
 
 	useEffect(() => {
-		window.addEventListener('wheel', handleWheel);
+		isViewPortLarge
+			? window.addEventListener('wheel', handleWheel)
+			: window.removeEventListener('wheel', handleWheel);
 
 		return () => window.removeEventListener('wheel', handleWheel);
-	}, [handleWheel]);
+	}, [handleWheel, isViewPortLarge]);
+
+	useEffect(() => {
+		!isViewPortLarge && setTransX(0);
+	}, [isViewPortLarge]);
 
 	return (
 		<div className={classes.projectPage}>
