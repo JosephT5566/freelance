@@ -114,7 +114,7 @@ export default function Function(props: {
 	url?: string;
 	tools?: string[];
 }) {
-	const { title, description, image, tools } = props;
+	const { title, description, image, url, tools } = props;
 	const classes = useStyle();
 	const theme = useTheme();
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
@@ -125,7 +125,11 @@ export default function Function(props: {
 				{title}
 			</Typography>
 			{image ? (
-				<div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
+				<div
+					className={classes.image}
+					style={{ backgroundImage: `url(${image})` }}
+					onClick={() => url && window.open(url, '_blank').focus()}
+				></div>
 			) : (
 				<div className={`${classes.image} default`}>
 					<PopupAnimate disabled={isViewPortLarge}>
