@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import _ from 'lodash';
+import useWidth from '../src/hooks/useWidth';
 
 import Head from 'next/head';
 import Project from '../src/views/payload/project';
@@ -28,7 +29,9 @@ const useStyle = makeStyles((theme) => ({
 		overflow: 'hidden',
 		backgroundColor: theme.palette.background.default,
 		willChange: 'transform',
+		transition: '0.5s',
 		[theme.breakpoints.down('sm')]: {
+			position: 'initial',
 			flexDirection: 'column',
 			paddingTop: '5em',
 		},
@@ -38,16 +41,40 @@ const useStyle = makeStyles((theme) => ({
 export default function Projects() {
 	const classes = useStyle();
 	const [transX, setTransX] = useState(0);
-	const projsContRef = useRef(null);
+	const outerWrapperRef = useRef(null);
+	const wrapperRef = useRef(null);
 	const theme = useTheme();
+
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
+	const outerWrapperWidth = useWidth(outerWrapperRef);
+	const wrapperWidth = useWidth(wrapperRef);
 
-	const handleWheel = (event) => {
-		const maxTransX = projsContRef.current.clientWidth - window.innerWidth;
-
-		event.deltaX && setTransX((prev) => _.clamp(prev - event.deltaX, -maxTransX, 0));
-		event.deltaY && setTransX((prev) => _.clamp(prev - event.deltaY, -maxTransX, 0));
+	const registerEvents = () => {
+		window.addEventListener('wheel', handleWheel);
+		window.addEventListener('keydown', handleKeyboard);
 	};
+
+	const handleWheel = useCallback(
+		(event) => {
+			const maxTransX = wrapperWidth - window.innerWidth;
+
+			event.deltaX && setTransX((prev) => _.clamp(prev - event.deltaX, -maxTransX, 0));
+			event.deltaY && setTransX((prev) => _.clamp(prev - event.deltaY, -maxTransX, 0));
+		},
+		[wrapperWidth]
+	);
+
+	const handleKeyboard = useCallback(
+		(event) => {
+			const maxTransX = wrapperWidth - window.innerWidth;
+
+			(event.key === 'ArrowRight' || event.key === 'ArrowDown') &&
+				setTransX((prev) => _.clamp(prev - outerWrapperWidth / 2, -maxTransX, 0));
+			(event.key === 'ArrowLeft' || event.key === 'ArrowUp') &&
+				setTransX((prev) => _.clamp(prev + outerWrapperWidth / 2, -maxTransX, 0));
+		},
+		[wrapperWidth]
+	);
 
 	useEffect(() => {
 		// Disable web page navigation on swipe(back and forward)
@@ -55,23 +82,24 @@ export default function Projects() {
 	}, []);
 
 	useEffect(() => {
-		isViewPortLarge
-			? window.addEventListener('wheel', handleWheel)
-			: window.removeEventListener('wheel', handleWheel);
+		isViewPortLarge && registerEvents();
 
-		return () => window.removeEventListener('wheel', handleWheel);
-	}, [handleWheel, isViewPortLarge]);
+		return () => {
+			window.removeEventListener('wheel', handleWheel);
+			window.removeEventListener('keydown', handleKeyboard);
+		};
+	}, [handleWheel, handleKeyboard, isViewPortLarge]);
 
 	useEffect(() => {
 		!isViewPortLarge && setTransX(0);
 	}, [isViewPortLarge]);
 
 	return (
-		<div className={classes.projectPage}>
+		<div className={classes.projectPage} ref={outerWrapperRef}>
 			<Head>
 				<title>Projects</title>
 			</Head>
-			<div className={classes.projects} ref={projsContRef} style={{ transform: `translateX(${transX}px)` }}>
+			<div className={classes.projects} ref={wrapperRef} style={{ transform: `translateX(${transX}px)` }}>
 				<Project
 					title={'Megaport selector'}
 					image={'https://i.imgur.com/OgYq1S8.png'}
