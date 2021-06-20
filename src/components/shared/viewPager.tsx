@@ -47,7 +47,7 @@ const useStyle = makeStyles((theme) => ({
 			willChange: 'transform',
 			backgroundPosition: 'center',
 			backgroundSize: 'cover',
-			cursor: 'pointer',
+			cursor: 'grab',
 		},
 	},
 	arrowBtn: {
@@ -90,7 +90,7 @@ const useStyle = makeStyles((theme) => ({
 
 interface Page {
 	imageLink: string;
-	content: string;
+	content?: string;
 }
 
 const PageDots = (props: {
@@ -229,9 +229,7 @@ export default function ViewPager(props: { pages: Page[] }) {
 						<animated.div
 							className="image"
 							style={{ backgroundImage: `url(${pages[i].imageLink})` }}
-							onClick={() => {
-								window.open(pages[i].content, '_blank').focus();
-							}}
+							onClick={() => pages[i].content && window.open(pages[i].content, '_blank').focus()}
 						/>
 					</animated.div>
 				))}
@@ -329,9 +327,7 @@ export function ViewPager_finite_scroll(props: { pages: Page[] }) {
 						<animated.div
 							className="image"
 							style={{ backgroundImage: `url(${pages[i].imageLink})` }}
-							onClick={() => {
-								window.open(pages[i].content, '_blank').focus();
-							}}
+							onClick={() => pages[i].content && window.open(pages[i].content, '_blank').focus()}
 						/>
 					</animated.div>
 				))}
