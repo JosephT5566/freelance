@@ -1,9 +1,9 @@
 name = "freelance"
 type = 'webpack'
-account_id = ''
-route = ''
-zone_id = ''
+account_id = '1f7783c7c3c593ab98bad669c80ae933'
+routes = ["josephtseng-tw.com/*", "www.josephtseng-tw.com/*"]
+zone_id = 'a3d90b71b4797dd1aece4f5966dc20d6'
 usage_model = ''
 workers_dev = true
 target_type = "webpack"
-site = {bucket = "",entry-point = "workers-site"}
+site = {bucket = "./out",entry-point = "workers-site"}
