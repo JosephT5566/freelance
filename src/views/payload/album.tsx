@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
 import ViewPager from '../../components/shared/viewPager';
+import Loading from '../../views/layout/Loading';
+import ErrorPage from '../../views/layout/Error';
 
 import { useFlickrGetPhotos } from '../../api/flickrHook';
 
@@ -44,24 +46,22 @@ const developPages = [
 
 export default function Album() {
 	const classes = useStyle();
-	const [pages, setPages] = useState(defaultPages);
 	const { photos, error } = useFlickrGetPhotos({
 		revalidateOnFocus: false,
-		onSuccess: (data) => {
-			setPages(data.photoset.photo.map((photo) => ({ imageLink: photo.url_o })));
-		},
 	});
 
-	if (!photos) {
-		return null;
-	}
 	return (
 		<div className={classes.album}>
 			<div className={classes.title}>
 				<Typography variant="h1">{'Album'}</Typography>
 			</div>
 			<div className={classes.viewPager}>
-				<ViewPager pages={pages} />
+				{photos ? (
+					<ViewPager pages={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
+				) : (
+					<Loading />
+				)}
+				{error && <ErrorPage err={error} />}
 			</div>
 		</div>
 	);
