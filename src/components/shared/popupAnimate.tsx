@@ -11,7 +11,6 @@ export default function PupupAnimate(props: { disabled?: boolean; children: Reac
 
 	const handleScroll = useCallback(
 		debounce(() => {
-			console.log('scroll');
 			const { bottom, height } = animateRef.current
 				? animateRef.current.getBoundingClientRect()
 				: { bottom: 0, height: 0 };
@@ -22,7 +21,6 @@ export default function PupupAnimate(props: { disabled?: boolean; children: Reac
 	);
 
 	useEffect(() => {
-		console.log('register scroll event');
 		!disabled && window.addEventListener('scroll', handleScroll);
 
 		return () => window.removeEventListener('scroll', handleScroll);
