@@ -40,14 +40,20 @@ const useStyle = makeStyles((theme) => ({
 
 export default function Projects() {
 	const classes = useStyle();
-	const outerWrapperRef = useRef(null);
-	const wrapperRef = useRef(null);
-	const transXRef = useRef(0);
 	const theme = useTheme();
 
-	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
+	// get the width of wrappers
+	const outerWrapperRef = useRef(null);
+	const wrapperRef = useRef(null);
 	const outerWrapperWidth = useWidth(outerWrapperRef);
 	const wrapperWidth = useWidth(wrapperRef);
+
+	const transXRef = useRef(0);
+	const maxTransXRef = useRef(0);
+	const touchXDownRef = useRef(0);
+	const prevTouchXDiffRef = useRef(0);
+
+	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
 
 	const [styles, api] = useSpring(() => ({
 		x: 0,
@@ -60,32 +66,54 @@ export default function Projects() {
 		});
 	};
 
+	useEffect(() => {
+		maxTransXRef.current = wrapperWidth - window.innerWidth;
+	}, [wrapperWidth]);
+
 	const registerEvents = () => {
 		window.addEventListener('wheel', handleWheel);
 		window.addEventListener('keydown', handleKeyboard);
+		window.addEventListener('touchstart', handleTouchstart);
+		window.addEventListener('touchmove', handleTouchmove);
+		window.addEventListener('touchend', handleTouchEnd);
 	};
 
-	const handleWheel = useCallback(
-		(event) => {
-			const maxTransX = wrapperWidth - window.innerWidth;
+	const removeEvents = () => {
+		window.removeEventListener('wheel', handleWheel);
+		window.removeEventListener('keydown', handleKeyboard);
+		window.removeEventListener('touchstart', handleTouchstart);
+		window.removeEventListener('touchmove', handleTouchmove);
+		window.removeEventListener('touchend', handleTouchEnd);
+	};
 
-			event.deltaX && apiStart(_.clamp(transXRef.current - event.deltaX, -maxTransX, 0));
-			event.deltaY && apiStart(_.clamp(transXRef.current - event.deltaY, -maxTransX, 0));
-		},
-		[wrapperWidth]
-	);
+	const handleTouchstart = useCallback((event: TouchEvent) => {
+		touchXDownRef.current = event.touches[0].clientX;
+	}, []);
+
+	const handleTouchEnd = useCallback(() => {
+		prevTouchXDiffRef.current = 0;
+	}, []);
+
+	const handleTouchmove = useCallback((event: TouchEvent) => {
+		const xDiff = event.touches[0].clientX - touchXDownRef.current;
+		apiStart(_.clamp(transXRef.current + (xDiff - prevTouchXDiffRef.current), -maxTransXRef.current, 0));
+		prevTouchXDiffRef.current = xDiff;
+	}, []);
+
+	const handleWheel = useCallback((event) => {
+		event.deltaX && apiStart(_.clamp(transXRef.current - event.deltaX, -maxTransXRef.current, 0));
+		event.deltaY && apiStart(_.clamp(transXRef.current - event.deltaY, -maxTransXRef.current, 0));
+	}, []);
 
 	const handleKeyboard = useCallback(
 		(event) => {
-			const maxTransX = wrapperWidth - window.innerWidth;
-
 			(event.key === 'ArrowLeft' || event.key === 'ArrowUp') &&
-				apiStart(_.clamp(transXRef.current + outerWrapperWidth / 2, -maxTransX, 0));
+				apiStart(_.clamp(transXRef.current + outerWrapperWidth / 2, -maxTransXRef.current, 0));
 
 			(event.key === 'ArrowRight' || event.key === 'ArrowDown') &&
-				apiStart(_.clamp(transXRef.current - outerWrapperWidth / 2, -maxTransX, 0));
+				apiStart(_.clamp(transXRef.current - outerWrapperWidth / 2, -maxTransXRef.current, 0));
 		},
-		[wrapperWidth]
+		[outerWrapperWidth]
 	);
 
 	useEffect(() => {
@@ -96,11 +124,8 @@ export default function Projects() {
 	useEffect(() => {
 		isViewPortLarge && registerEvents();
 
-		return () => {
-			window.removeEventListener('wheel', handleWheel);
-			window.removeEventListener('keydown', handleKeyboard);
-		};
-	}, [handleWheel, handleKeyboard, isViewPortLarge]);
+		return () => removeEvents();
+	}, [isViewPortLarge]);
 
 	useEffect(() => {
 		!isViewPortLarge && apiStart(0);
