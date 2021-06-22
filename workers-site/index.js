@@ -1,4 +1,5 @@
 import { getAssetFromKV, mapRequestToAsset } from '@cloudflare/kv-asset-handler'
+import mime from 'mime'
 
 /**
  * The DEBUG flag will do two things that help during development:
