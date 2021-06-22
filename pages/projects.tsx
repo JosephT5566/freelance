@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useSpring, animated } from '@react-spring/web';
 import _ from 'lodash';
 import useWidth from '../src/hooks/useWidth';
 
@@ -29,7 +30,6 @@ const useStyle = makeStyles((theme) => ({
 		overflow: 'hidden',
 		backgroundColor: theme.palette.background.default,
 		willChange: 'transform',
-		transition: '0.5s',
 		[theme.breakpoints.down('sm')]: {
 			position: 'initial',
 			flexDirection: 'column',
@@ -40,14 +40,25 @@ const useStyle = makeStyles((theme) => ({
 
 export default function Projects() {
 	const classes = useStyle();
-	const [transX, setTransX] = useState(0);
 	const outerWrapperRef = useRef(null);
 	const wrapperRef = useRef(null);
+	const transXRef = useRef(0);
 	const theme = useTheme();
 
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
 	const outerWrapperWidth = useWidth(outerWrapperRef);
 	const wrapperWidth = useWidth(wrapperRef);
+
+	const [styles, api] = useSpring(() => ({
+		x: 0,
+	}));
+
+	const apiStart = (newTransX: number) => {
+		transXRef.current = newTransX;
+		api.start(() => {
+			return { x: transXRef.current };
+		});
+	};
 
 	const registerEvents = () => {
 		window.addEventListener('wheel', handleWheel);
@@ -58,8 +69,8 @@ export default function Projects() {
 		(event) => {
 			const maxTransX = wrapperWidth - window.innerWidth;
 
-			event.deltaX && setTransX((prev) => _.clamp(prev - event.deltaX, -maxTransX, 0));
-			event.deltaY && setTransX((prev) => _.clamp(prev - event.deltaY, -maxTransX, 0));
+			event.deltaX && apiStart(_.clamp(transXRef.current - event.deltaX, -maxTransX, 0));
+			event.deltaY && apiStart(_.clamp(transXRef.current - event.deltaY, -maxTransX, 0));
 		},
 		[wrapperWidth]
 	);
@@ -68,10 +79,11 @@ export default function Projects() {
 		(event) => {
 			const maxTransX = wrapperWidth - window.innerWidth;
 
-			(event.key === 'ArrowRight' || event.key === 'ArrowDown') &&
-				setTransX((prev) => _.clamp(prev - outerWrapperWidth / 2, -maxTransX, 0));
 			(event.key === 'ArrowLeft' || event.key === 'ArrowUp') &&
-				setTransX((prev) => _.clamp(prev + outerWrapperWidth / 2, -maxTransX, 0));
+				apiStart(_.clamp(transXRef.current + outerWrapperWidth / 2, -maxTransX, 0));
+
+			(event.key === 'ArrowRight' || event.key === 'ArrowDown') &&
+				apiStart(_.clamp(transXRef.current - outerWrapperWidth / 2, -maxTransX, 0));
 		},
 		[wrapperWidth]
 	);
@@ -91,7 +103,7 @@ export default function Projects() {
 	}, [handleWheel, handleKeyboard, isViewPortLarge]);
 
 	useEffect(() => {
-		!isViewPortLarge && setTransX(0);
+		!isViewPortLarge && apiStart(0);
 	}, [isViewPortLarge]);
 
 	return (
@@ -99,7 +111,7 @@ export default function Projects() {
 			<Head>
 				<title>Projects</title>
 			</Head>
-			<div className={classes.projects} ref={wrapperRef} style={{ transform: `translateX(${transX}px)` }}>
+			<animated.div className={classes.projects} ref={wrapperRef} style={{ ...styles }}>
 				<Project
 					title={'Megaport selector'}
 					image={'https://i.imgur.com/OgYq1S8.png'}
@@ -117,7 +129,7 @@ export default function Projects() {
 					tools={['1', '2']}
 				/>
 				<Project title={'Next'} />
-			</div>
+			</animated.div>
 		</div>
 	);
 }
