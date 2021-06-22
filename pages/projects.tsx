@@ -115,9 +115,9 @@ export default function Projects() {
 				<Project
 					title={'Megaport selector'}
 					image={'https://i.imgur.com/OgYq1S8.png'}
-					description={'2021大港開唱，看團選擇器'}
+					description={'2021 Megaport Festival performance selector.'}
 					url={'https://josepht5566.github.io/musicFest'}
-					tools={['React js', 'RWD web', 'Gh-pages']}
+					tools={['RWD web', 'React js', 'Gh-pages']}
 				/>
 				<Project
 					title={'Megaport selector'}
