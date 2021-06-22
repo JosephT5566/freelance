@@ -43,7 +43,10 @@ async function handleEvent(event) {
         bypassCache: true,
       };
     }
-    const page = await getAssetFromKV(event, options);
+
+    const page = await getAssetFromKV(event, {
+      mapRequestToAsset: (req) => mapToAsset(req),
+    })
 
     // allow headers to be altered
     const response = new Response(page.body, page);
