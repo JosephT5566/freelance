@@ -9,6 +9,7 @@ import Button from './Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import Snackbar, { defaultSnackbarProps } from '../../../components/shared/snackbar';
 
 import { debounce } from '../../../utils/helpers';
 
@@ -69,7 +70,22 @@ const useStyle = makeStyles((theme) => ({
 
 const Items = ({ btnClicked }) => {
 	const router = useRouter();
+	const [snackbarProps, setSnackbarProps] = useState(defaultSnackbarProps);
 	const url = useLocation();
+
+	const handleCloseSnackbar = () => {
+		setSnackbarProps((prev) => ({ ...prev, open: false }));
+	};
+
+	const copyEmail = async () => {
+		await navigator.clipboard.writeText(`zxp930110@hotmail.com.tw`); // copy to clipboard
+		setSnackbarProps((prev) => ({
+			...prev,
+			open: true,
+			severity: 'success',
+			message: 'e-mail address copied',
+		}));
+	};
 
 	return (
 		<CurrentIndexStore>
@@ -84,13 +100,14 @@ const Items = ({ btnClicked }) => {
 			</Button>
 			<Button
 				index={2}
-				onClick={() => {
-					// router.push(`/timeline/${url.hash}`);
+				onClick={async () => {
+					await copyEmail();
 					btnClicked && btnClicked();
 				}}
 			>
 				Contact me
 			</Button>
+			<Snackbar snackbarProps={snackbarProps} onClose={handleCloseSnackbar} />
 		</CurrentIndexStore>
 	);
 };
