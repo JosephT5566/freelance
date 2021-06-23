@@ -6,7 +6,9 @@ import Head from 'next/head';
 import Project from '../src/views/payload/project';
 
 const useStyle = makeStyles((theme) => ({
-	projectPage: {},
+	projectPage: {
+		backgroundColor: theme.palette.background.default,
+	},
 }));
 
 export default function Projects() {

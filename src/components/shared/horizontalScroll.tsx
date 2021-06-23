@@ -6,31 +6,64 @@ import _ from 'lodash';
 import useWidth from '../../hooks/useWidth';
 
 const useStyle = makeStyles((theme) => ({
-	outerWrapper: {
+	outerWrapper_trans: {
 		position: 'fixed',
 		left: '0',
 		top: '0',
 		width: '100%',
 		height: '100%',
+		backgroundColor: 'inherit',
 		overflow: 'hidden',
 		[theme.breakpoints.down('sm')]: {
 			overflow: 'auto',
 			position: 'initial',
 		},
 	},
-	wrapper: {
+	wrapper_trans: {
 		position: 'absolute',
 		top: '0',
 		left: '0',
 		display: 'flex',
 		minWidth: '100%',
 		overflow: 'hidden',
-		backgroundColor: theme.palette.background.default,
 		willChange: 'transform',
 		[theme.breakpoints.down('sm')]: {
 			position: 'initial',
 			flexDirection: 'column',
 			paddingTop: '5em',
+		},
+	},
+	outerWrapper_rotate: {
+		// the size of width and height is the point
+		position: 'absolute',
+		width: '100vh',
+		height: '100vw',
+		backgroundColor: 'inherit',
+		transform: 'rotate(-90deg) translateX(-100vh)',
+		transformOrigin: 'top left',
+		overflowY: 'scroll',
+		overflowX: 'hidden',
+		scrollbarWidth: 'none',
+		'&::-webkit-scrollbar': {
+			display: 'none',
+		},
+		[theme.breakpoints.down('sm')]: {
+			position: 'initial',
+			width: '100%',
+			height: '100%',
+			overflow: 'auto',
+			transform: 'initial',
+		},
+	},
+	wrapper_rotate: {
+		display: 'flex',
+		flexDirection: 'row',
+		transform: 'rotate(90deg) translateY(-100vh)',
+		transformOrigin: 'top left',
+		[theme.breakpoints.down('sm')]: {
+			flexDirection: 'column',
+			paddingTop: '5em',
+			transform: 'initial',
 		},
 	},
 }));
@@ -66,7 +99,7 @@ export function HorizontalScroll_trans(props: { children: ReactNode }) {
 			return { x: transXRef.current };
 		});
 	};
-    
+
 	useEffect(() => {
 		maxTransXRef.current = wrapperWidth - window.innerWidth;
 	}, [wrapperWidth]);
@@ -133,10 +166,25 @@ export function HorizontalScroll_trans(props: { children: ReactNode }) {
 	}, [isViewPortLarge]);
 
 	return (
-		<div className={classes.outerWrapper} ref={outerWrapperRef}>
-			<animated.div className={classes.wrapper} ref={wrapperRef} style={{ ...styles }}>
+		<div className={classes.outerWrapper_trans} ref={outerWrapperRef}>
+			<animated.div className={classes.wrapper_trans} ref={wrapperRef} style={{ ...styles }}>
 				{children}
 			</animated.div>
+		</div>
+	);
+}
+
+// Use CSS method, `transform: rotate(-90deg)` to change the direction
+// There are two layers of wrapper, set the outer wrapper to 'absolute'.
+// But there are no any gesture control, can only scroll up/down to move horizontally
+// *** NOTICE: The SIZE of children should be set, like (width: '100vw', height: '100vh') ***
+export function HorizontalScroll_rotate(props: { children: ReactNode }) {
+	const { children } = props;
+	const classes = useStyle();
+
+	return (
+		<div className={classes.outerWrapper_rotate}>
+			<div className={classes.wrapper_rotate}>{children}</div>
 		</div>
 	);
 }
