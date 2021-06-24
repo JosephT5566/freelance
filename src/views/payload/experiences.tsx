@@ -53,37 +53,41 @@ export default function Experience() {
 			</Typography>
 			<div className={classes.description}>
 				<Typography variant="body1">
-					{
-						'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-					}
+					{`
+						Join the front-end is 1 year although, I've been an engineer about 4 years.
+						In my opinion, the program is not just a complicated and confusing data manager,
+						but can be used as a kind of creative tool.
+					`}
 				</Typography>
 			</div>
 			<div className={classes.items}>
 				<Divider className={classes.divider} />
 				<PopupAnimate>
 					<ExperienceItem
-						year={'2019'}
-						description={
-							'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-						}
+						year={'-2019'}
+						description={`
+							F/W engineer in Memoright and Socle tech. Develop, maintain and test system drivers
+						`}
 					/>
 				</PopupAnimate>
 				<Divider className={classes.divider} />
 				<PopupAnimate>
 					<ExperienceItem
 						year={'2020'}
-						description={
-							'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-						}
+						description={`
+							After leaving the original job and having an unforgettable time in green island,
+							I've been hired to a start up company for front-end develop.
+						`}
 					/>
 				</PopupAnimate>
 				<Divider className={classes.divider} />
 				<PopupAnimate>
 					<ExperienceItem
 						year={'2021'}
-						description={
-							'Maecenas vitae ligula nulla. Donec euismod mauris risus, eget eleifend diam tempus sed. Cras vitae ex mauris. '
-						}
+						description={`
+							Keep working on front-end. I help to build a member system, in addition to websites for general user
+							and administrator, and also back-end maintenance.
+						`}
 					/>
 				</PopupAnimate>
 				<Divider className={classes.divider} />

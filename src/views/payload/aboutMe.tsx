@@ -66,9 +66,12 @@ export default function AboutMe() {
 			<div className={classes.description}>
 				<Typography variant="body1">{'Hi, this is Joseph'}</Typography>
 				<Typography variant="body1">
-					{
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis metus eu mi pharetra, ut molestie mauris commodo. Quisque posuere, leo eu euismod aliquet, quam est dapibus lacus, ut fringilla elit risus a leo. Pellentesque imperdiet magna quis tellus aliquam rhoncus. Suspendisse laoreet, lectus sed semper sagittis, purus neque congue nulla, a porttitor risus diam ut mi'
-					}
+					{`
+						A front-end developer. I enjoy on interesting and meaningful projects, the development process is really facinating.
+						I like to not just focus on code but also on quality. Try to design perfection and optimised UX/UI is always the main purpose,
+						and I keep improving myself to achieve that.
+						I take my work seriously as I treat myself.
+					`}
 				</Typography>
 			</div>
 			<div className={classes.profileImage} style={{ backgroundImage: `url(/images/profile.jpg)` }}></div>

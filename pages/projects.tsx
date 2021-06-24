@@ -23,18 +23,14 @@ export default function Projects() {
 				<Project
 					title={'Megaport selector'}
 					image={'https://i.imgur.com/OgYq1S8.png'}
-					description={'2021 Megaport Festival performance selector.'}
+					description={`
+						A performance selector for 2021 Megaport Festival.
+						There are a lots of shows in the two days, so I design a website
+						to make scheduling easier. And people may participate the party with only mobile device,
+						so RWD is required.
+					`}
 					url={'https://josepht5566.github.io/musicFest'}
 					tools={['RWD web', 'React js', 'Gh-pages']}
-				/>
-				<Project
-					title={'Megaport selector'}
-					image={'https://live.staticflickr.com/65535/51049860506_291e6c2cf3_b.jpg'}
-					description={
-						'Nunc accumsan ipsum vitae ex lacinia varius. Donec condimentum sodales odio eu accumsan. Sed quis velit condimentum, vehicula ex sit amet, rutrum mi'
-					}
-					url={''}
-					tools={['1', '2']}
 				/>
 				<Project title={'Next'} />
 			</HorizontalScroll_trans>

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
 import PopupAnimate from '../../components/shared/popupAnimate';
+import Instagram from '../../../public/icons/instagram.svg';
 
 const useStyle = makeStyles((theme) => ({
 	interests: {
@@ -19,6 +20,14 @@ const useStyle = makeStyles((theme) => ({
 	description: {
 		padding: '0 16.6%',
 	},
+	icon: {
+		width: '1rem',
+		transition: '0.5s',
+		'&:hover': {
+			cursor: 'pointer',
+			color: theme.palette.secondary.main,
+		},
+	},
 }));
 
 export default function Interests() {
@@ -31,10 +40,25 @@ export default function Interests() {
 			<div className={classes.description}>
 				<PopupAnimate>
 					<Typography variant="body1">
-						{
-							'Donec ac lorem mauris. Suspendisse nisl arcu, porttitor vel felis vitae, fermentum faucibus arcu. Sed et interdum odio. Duis cursus nec enim eu fermentum. Praesent aliquet nisi sodales, maximus ligula ut, pharetra nunc. Cras tincidunt ligula et ipsum dictum ullamcorper. Aliquam lectus diam, posuere quis nisl non, efficitur tincidunt dolor. Duis finibus egestas felis non ultrices. Nulla facilisi.'
-						}
+						{`
+							I like to take photos, just like the pictures in the album above.
+							I like to create, just like a deep desire, it can bring me a sense of accomplishment.
+							I like to diving. Yeah, I have AOW (advenced open water) licence, got it in Green Island.
+							The ocean there is really beautiful, you should try if you haven't been there before.
+							Besides that, I like travel, with camera absolutely, and snowboarding also.
+						`}
 					</Typography>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						<Typography variant="body1">{`Check out my`}</Typography>
+						<a
+							href="https://www.instagram.com/tsengchun34/"
+							style={{ padding: '0 4px' }}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<Instagram className={classes.icon} />
+						</a>
+					</div>
 				</PopupAnimate>
 			</div>
 		</div>
