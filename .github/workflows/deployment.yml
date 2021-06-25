@@ -16,13 +16,14 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
+            # https://github.com/marketplace/actions/version-check
             - name: Check package version
               uses: EndBug/version-check@v1
               id: check
 
             - name: Get Tag Version
               id: get_version
-              run: echo ::set-output name=VERSION::${ steps.check.output.version }
+              run: echo ::set-output name=VERSION::${ steps.check.outputs.version }
 
             - name: Build
               run: |-
