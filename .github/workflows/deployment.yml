@@ -21,13 +21,13 @@ jobs:
               uses: EndBug/version-check@v1
               id: check
 
-            - name: Get Tag Version
+            - name: Get Package Version
               id: get_version
               run: echo ::set-output name=VERSION::${{ steps.check.outputs.version }}
 
             - name: Build
               run: |-
-                  yarn install && yarn build
+                  yarn install && yarn build && yarn export
 
             - name: Publish
               uses: cloudflare/wrangler-action@1.3.0
