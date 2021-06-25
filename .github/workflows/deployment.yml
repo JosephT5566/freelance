@@ -17,6 +17,7 @@ jobs:
             - uses: actions/checkout@v2
 
             # https://github.com/marketplace/actions/version-check
+            # the pushed commit message should contain version number (like <WHATEVER 1.2.3>) and MATCHS `package.json`, outputs will be set then.
             - name: Check package version
               uses: EndBug/version-check@v1
               id: check
@@ -25,7 +26,12 @@ jobs:
               id: get_version
               run: echo "package version - ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"
 
-            - name: Build
+            - name: Log when unchanged
+              if: steps.check.outputs.changed == 'false'
+              run: echo "No version change :/"
+
+            - name: Build If Version Changed
+              if: steps.check.outputs.changed == 'true'
               run: |-
                   yarn install && yarn build && yarn export
 
