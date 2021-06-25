@@ -22,13 +22,13 @@ jobs:
               uses: EndBug/version-check@v1
               id: check
 
-            - name: Log when unchanged
-              if: steps.check.outputs.changed == 'false'
-              run: 'echo "No version change :/"'
-
             - name: Get Package Version
               id: get_version
               run: echo "package version - ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"
+
+            - name: Log when unchanged
+              if: steps.check.outputs.changed == 'false'
+              run: 'echo "No version change :/"'
 
             - name: Build If Version Changed
               if: steps.check.outputs.changed == 'true'
@@ -36,7 +36,6 @@ jobs:
                   yarn install && yarn build && yarn export
 
             - name: Publish
-              if: steps.check.outputs.changed == 'true'
               uses: cloudflare/wrangler-action@1.3.0
               with:
                   apiToken: ${{ secrets.CF_API_TOKEN }}
