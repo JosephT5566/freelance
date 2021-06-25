@@ -23,7 +23,7 @@ jobs:
 
             - name: Get Package Version
               id: get_version
-              run: echo "package version - ${{ steps.check.outputs.version }}"
+              run: echo "package version - ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"
 
             - name: Build
               run: |-
