@@ -19,6 +19,7 @@ const useStyle = makeStyles((theme) => ({
 
 export default function Home() {
 	const classes = useStyle();
+	console.log(`${process.env.NEXT_PUBLIC_NAME} v${process.env.NEXT_PUBLIC_VERSION}`);
 
 	return (
 		<div className={classes.home}>

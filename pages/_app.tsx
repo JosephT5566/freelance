@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import '../styles/globals.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../styles/theme';
-import Header from '../src/views/layout/Header'
-import Navigation from '../src/views/layout/Navigation'
+import Header from '../src/views/layout/Header';
+import Navigation from '../src/views/layout/Navigation';
 
 function MyApp({ Component, pageProps }) {
 	useEffect(() => {

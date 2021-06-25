@@ -1,0 +1,34 @@
+name: Deploy Freelance website
+
+on:
+    push:
+        branches:
+            - 'main'
+
+env:
+    PROJECT_ID: freelance
+
+jobs:
+    setup-build-deploy:
+        name: Setup, Build, and Deploy
+        runs-on: ubuntu-18.04
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Check package version
+              uses: EndBug/version-check@v1
+              id: check
+
+            - name: Get Tag Version
+              id: get_version
+              run: echo ::set-output name=VERSION::${ steps.check.output.version }
+
+            - name: Build
+              run: |-
+                  yarn install && yarn build
+
+            - name: Publish
+              uses: cloudflare/wrangler-action@1.3.0
+              with:
+                  apiToken: ${{ secrets.CF_API_TOKEN }}
