@@ -67,8 +67,8 @@ export default function AboutMe() {
 				<Typography variant="body1">{'Hi, this is Joseph'}</Typography>
 				<Typography variant="body1">
 					{`
-						A front-end developer. I enjoy on interesting and meaningful projects, the development process is really facinating.
-						I like to not just focus on code but also on quality. Try to design perfection and optimised UX/UI is always the main purpose,
+						A front-end developer. I enjoy on interesting and meaningful projects, the development process is really fascinating.
+						I like to not just focus on code but also on quality. Try to design perfection and optimized UX/UI is always the main purpose,
 						and I keep improving myself to achieve that.
 						I take my work seriously as I treat myself.
 					`}

@@ -25,7 +25,7 @@ export default function Projects() {
 					image={'https://i.imgur.com/OgYq1S8.png'}
 					description={`
 						A performance selector for 2021 Megaport Festival.
-						There are a lots of shows in the two days, so I design a website
+						There are lots of shows in the two days, so I design a website
 						to make scheduling easier. And people may participate the party with only mobile device,
 						so RWD is required.
 					`}
