@@ -9,6 +9,7 @@ import Button from './Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import Snackbar, { defaultSnackbarProps } from '../../../components/shared/snackbar';
 
 import { debounce } from '../../../utils/helpers';
 
@@ -17,27 +18,25 @@ const useStyle = makeStyles((theme) => ({
 		position: 'fixed',
 		display: 'flex',
 		zIndex: '100',
+		width: '100%',
 
 		top: '0.5em',
-		left: '50%',
-		transform: 'translate(-50%, 0)',
 		padding: '1em 0',
-		backgroundColor: theme.palette.secondary.main,
-		borderRadius: '0.5em',
 		transition: '0.6s',
 		'&.false': {
 			top: '-4.5em',
 		},
+		zIndex: theme.zIndex.appBar,
 	},
 	navigation_md: {
 		position: 'fixed',
 		display: 'flex',
-		zIndex: '100',
+		zIndex: theme.zIndex.appBar,
 
 		right: `-${theme.typography.navWidth}`,
 		height: '100vh',
 		width: theme.typography.navWidth,
-		backgroundColor: theme.palette.secondary.dark,
+		backgroundColor: theme.palette.background.paper,
 		transition: '0.6s',
 		'&.true': {
 			right: '0',
@@ -46,10 +45,10 @@ const useStyle = makeStyles((theme) => ({
 	itemsContainer: {
 		display: 'flex',
 		width: '100%',
-		padding: '0 0.5em',
+		padding: '0 1em',
 
 		[theme.breakpoints.up('md')]: {
-			justifyContent: 'center',
+			justifyContent: 'space-between',
 		},
 		[theme.breakpoints.down('sm')]: {
 			paddingTop: theme.typography.headerHeight,
@@ -62,60 +61,53 @@ const useStyle = makeStyles((theme) => ({
 		right: '0.2em',
 		color: theme.palette.primary.main,
 		padding: '0.5em 0.8em',
-		backgroundColor: `${theme.palette.secondary.main}BF`,
 		borderRadius: '0.5em',
 		[theme.breakpoints.up('md')]: {
 			display: 'none',
-		},
-
-		'&:hover': {
-			backgroundColor: `${theme.palette.secondary.main}E5`,
 		},
 	},
 }));
 
 const Items = ({ btnClicked }) => {
 	const router = useRouter();
+	const [snackbarProps, setSnackbarProps] = useState(defaultSnackbarProps);
 	const url = useLocation();
+
+	const handleCloseSnackbar = () => {
+		setSnackbarProps((prev) => ({ ...prev, open: false }));
+	};
+
+	const copyEmail = async () => {
+		await navigator.clipboard.writeText(`zxp930110@hotmail.com.tw`); // copy to clipboard
+		setSnackbarProps((prev) => ({
+			...prev,
+			open: true,
+			severity: 'success',
+			message: 'e-mail address copied',
+		}));
+	};
 
 	return (
 		<CurrentIndexStore>
 			<Button
 				index={1}
 				onClick={() => {
-					router.push(`${url.hash}`);
-					if (btnClicked) btnClicked();
+					router.push(`/projects`);
+					btnClicked && btnClicked();
 				}}
 			>
-				Time Table
+				Projects
 			</Button>
 			<Button
 				index={2}
-				onClick={() => {
-					router.push(`/timeline/${url.hash}`);
-					if (btnClicked) btnClicked();
+				onClick={async () => {
+					await copyEmail();
+					btnClicked && btnClicked();
 				}}
 			>
-				Time Line
+				Contact me
 			</Button>
-			<Button
-				index={3}
-				onClick={() => {
-					router.push(`/map/${url.hash}`);
-					if (btnClicked) btnClicked();
-				}}
-			>
-				Map
-			</Button>
-			<Button
-				index={4}
-				onClick={() => {
-					router.push(`/links/${url.hash}`);
-					if (btnClicked) btnClicked();
-				}}
-			>
-				Links
-			</Button>
+			<Snackbar snackbarProps={snackbarProps} onClose={handleCloseSnackbar} />
 		</CurrentIndexStore>
 	);
 };
@@ -148,6 +140,7 @@ const NavigatorLg = () => {
 	return (
 		<nav className={`${classes.navigation_lg} ${visible}`}>
 			<div className={classes.itemsContainer}>
+				<div style={{ width: '144px', zIndex: -1 }}></div>
 				<Items />
 			</div>
 		</nav>
@@ -188,8 +181,5 @@ const NavigatorMd = () => {
 
 export default function Navigator() {
 	const theme = useTheme();
-	if (useMediaQuery(theme.breakpoints.up('md'))) {
-		return <NavigatorLg />;
-	}
-	return <NavigatorMd />;
+	return useMediaQuery(theme.breakpoints.up('md')) ? <NavigatorLg /> : <NavigatorMd />;
 }

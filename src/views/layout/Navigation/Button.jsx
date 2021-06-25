@@ -16,8 +16,11 @@ const useStyle = makeStyles((theme) => ({
 		flexDirection: 'column',
 		minWidth: '6em',
 		fontWeight: 'bold',
+		fontFamily: theme.typography.h1.fontFamily,
+		fontSize: '1.5em',
+		fontWeight: 'normal',
 
-		color: theme.palette.background.default,
+		color: theme.palette.primary.main,
 
 		[theme.breakpoints.down('sm')]: {
 			flex: '0 1 0px',
@@ -52,7 +55,7 @@ const useStyle = makeStyles((theme) => ({
 
 			transition: '200ms',
 			[theme.breakpoints.up('md')]: {
-				bottom: '-1em',
+				bottom: '-0.5em',
 			},
 			[theme.breakpoints.down('sm')]: {
 				bottom: '0',

@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
 		return (
 			<Html lang="zh-TW">
 				<Head>
-					<link rel="icon" href="/favicon.ico" />
+					<link rel="icon" href="/favicon.png" />
 					{/* PWA primary color */}
 					<meta name="theme-color" content={theme.palette.primary.main} />
 					<link
@@ -19,14 +19,19 @@ export default class MyDocument extends Document {
 						href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"
 						rel="stylesheet"
 					/>
-					<meta property="og:title" content="2021 大港開唱選擇器 Megaport Festival Selector" />
-					<meta property="og:description" content="2021大港開唱，看團選擇器" />
+					<meta property="og:title" content="This is Joseph" />
+					<meta property="og:description" content="Portfolio of Joseph frontend developer." />
 					<meta property="og:type" content="website" />
-					<meta property="og:image" content="https://i.imgur.com/OgYq1S8.png" />
-					<meta property="og:site_name" content="2021 大港開唱選擇器 Megaport Festival Selector" />
-					<meta property="og:url" content="https://josepht5566.github.io/musicFest" />
-					<meta name="description" content="2021大港開唱，看團選擇器" />
+					<meta property="og:image" content="/cover.jpg" />
+					<meta property="og:site_name" content="This is Joseph" />
+					<meta property="og:url" content="https://josephtseng-tw.com/" />
+					<meta name="description" content="Portfolio of Joseph frontend developer." />
 					<link rel="manifest" href="/manifest.json" />
+					<link rel="preconnect" href="https://fonts.gstatic.com" />
+					<link
+						href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Lobster&family=Vidaloka&family=Montserrat&display=swap"
+						rel="stylesheet"
+					/>
 				</Head>
 				<body>
 					<Main />
