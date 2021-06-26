@@ -72,7 +72,7 @@ export default function Footer() {
 				</a>
 			</div>
 			<Container className={classes.copyright}>
-				<div>{'© Design by Joseph'}</div>
+				<div>{`© Design by Joseph v${process.env.NEXT_PUBLIC_VERSION}`}</div>
 			</Container>
 		</div>
 	);
