@@ -11,6 +11,7 @@ import { useFlickrGetPhotos } from '../../api/flickrHook';
 const useStyle = makeStyles((theme) => ({
 	album: {
 		width: '100%',
+		marginBottom: '3em',
 	},
 	title: {
 		padding: '1em 16.6%',
@@ -18,14 +19,22 @@ const useStyle = makeStyles((theme) => ({
 			padding: '1em 0',
 		},
 	},
-	viewPager: {
-		marginBottom: '3em',
+	outerWrapper: {
 		width: '100%',
+		position: 'relative',
 		[theme.breakpoints.up('md')]: {
-			height: '70vh',
+			height: '45em',
 		},
-		[theme.breakpoints.down('md')]: {
-			aspectRatio: '16 / 9',
+		[theme.breakpoints.down('sm')]: {
+			paddingTop: '56.25%',
+		},
+	},
+	wrapper: {
+		width: '100%',
+		height: '100%',
+		[theme.breakpoints.down('sm')]: {
+			position: 'absolute',
+			top: '0',
 		},
 	},
 }));
@@ -55,9 +64,11 @@ export default function Album() {
 			<div className={classes.title}>
 				<Typography variant="h1">{'Album'}</Typography>
 			</div>
-			<div className={classes.viewPager}>
+			<div className={classes.outerWrapper}>
 				{photos ? (
-					<ViewPager pages={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
+					<div className={classes.wrapper}>
+						<ViewPager pages={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
+					</div>
 				) : (
 					<Loading />
 				)}

@@ -74,7 +74,7 @@ const useStyle = makeStyles((theme) => ({
 		},
 		[theme.breakpoints.down('sm')]: {
 			width: 'calc(100% - 1em)',
-			aspectRatio: '16/9',
+			paddingTop: '56.25%',
 		},
 		'&.default': {
 			backgroundColor: theme.palette.background.paper,

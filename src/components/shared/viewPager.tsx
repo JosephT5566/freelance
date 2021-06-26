@@ -13,7 +13,6 @@ import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordO
 const useStyle = makeStyles((theme) => ({
 	viewPager: {
 		position: 'relative',
-		marginBottom: '1em',
 		width: '100%',
 		height: '100%',
 		overflow: 'hidden',
@@ -33,6 +32,7 @@ const useStyle = makeStyles((theme) => ({
 	},
 	page: {
 		position: 'absolute',
+		top: 0,
 		width: '98%',
 		height: '100%',
 		willChange: 'transform',
