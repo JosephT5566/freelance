@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useEffect } from 'react';
 import * as THREE from 'three';
-// import * as dat from 'dat.gui';
+import { GUI } from 'dat.gui';
 
 const useStyle = makeStyles(() => ({
 	sphere: {
@@ -13,12 +13,19 @@ const useStyle = makeStyles(() => ({
 	},
 }));
 
+const createGUI = (): GUI => {
+	const module = require('dat.gui');
+	const { GUI } = module;
+	return new GUI();
+}
+
 export default function Sphere() {
 	const classes = useStyle();
 	const canvasRef = useRef(null);
 
 	useEffect(() => {
-		// const gui = new dat.GUI();
+		const gui = createGUI();
+
 		const sizes = {
 			width: window.innerWidth,
 			height: window.innerHeight,
