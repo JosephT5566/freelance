@@ -202,17 +202,18 @@ export default function Sphere() {
 	const classes = useStyle();
 	const canvasRef = useRef(null);
 
+	const settings = {
+		speed: 0.2,
+		density: 1.5,
+		strength: 0.2,
+		frequency: 3.0,
+		amplitude: 4.0,
+		intensity: 7.0,
+	};
+
 	useEffect(() => {
 		const gui = createGUI();
 
-		const settings = {
-			speed: 0.2,
-			density: 1.5,
-			strength: 0.2,
-			frequency: 3.0,
-			amplitude: 4.0,
-			intensity: 7.0,
-		};
 		const folder1 = gui.addFolder('Noise');
 		const folder2 = gui.addFolder('Rotation');
 		const folder3 = gui.addFolder('color');
@@ -259,7 +260,7 @@ export default function Sphere() {
 		scene.add(pointLight);
 
 		// camera
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+		const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
 		camera.position.x = 0;
 		camera.position.y = 0;
 		camera.position.z = 4;
@@ -274,7 +275,21 @@ export default function Sphere() {
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 		canvasRef.current.appendChild(renderer.domElement);
 
-		const updateSize = () => {
+		let mouseX = 0;
+		let mouseY = 0;
+		const windowX = window.innerWidth / 2;
+		const windowY = window.innerHeight / 2;
+
+		const onMouseMove = (event) => {
+			mouseX = event.clientX - windowX;
+			mouseY = event.clientY - windowY;
+		};
+
+		const onScreenScroll = () => {
+			mesh.position.y = window.scrollY * 0.003;
+		};
+
+		const onResize = () => {
 			// Update sizes
 			sizes.width = window.innerWidth;
 			sizes.height = window.innerHeight;
@@ -288,8 +303,12 @@ export default function Sphere() {
 
 		const clock = new THREE.Clock();
 
-		const aninate = () => {
+		const animate = () => {
 			// mesh.rotation.y = 0.5 * elapsedTime;
+			const targetX = mouseX * 0.001;
+			const targetY = mouseY * 0.001;
+			mesh.rotation.y += 0.5 * (targetX - mesh.rotation.y);
+			mesh.rotation.x += 0.5 * (targetY - mesh.rotation.x);
 
 			// Update uniforms
 			mesh.material.uniforms.uTime.value = clock.getElapsedTime();
@@ -304,15 +323,19 @@ export default function Sphere() {
 			renderer.render(scene, camera);
 
 			// Call tick again on the next frame
-			window.requestAnimationFrame(aninate);
+			window.requestAnimationFrame(animate);
 		};
 
-		aninate();
+		animate();
 
-		window.addEventListener('resize', updateSize);
+		window.addEventListener('resize', onResize);
+		window.addEventListener('mousemove', onMouseMove);
+		window.addEventListener('scroll', onScreenScroll);
 
 		return () => {
-			window.removeEventListener('resize', updateSize);
+			window.removeEventListener('resize', onResize);
+			window.removeEventListener('mousemove', onMouseMove);
+			window.removeEventListener('scroll', onScreenScroll);
 		};
 	}, []);
 
