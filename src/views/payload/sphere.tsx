@@ -19,6 +19,8 @@ const createGUI = (): GUI => {
 	return new GUI();
 };
 
+const DEBUG_GUI = false;
+
 const noise = `
   // GLSL textureless classic 3D noise "cnoise",
   // with an RSL-style periodic variant "pnoise".
@@ -212,17 +214,19 @@ export default function Sphere() {
 	};
 
 	useEffect(() => {
-		const gui = createGUI();
+		if (DEBUG_GUI) {
+			const gui = createGUI();
 
-		const folder1 = gui.addFolder('Noise');
-		const folder2 = gui.addFolder('Rotation');
-		const folder3 = gui.addFolder('color');
-		folder1.add(settings, 'speed', 0.1, 1, 0.01);
-		folder1.add(settings, 'density', 0, 10, 0.01);
-		folder1.add(settings, 'strength', 0, 2, 0.01);
-		folder2.add(settings, 'frequency', 0, 10, 0.1);
-		folder2.add(settings, 'amplitude', 0, 10, 0.1);
-		folder3.add(settings, 'intensity', 0, 10, 0.1);
+			const folder1 = gui.addFolder('Noise');
+			const folder2 = gui.addFolder('Rotation');
+			const folder3 = gui.addFolder('color');
+			folder1.add(settings, 'speed', 0.1, 1, 0.01);
+			folder1.add(settings, 'density', 0, 10, 0.01);
+			folder1.add(settings, 'strength', 0, 2, 0.01);
+			folder2.add(settings, 'frequency', 0, 10, 0.1);
+			folder2.add(settings, 'amplitude', 0, 10, 0.1);
+			folder3.add(settings, 'intensity', 0, 10, 0.1);
+		}
 
 		const sizes = {
 			width: window.innerWidth,
@@ -252,12 +256,13 @@ export default function Sphere() {
 		// Mesh
 		const mesh = new THREE.Mesh(geometry, material);
 		scene.add(mesh);
+
 		// Lights
-		const pointLight = new THREE.PointLight(0xffffff, 0.1);
-		pointLight.position.x = 2;
-		pointLight.position.y = 3;
-		pointLight.position.z = 4;
-		scene.add(pointLight);
+		// const pointLight = new THREE.PointLight(0xffffff, 0.1);
+		// pointLight.position.x = 2;
+		// pointLight.position.y = 3;
+		// pointLight.position.z = 4;
+		// scene.add(pointLight);
 
 		// camera
 		const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
