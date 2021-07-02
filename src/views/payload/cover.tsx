@@ -1,9 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Sphere from './sphere';
 
 const useStyle = makeStyles((theme) => ({
 	cover: {
 		display: 'flex',
+		position: 'relative',
 		width: '100%',
 		height: '100vh',
 		backgroundSize: 'cover',
@@ -37,6 +39,7 @@ export default function Cover() {
 				<h1>THIS IS</h1>
 				<h1>JOSEPH TSENG</h1>
 			</div>
+			<Sphere />
 		</div>
 	);
 }
