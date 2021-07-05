@@ -22,8 +22,7 @@ const useStyle = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'center',
 		margin: '0 auto',
-		height: '100%',
-		aspectRatio: '16 / 9', // decide the width
+		height: '100%', // decide width by js
 		maxWidth: '100%',
 		overflow: 'hidden',
 		[theme.breakpoints.up('md')]: {
@@ -223,7 +222,11 @@ export default function ViewPager(props: { pages: Page[] }) {
 			<IconButton className={`${classes.arrowBtn} previous`} onClick={handleClickPrev}>
 				<ArrowBackIcon />
 			</IconButton>
-			<div className={classes.pagesContainer} ref={containerRef}>
+			<div
+				className={classes.pagesContainer}
+				ref={containerRef}
+				style={{ width: containerRef.current ? containerRef.current.offsetHeight / 0.5625 : 0 }}
+			>
 				{springs.map(({ x, display }, i) => (
 					<animated.div className={classes.page} {...bind()} key={i} style={{ display, x }}>
 						<animated.div
@@ -321,7 +324,11 @@ export function ViewPager_finite_scroll(props: { pages: Page[] }) {
 			<IconButton className={`${classes.arrowBtn} previous`} onClick={handleClickPrev}>
 				<ArrowBackIcon />
 			</IconButton>
-			<div className={classes.pagesContainer} ref={containerRef}>
+			<div
+				className={classes.pagesContainer}
+				ref={containerRef}
+				style={{ width: containerRef.current ? containerRef.current.offsetHeight / 0.5625 : 0 }}
+			>
 				{springs.map(({ x, display }, i) => (
 					<animated.div className={classes.page} {...bind()} key={i} style={{ display, x }}>
 						<animated.div
