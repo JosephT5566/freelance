@@ -29,7 +29,7 @@ const useStyle = makeStyles((theme) => ({
 		},
 		[theme.breakpoints.down('sm')]: {
 			width: '100%',
-			aspectRatio: '3 / 4',
+			paddingTop: '133.33%',
 		},
 	},
 	title: {
