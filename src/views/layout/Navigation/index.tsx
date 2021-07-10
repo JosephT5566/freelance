@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { CurrentIndexStore } from './Context';
+import { IndexProvider } from './IndexProvider';
 import useLocation from '../../../hooks/useLocation';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -17,7 +17,6 @@ const useStyle = makeStyles((theme) => ({
 	navigation_lg: {
 		position: 'fixed',
 		display: 'flex',
-		zIndex: '100',
 		width: '100%',
 
 		top: '0.5em',
@@ -68,7 +67,8 @@ const useStyle = makeStyles((theme) => ({
 	},
 }));
 
-const Items = ({ btnClicked }) => {
+const Items = (props: { btnClicked?: any }) => {
+	const { btnClicked = null } = props;
 	const router = useRouter();
 	const [snackbarProps, setSnackbarProps] = useState(defaultSnackbarProps);
 	const url = useLocation();
@@ -88,7 +88,7 @@ const Items = ({ btnClicked }) => {
 	};
 
 	return (
-		<CurrentIndexStore>
+		<IndexProvider>
 			<Button
 				index={1}
 				onClick={() => {
@@ -108,7 +108,7 @@ const Items = ({ btnClicked }) => {
 				Contact me
 			</Button>
 			<Snackbar snackbarProps={snackbarProps} onClose={handleCloseSnackbar} />
-		</CurrentIndexStore>
+		</IndexProvider>
 	);
 };
 
