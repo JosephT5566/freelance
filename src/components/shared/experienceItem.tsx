@@ -30,13 +30,11 @@ export default function ExperienceItem(props: { year: string; description: strin
 	const classes = useStyle();
 
 	return (
-		<section className={classes.experienceItem}>
+		<article className={classes.experienceItem}>
 			<h1 className={'year'}>{year}</h1>
-			<article>
-				<Typography className={'content'} variant="body1">
-					{description}
-				</Typography>
-			</article>
-		</section>
+			<Typography className={'content'} variant="body1">
+				{description}
+			</Typography>
+		</article>
 	);
 }
