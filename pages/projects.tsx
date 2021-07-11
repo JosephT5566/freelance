@@ -4,6 +4,7 @@ import { HorizontalScroll_trans } from '../src/components/shared/horizontalScrol
 
 import Head from 'next/head';
 import Project from '../src/views/payload/project';
+import { APP_NAME } from '../src/utils/static';
 
 const useStyle = makeStyles((theme) => ({
 	projectPage: {
@@ -17,7 +18,7 @@ export default function Projects() {
 	return (
 		<div className={classes.projectPage}>
 			<Head>
-				<title>Projects</title>
+				<title>{`Projects - ${APP_NAME}`}</title>
 			</Head>
 			<HorizontalScroll_trans>
 				<Project
