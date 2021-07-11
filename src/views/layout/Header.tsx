@@ -5,18 +5,15 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyle = makeStyles((theme) => ({
 	header: {
-		position: 'sticky',
-		top: '0',
-		alignItems: 'center',
 		height: '0',
 		width: '100%',
 		backgroundColor: 'transparent',
-		zIndex: theme.zIndex.appBar + 1,
 	},
 	a: {
-		position: 'absolute',
+		position: 'fixed',
 		top: '1.5rem',
 		left: '2rem',
+		zIndex: theme.zIndex.speedDial,
 		textDecoration: 'none',
 		fontFamily: theme.typography.h1.fontFamily,
 		fontSize: '1.5rem',

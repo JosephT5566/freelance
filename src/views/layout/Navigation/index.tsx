@@ -30,7 +30,7 @@ const useStyle = makeStyles((theme) => ({
 	navigation_md: {
 		position: 'fixed',
 		display: 'flex',
-		zIndex: theme.zIndex.appBar,
+		zIndex: theme.zIndex.drawer,
 
 		right: `-${theme.typography.navWidth}`,
 		height: '100vh',
