@@ -4,7 +4,7 @@ import { palette } from './palette';
 import { typography } from './typography';
 
 declare module '@material-ui/core/styles/createTypography' {
-	interface TypographyOptions {
+	interface Typography {
 		navWidth?: string;
 		headerHeight?: string;
 		tableHeadHeight?: string;
