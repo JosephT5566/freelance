@@ -16,16 +16,16 @@ import { debounce } from '../../../utils/helpers';
 const useStyle = makeStyles((theme) => ({
 	navigation_lg: {
 		position: 'fixed',
+		top: '0.5em',
 		display: 'flex',
 		width: '100%',
 
-		top: '0.5em',
+		zIndex: theme.zIndex.speedDial - 1,
 		padding: '1em 0',
 		transition: '0.6s',
 		'&.false': {
 			top: '-4.5em',
 		},
-		zIndex: theme.zIndex.appBar,
 	},
 	navigation_md: {
 		position: 'fixed',

@@ -19,8 +19,8 @@ function MyApp({ Component, pageProps }) {
 			<title>123</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
 			<ThemeProvider theme={theme}>
-				<Navigation />
 				<Header />
+				<Navigation />
 				<Component {...pageProps} />
 			</ThemeProvider>
 		</React.Fragment>
