@@ -47,7 +47,7 @@ const useStyle = makeStyles((theme) => ({
 export default function Experience() {
 	const classes = useStyle();
 	return (
-		<div className={classes.experiences}>
+		<section className={classes.experiences}>
 			<Typography variant="h1" className={classes.title}>
 				{'Experiences'}
 			</Typography>
@@ -92,6 +92,6 @@ export default function Experience() {
 				</PopupAnimate>
 				<Divider className={classes.divider} />
 			</div>
-		</div>
+		</section>
 	);
 }

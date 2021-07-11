@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CurrentIndexContext from './Context';
+import { useIndex, useUpdateIndex } from './IndexProvider';
 
 const useStyle = makeStyles((theme) => ({
 	button: {
@@ -15,7 +15,6 @@ const useStyle = makeStyles((theme) => ({
 		letterSpacing: '1px',
 		flexDirection: 'column',
 		minWidth: '6em',
-		fontWeight: 'bold',
 		fontFamily: theme.typography.h1.fontFamily,
 		fontSize: '1.5em',
 		fontWeight: 'normal',
@@ -65,6 +64,10 @@ const useStyle = makeStyles((theme) => ({
 			width: '90%',
 			background: theme.palette.primary.main,
 		},
+		'&:focus::after': {
+			width: '90%',
+			background: theme.palette.primary.main,
+		},
 		'&.active::after': {
 			width: '90%',
 		},
@@ -76,13 +79,14 @@ const useStyle = makeStyles((theme) => ({
 
 export default function Button({ index, onClick = null, children }) {
 	const classes = useStyle();
-	const currentIndexContext = useContext(CurrentIndexContext);
-	const active = index === currentIndexContext.currentIndex ? 'active' : '';
+	const currentIndex = useIndex();
+	const updateIndex = useUpdateIndex();
+	const active = index === currentIndex ? 'active' : '';
 	return (
 		<button
 			className={`${classes.button} ${active}`}
 			onClick={() => {
-				currentIndexContext.onIndexChange(index);
+				updateIndex(index);
 				if (onClick) onClick();
 			}}
 		>

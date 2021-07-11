@@ -33,12 +33,12 @@ const useStyle = makeStyles((theme) => ({
 export default function Interests() {
 	const classes = useStyle();
 	return (
-		<div className={classes.interests}>
+		<article className={classes.interests}>
 			<Typography variant="h1" className={classes.title}>
 				{'Interests'}
 			</Typography>
-			<div className={classes.description}>
-				<PopupAnimate>
+			<PopupAnimate>
+				<div className={classes.description}>
 					<Typography variant="body1">
 						{`
 							I like to take photos, just like the pictures in the album above.
@@ -59,8 +59,8 @@ export default function Interests() {
 							<Instagram className={classes.icon} />
 						</a>
 					</div>
-				</PopupAnimate>
-			</div>
-		</div>
+				</div>
+			</PopupAnimate>
+		</article>
 	);
 }

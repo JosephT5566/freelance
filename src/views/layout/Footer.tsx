@@ -52,7 +52,7 @@ export default function Footer() {
 	const classes = useStyle();
 
 	return (
-		<div className={classes.footer}>
+		<footer className={classes.footer}>
 			<Typography variant="body1">{'Elsewhere on the Internet'}</Typography>
 			<div className={classes.icons}>
 				<a href="https://www.behance.net/zxp9301107b6a" target="_blank" rel="noopener noreferrer">
@@ -74,6 +74,6 @@ export default function Footer() {
 			<Container className={classes.copyright}>
 				<div>{`© Design by Joseph v${process.env.NEXT_PUBLIC_VERSION}`}</div>
 			</Container>
-		</div>
+		</footer>
 	);
 }

@@ -5,28 +5,27 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyle = makeStyles((theme) => ({
 	header: {
-		position: 'sticky',
-		top: '0',
-		alignItems: 'center',
 		height: '0',
 		width: '100%',
 		backgroundColor: 'transparent',
-		zIndex: theme.zIndex.appBar + 1,
 	},
 	a: {
-		position: 'absolute',
-		top: '1.5em',
-		left: '2em',
+		position: 'fixed',
+		top: '1.5rem',
+		left: '2rem',
+		zIndex: theme.zIndex.speedDial,
 		textDecoration: 'none',
-	},
-	label: {
 		fontFamily: theme.typography.h1.fontFamily,
+		fontSize: '1.5rem',
 		fontWeight: 'normal',
 		color: theme.palette.text.primary,
 		transition: '0.5s',
 		'&:hover': {
-			color: theme.palette.primary.main,
 			color: theme.palette.secondary.main,
+		},
+		'&:focus': {
+			color: theme.palette.secondary.main,
+			outline: 'none',
 		},
 	},
 }));
@@ -34,13 +33,10 @@ const useStyle = makeStyles((theme) => ({
 export default function Header() {
 	const classes = useStyle();
 	return (
-		<div className={classes.header}>
+		<header className={classes.header}>
 			<a className={classes.a} href="/">
-				{/* <img src={'/mega_origin.png'} alt="mega_origin" /> */}
-				<Typography className={classes.label} variant="h3">
-					Joseph Tseng
-				</Typography>
+				Joseph Tseng
 			</a>
-		</div>
+		</header>
 	);
 }

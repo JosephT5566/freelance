@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { CurrentIndexStore } from './Context';
+import { IndexProvider } from './IndexProvider';
 import useLocation from '../../../hooks/useLocation';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -16,22 +16,21 @@ import { debounce } from '../../../utils/helpers';
 const useStyle = makeStyles((theme) => ({
 	navigation_lg: {
 		position: 'fixed',
+		top: '0.5em',
 		display: 'flex',
-		zIndex: '100',
 		width: '100%',
 
-		top: '0.5em',
+		zIndex: theme.zIndex.speedDial - 1,
 		padding: '1em 0',
 		transition: '0.6s',
 		'&.false': {
 			top: '-4.5em',
 		},
-		zIndex: theme.zIndex.appBar,
 	},
 	navigation_md: {
 		position: 'fixed',
 		display: 'flex',
-		zIndex: theme.zIndex.appBar,
+		zIndex: theme.zIndex.drawer,
 
 		right: `-${theme.typography.navWidth}`,
 		height: '100vh',
@@ -68,7 +67,8 @@ const useStyle = makeStyles((theme) => ({
 	},
 }));
 
-const Items = ({ btnClicked }) => {
+const Items = (props: { btnClicked?: any }) => {
+	const { btnClicked = null } = props;
 	const router = useRouter();
 	const [snackbarProps, setSnackbarProps] = useState(defaultSnackbarProps);
 	const url = useLocation();
@@ -88,7 +88,7 @@ const Items = ({ btnClicked }) => {
 	};
 
 	return (
-		<CurrentIndexStore>
+		<IndexProvider>
 			<Button
 				index={1}
 				onClick={() => {
@@ -108,7 +108,7 @@ const Items = ({ btnClicked }) => {
 				Contact me
 			</Button>
 			<Snackbar snackbarProps={snackbarProps} onClose={handleCloseSnackbar} />
-		</CurrentIndexStore>
+		</IndexProvider>
 	);
 };
 
