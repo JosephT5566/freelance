@@ -9,6 +9,7 @@ import Experiences from '../src/views/payload/experiences';
 import Album from '../src/views/payload/album';
 import Interests from '../src/views/payload/interests';
 import Footer from '../src/views/layout/Footer';
+import { APP_NAME } from '../src/utils/static';
 
 const useStyle = makeStyles((theme) => ({
 	home: {
@@ -24,7 +25,7 @@ export default function Home() {
 	return (
 		<div className={classes.home}>
 			<Head>
-				<title>This is Joseph</title>
+				<title>{APP_NAME}</title>
 			</Head>
 
 			<Cover />
