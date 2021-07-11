@@ -107,7 +107,7 @@ const useStyle = makeStyles((theme) => ({
 	},
 }));
 
-export default function Function(props: {
+export default function Project(props: {
 	title: string;
 	description?: string;
 	image?: string;
@@ -138,7 +138,7 @@ export default function Function(props: {
 				</div>
 			)}
 			{description && (
-				<>
+				<article>
 					<Typography className={classes.descriptionTitle} variant={'h2'}>
 						{'Description'}
 					</Typography>
@@ -150,7 +150,7 @@ export default function Function(props: {
 						</PopupAnimate>
 						<Divider />
 					</div>
-				</>
+				</article>
 			)}
 			{tools && (
 				<div className={classes.tools}>

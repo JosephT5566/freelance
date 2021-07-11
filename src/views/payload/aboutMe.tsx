@@ -59,22 +59,22 @@ const useStyle = makeStyles((theme) => ({
 export default function AboutMe() {
 	const classes = useStyle();
 	return (
-		<div className={classes.aboutme}>
+		<section className={classes.aboutme}>
 			<Typography variant="h1" className={classes.title}>
 				{'About Me'}
 			</Typography>
-			<div className={classes.description}>
+			<article className={classes.description}>
 				<Typography variant="body1">{'Hi, this is Joseph'}</Typography>
 				<Typography variant="body1">
 					{`
-						A front-end developer. I enjoy on interesting and meaningful projects, the development process is really fascinating.
-						I like to not just focus on code but also on quality. Try to design perfection and optimized UX/UI is always the main purpose,
+						A front-end developer. I enjoy interesting and meaningful projects, the development process is really fascinating.
+						I like to focus not just on code but also on quality. Try to design perfection and optimized UX/UI is always the primary purpose,
 						and I keep improving myself to achieve that.
-						I take my work seriously as I treat myself.
+						I always take my work seriously as I treat myself.
 					`}
 				</Typography>
-			</div>
+			</article>
 			<div className={classes.profileImage} style={{ backgroundImage: `url(/images/profile.jpg)` }}></div>
-		</div>
+		</section>
 	);
 }
