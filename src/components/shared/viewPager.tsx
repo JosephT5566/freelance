@@ -87,9 +87,9 @@ const useStyle = makeStyles((theme) => ({
 	},
 }));
 
-interface Page {
-	imageLink: string;
-	content?: string;
+export class PageType {
+	imageLink: string = '';
+	content: string = '';
 }
 
 const PageDots = (props: {
@@ -125,19 +125,26 @@ const PageDots = (props: {
 	);
 };
 
-const defaultPages = [{ imageLink: '', content: '' }];
+const defaultPages = new Array<PageType>();
 
 const useWidth = (ref: React.MutableRefObject<any>): number => {
 	const [width, setWidth] = useState(0);
 
+	const updateWidth = () => {
+		ref.current && setWidth(ref.current.clientWidth);
+	};
+
 	useEffect(() => {
-		return !!ref.current && setWidth(ref.current.clientWidth);
-	}, [ref.current?.clientWidth]);
+		updateWidth();
+		window.addEventListener('resize', updateWidth);
+
+		return () => window.removeEventListener('resize', updateWidth);
+	}, [updateWidth]);
 
 	return width;
 };
 
-export default function ViewPager(props: { pages: Page[] }) {
+export default function ViewPager(props: { pages: PageType[] }) {
 	const { pages = defaultPages } = props;
 	const classes = useStyle();
 	const [dotIndex, setDotIndex] = useState(0);
@@ -248,7 +255,7 @@ export default function ViewPager(props: { pages: Page[] }) {
 	);
 }
 
-export function ViewPager_finite_scroll(props: { pages: Page[] }) {
+export function ViewPager_finite_scroll(props: { pages: PageType[] }) {
 	const { pages = defaultPages } = props;
 	const classes = useStyle();
 	const [dotIndex, setDotIndex] = useState(0);
