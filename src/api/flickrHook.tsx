@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 // Api Doc
 // https://www.flickr.com/services/api/flickr.photosets.getPhotos.html
+// https://www.flickr.com/services/api/misc.urls.html
 
 const flickr_getPhotos_endpoint = 'https://www.flickr.com/services/rest/';
 const params = {
@@ -58,7 +59,7 @@ const setOriginToBig = (originData: FlickrData): FlickrData => {
 	const photos = originData.photoset.photo;
 	const newPhotos = photos.map((photo) => {
 		const stringLength = photo.url_o.length;
-		return { ...photo, url_o: replaceCharAt(photo.url_o, stringLength - 5, 'b') };
+		return { ...photo, url_o: replaceCharAt(photo.url_o, stringLength - 5, 'h') };
 	});
 
 	const newData = { ...originData, photoset: { ...originData.photoset, photo: newPhotos } };
