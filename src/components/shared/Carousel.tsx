@@ -133,10 +133,11 @@ export default function Carousel({ images: oriImages }: Props) {
 	useEffect(() => {
 		// Initial all params
 		const length = oriImages.length;
-		minEdge.current = 1;
+		minEdge.current = 2;
 		maxEdge.current = minEdge.current + length - 1;
 
-		setImages([oriImages[length - 1], ...oriImages, oriImages[0]]); // add two images
+		// add 2 images at start, and 2 at end
+		setImages([oriImages[length - 2], oriImages[length - 1], ...oriImages, oriImages[0], oriImages[1]]);
 		setIndex(minEdge.current);
 	}, [oriImages]);
 
@@ -166,7 +167,7 @@ export default function Carousel({ images: oriImages }: Props) {
 					x: -1 * (index * transDistance - bias),
 			  });
 
-    // update currentIndexRef
+		// update currentIndexRef
 		currentIndexRef.current = index;
 		isOverflow.current && (isOverflow.current = false);
 	}, [index, isViewLg]);
