@@ -15,7 +15,6 @@ const useStyle = makeStyles((theme) => ({
 		width: '100%',
 		height: '100%',
 		position: 'relative',
-		backgroundColor: theme.palette.background.paper,
 		overflow: 'hidden',
 	},
 	imagesContainer: {
@@ -26,54 +25,41 @@ const useStyle = makeStyles((theme) => ({
 		flexShrink: 0,
 		width: '360px',
 		height: '100%',
+		borderRadius: '0.5rem',
 		backgroundPosition: 'center',
 		backgroundSize: 'cover',
 	},
 	iconButton: {
-		width: '40px',
-		padding: 5,
+		color: theme.palette.primary.main,
 		position: 'absolute',
+		zIndex: 1,
 		top: '50%',
 		transform: 'translate(0, -50%)',
-		'& img': {
-			display: 'block',
-			width: '100%',
-		},
-		'&.left': {
-			left: '12px',
+		backgroundColor: 'white',
+		'&:hover': {
+			backgroundColor: theme.palette.secondary.main,
+			color: 'white',
 		},
 		'&.right': {
-			right: '12px',
+			right: '5%',
 		},
-		'&:focus': {
-			outline: 0,
+		'&.left': {
+			left: '5%',
 		},
 	},
 	navButtonsContainer: {
-		position: 'absolute',
+		width: '100%',
 		display: 'flex',
-		bottom: '40px',
+		justifyContent: 'center',
+		paddingBlock: '0.2em',
+		position: 'absolute',
+		bottom: '0',
 		left: '50%',
-		transform: 'translateX(-50%)',
-		[theme.breakpoints.down('xs')]: {
-			display: 'none',
-		},
+		transform: 'translate(-50%, 0)',
 	},
 	dotIcon: {
 		color: 'white',
-	},
-}));
-
-const StyledButton = styled('div')(({ theme }) => ({
-	width: '60px',
-	height: '6px',
-	marginRight: '10px',
-	backgroundColor: theme.palette.common.white,
-	'&.selected': {
-		backgroundColor: theme.palette.primary.main,
-	},
-	'&:hover': {
-		cursor: 'pointer',
+		marginInline: '0.2em',
 	},
 }));
 

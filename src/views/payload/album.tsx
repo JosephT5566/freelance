@@ -7,6 +7,7 @@ import Loading from '../../views/layout/Loading';
 import ErrorPage from '../../views/layout/Error';
 
 import { useFlickrGetPhotos } from '../../api/flickrHook';
+import Carousel from '../../components/shared/Carousel';
 
 const useStyle = makeStyles((theme) => ({
 	album: {
@@ -68,6 +69,16 @@ export default function Album() {
 				{photos ? (
 					<div className={classes.wrapper}>
 						<ViewPager pages={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
+					</div>
+				) : (
+					<Loading />
+				)}
+				{error && <ErrorPage err={error} />}
+			</div>
+			<div className={classes.outerWrapper}>
+				{photos ? (
+					<div className={classes.wrapper}>
+						<Carousel images={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
 					</div>
 				) : (
 					<Loading />

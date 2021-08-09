@@ -18,6 +18,38 @@ const params = {
 	nojsoncallback: '1',
 };
 
+interface FlickrPhoto {
+	farm: number;
+	height_o: number;
+	id: string;
+	isfamily: number;
+	isfriend: number;
+	isprimary: string;
+	ispublic: number;
+	secret: string;
+	server: string;
+	title: string;
+	url_o: string;
+	width_o: number;
+}
+
+interface FlickrData {
+	photoset: {
+		id: string;
+		owner: string;
+		ownername: string;
+		page: number;
+		pages: number;
+		per_page: string;
+		perpage: string;
+		photo: Array<FlickrPhoto>;
+		primary: string;
+		title: string; // album titel
+		total: number;
+	};
+	stat: string;
+}
+
 export const useFlickrGetPhotos = (config?: SWRConfiguration) => {
 	const url = new URL(flickr_getPhotos_endpoint);
 	Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]));
@@ -25,7 +57,7 @@ export const useFlickrGetPhotos = (config?: SWRConfiguration) => {
 	const { data, error } = useSWR(url.href, fetcher, config);
 
 	return {
-		photos: data,
+		photos: data as FlickrData,
 		error,
 	};
 };
