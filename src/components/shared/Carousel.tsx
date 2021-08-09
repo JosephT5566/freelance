@@ -1,7 +1,8 @@
 // credit: https://codesandbox.io/s/infinite-carousel-example-ifebt
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { makeStyles, styled } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -57,9 +58,12 @@ const useStyle = makeStyles((theme) => ({
 		left: '50%',
 		transform: 'translate(-50%, 0)',
 	},
+	navButton: {
+		padding: '0.2em',
+	},
 	dotIcon: {
 		color: 'white',
-		marginInline: '0.2em',
+		// marginInline: '0.2em',
 	},
 }));
 
@@ -67,10 +71,14 @@ const NavButton = (props: { isSelected: boolean; onClick: () => void }) => {
 	const { isSelected, onClick } = props;
 	const classes = useStyle();
 
-	return isSelected ? (
-		<FiberManualRecordIcon className={classes.dotIcon} fontSize="small" />
-	) : (
-		<FiberManualRecordOutlinedIcon className={classes.dotIcon} fontSize="small" />
+	return (
+		<IconButton className={classes.navButton} onClick={onClick}>
+			{isSelected ? (
+				<FiberManualRecordIcon className={classes.dotIcon} fontSize="small" />
+			) : (
+				<FiberManualRecordOutlinedIcon className={classes.dotIcon} fontSize="small" />
+			)}
+		</IconButton>
 	);
 };
 
@@ -85,7 +93,7 @@ export default function Carousel({ images: oriImages }: Props) {
 	const imagesContainerRef = useRef<HTMLDivElement>(null);
 	const viewPagerWidth = useWidth(viewPagerRef);
 
-	// we'll DOUBLE the images
+	// we'll ADD two images at first and last
 	const [images, setImages] = useState(oriImages);
 	// use state to rerender
 	const [index, setIndex] = useState(0);
@@ -96,6 +104,8 @@ export default function Carousel({ images: oriImages }: Props) {
 	const isTransiting = useRef(false);
 	const isOverflow = useRef(false);
 
+	const theme = useTheme();
+	const isViewLg = useMediaQuery(theme.breakpoints.up('md'));
 	const classes = useStyle();
 
 	const handleTransEnd = useCallback(() => {
@@ -114,7 +124,6 @@ export default function Carousel({ images: oriImages }: Props) {
 
 	useEffect(() => {
 		// Initial all params
-		console.log('oriImages', oriImages);
 		const length = oriImages.length;
 		minEdge.current = 1;
 		maxEdge.current = minEdge.current + length - 1;
@@ -160,9 +169,14 @@ export default function Carousel({ images: oriImages }: Props) {
 		setIndex((prev) => prev - 1);
 	};
 
+	const marginInline = isViewLg ? 12 : viewPagerWidth * 0.02;
+	const imageWidth = isViewLg ? (45 * 15.7) / 0.5625 : viewPagerWidth * 0.98;
+	const transDistance = imageWidth + marginInline * 2;
+	const bias = (viewPagerWidth - transDistance) / 2;
 	const style = {
-		transition: isOverflow.current ? 'none' : '0.2s',
-		transform: `translateX(-${index * viewPagerWidth}px)`,
+		transition: isOverflow.current ? 'none' : '0.5s',
+		// translateX can't larger then 0
+		transform: `translateX(-${index * transDistance - bias < 0 ? 0 : index * transDistance - bias}px)`,
 	};
 
 	return (
@@ -172,7 +186,8 @@ export default function Carousel({ images: oriImages }: Props) {
 					<div
 						className={`${classes.imageCard}`}
 						style={{
-							width: viewPagerWidth,
+							width: imageWidth,
+							marginInline: marginInline,
 							backgroundImage: `url(${image.imageLink})`,
 						}}
 						key={key}

@@ -24,7 +24,7 @@ const useStyle = makeStyles((theme) => ({
 		width: '100%',
 		position: 'relative',
 		[theme.breakpoints.up('md')]: {
-			height: '45em',
+			height: '45rem',
 		},
 		[theme.breakpoints.down('sm')]: {
 			paddingTop: '56.25%',
@@ -64,16 +64,6 @@ export default function Album() {
 		<div className={classes.album}>
 			<div className={classes.title}>
 				<Typography variant="h1">{'Album'}</Typography>
-			</div>
-			<div className={classes.outerWrapper}>
-				{photos ? (
-					<div className={classes.wrapper}>
-						<ViewPager pages={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
-					</div>
-				) : (
-					<Loading />
-				)}
-				{error && <ErrorPage err={error} />}
 			</div>
 			<div className={classes.outerWrapper}>
 				{photos ? (

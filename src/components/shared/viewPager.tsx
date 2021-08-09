@@ -89,7 +89,7 @@ const useStyle = makeStyles((theme) => ({
 
 export class PageType {
 	imageLink: string = '';
-	content: string = '';
+	content?: string = '';
 }
 
 const PageDots = (props: {
