@@ -1,6 +1,7 @@
 // credit: https://codesandbox.io/s/infinite-carousel-example-ifebt
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { animated, useSpring } from 'react-spring';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import IconButton from '@material-ui/core/IconButton';
@@ -104,23 +105,30 @@ export default function Carousel({ images: oriImages }: Props) {
 	const isTransiting = useRef(false);
 	const isOverflow = useRef(false);
 
+	const [position, api] = useSpring(() => ({
+		x: 0,
+		config: { duration: 200 },
+		onStart: () => {
+			isTransiting.current = true;
+		},
+		onRest: () => {
+			isTransiting.current = false;
+			if (currentIndexRef.current > maxEdge.current) {
+				// console.log('max overflow');
+				isOverflow.current = true;
+				setIndex(minEdge.current);
+			}
+
+			if (currentIndexRef.current < minEdge.current) {
+				// console.log('min overflow');
+				isOverflow.current = true;
+				setIndex(maxEdge.current);
+			}
+		},
+	}));
 	const theme = useTheme();
 	const isViewLg = useMediaQuery(theme.breakpoints.up('md'));
 	const classes = useStyle();
-
-	const handleTransEnd = useCallback(() => {
-		isTransiting.current = false;
-
-		if (currentIndexRef.current > maxEdge.current) {
-			isOverflow.current = true;
-			setIndex(minEdge.current);
-		}
-
-		if (currentIndexRef.current < minEdge.current) {
-			isOverflow.current = true;
-			setIndex(maxEdge.current);
-		}
-	}, []);
 
 	useEffect(() => {
 		// Initial all params
@@ -133,27 +141,35 @@ export default function Carousel({ images: oriImages }: Props) {
 	}, [oriImages]);
 
 	useEffect(() => {
-		const handleTransRun = () => {
-			isTransiting.current = true;
-		};
-
-		imagesContainerRef.current?.addEventListener('transitionend', handleTransEnd);
-		imagesContainerRef.current?.addEventListener('transitionrun', handleTransRun);
 		const autoScrollId = setInterval(() => {
 			setIndex((prev) => prev + 1);
 		}, AUTO_SCROLL_TIMER);
 
 		return () => {
-			imagesContainerRef.current?.removeEventListener('transitionend', handleTransEnd);
-			imagesContainerRef.current?.addEventListener('transitionrun', handleTransRun);
 			clearInterval(autoScrollId);
 		};
 	}, []);
 
+	const marginInline = isViewLg ? 12 : viewPagerWidth * 0.02;
+	const imageWidth = isViewLg ? (45 * 15.7) / 0.5625 : viewPagerWidth * 0.98;
+
 	useEffect(() => {
+		const transDistance = imageWidth + marginInline * 2;
+		const bias = (viewPagerWidth - transDistance) / 2;
+		// translateX can't larger then 0 (but that's ok in react-spring)
+		isOverflow.current
+			? api.start({
+					x: -1 * (index * transDistance - bias),
+					immediate: true,
+			  })
+			: api.start({
+					x: -1 * (index * transDistance - bias),
+			  });
+
+    // update currentIndexRef
 		currentIndexRef.current = index;
 		isOverflow.current && (isOverflow.current = false);
-	}, [index]);
+	}, [index, isViewLg]);
 
 	const handleNext = () => {
 		if (isTransiting.current) {
@@ -169,19 +185,9 @@ export default function Carousel({ images: oriImages }: Props) {
 		setIndex((prev) => prev - 1);
 	};
 
-	const marginInline = isViewLg ? 12 : viewPagerWidth * 0.02;
-	const imageWidth = isViewLg ? (45 * 15.7) / 0.5625 : viewPagerWidth * 0.98;
-	const transDistance = imageWidth + marginInline * 2;
-	const bias = (viewPagerWidth - transDistance) / 2;
-	const style = {
-		transition: isOverflow.current ? 'none' : '0.5s',
-		// translateX can't larger then 0
-		transform: `translateX(-${index * transDistance - bias < 0 ? 0 : index * transDistance - bias}px)`,
-	};
-
 	return (
 		<div ref={viewPagerRef} className={classes.carousel}>
-			<div ref={imagesContainerRef} className={classes.imagesContainer} style={style}>
+			<animated.div ref={imagesContainerRef} className={classes.imagesContainer} style={position}>
 				{images.map((image, key) => (
 					<div
 						className={`${classes.imageCard}`}
@@ -193,7 +199,7 @@ export default function Carousel({ images: oriImages }: Props) {
 						key={key}
 					></div>
 				))}
-			</div>
+			</animated.div>
 			<div className={classes.navButtonsContainer}>
 				{oriImages.map((_, key) => {
 					return (
