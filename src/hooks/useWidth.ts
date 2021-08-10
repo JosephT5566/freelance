@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useWidth = (ref: React.MutableRefObject<any>): number => {
+const useWidth = (ref: React.MutableRefObject<any>, deps?: Array<any>): number => {
 	const [width, setWidth] = useState(0);
 
 	const updateWidth = () => {
@@ -12,7 +12,7 @@ const useWidth = (ref: React.MutableRefObject<any>): number => {
 		window.addEventListener('resize', updateWidth);
 
 		return () => window.removeEventListener('resize', updateWidth);
-	}, []);
+	}, deps);
 
 	return width;
 };
