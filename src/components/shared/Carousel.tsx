@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { animated, useSpring } from 'react-spring';
+import { useDrag } from 'react-use-gesture';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,6 +23,7 @@ const useStyle = makeStyles((theme) => ({
 	imagesContainer: {
 		display: 'inline-flex',
 		height: '100%',
+		touchAction: 'none',
 	},
 	imageCard: {
 		flexShrink: 0,
@@ -100,19 +102,25 @@ export default function Carousel({ images: oriImages }: Props) {
 	const [index, setIndex] = useState(0);
 	// same as index, but use this to check index and prevent from rerender
 	const currentIndexRef = useRef(0);
+	const currentPosition = useRef(0);
 	const minEdge = useRef(0);
 	const maxEdge = useRef(0);
 	const isTransiting = useRef(false);
 	const isOverflow = useRef(false);
 
+	const theme = useTheme();
+	const isViewLg = useMediaQuery(theme.breakpoints.up('md'));
+	const classes = useStyle();
 	const [position, api] = useSpring(() => ({
 		x: 0,
+		cursor: 'grab',
 		config: { duration: 200 },
 		onStart: () => {
 			isTransiting.current = true;
 		},
 		onRest: () => {
 			isTransiting.current = false;
+			api.set({ cursor: 'grab' });
 			if (currentIndexRef.current > maxEdge.current) {
 				// console.log('max overflow');
 				isOverflow.current = true;
@@ -126,9 +134,16 @@ export default function Carousel({ images: oriImages }: Props) {
 			}
 		},
 	}));
-	const theme = useTheme();
-	const isViewLg = useMediaQuery(theme.breakpoints.up('md'));
-	const classes = useStyle();
+	const bindPos = useDrag((params) => {
+		if (params.active && params.distance > viewPagerWidth / 3) {
+			params.cancel();
+			params.direction[0] > 0 ? setIndex((prev) => prev - 1) : setIndex((prev) => prev + 1);
+		}
+		api.set({ cursor: 'grabbing' });
+		api.start({
+			x: currentPosition.current + (params.active ? params.movement[0] : 0),
+		});
+	});
 
 	useEffect(() => {
 		// Initial all params
@@ -157,14 +172,15 @@ export default function Carousel({ images: oriImages }: Props) {
 	useEffect(() => {
 		const transDistance = imageWidth + marginInline * 2;
 		const bias = (viewPagerWidth - transDistance) / 2;
+		currentPosition.current = -(index * transDistance - bias);
 		// translateX can't larger then 0 (but that's ok in react-spring)
 		isOverflow.current
 			? api.start({
-					x: -1 * (index * transDistance - bias),
+					x: currentPosition.current,
 					immediate: true,
 			  })
 			: api.start({
-					x: -1 * (index * transDistance - bias),
+					x: currentPosition.current,
 			  });
 
 		// update currentIndexRef
@@ -188,7 +204,7 @@ export default function Carousel({ images: oriImages }: Props) {
 
 	return (
 		<div ref={viewPagerRef} className={classes.carousel}>
-			<animated.div ref={imagesContainerRef} className={classes.imagesContainer} style={position}>
+			<animated.div ref={imagesContainerRef} {...bindPos()} className={classes.imagesContainer} style={position}>
 				{images.map((image, key) => (
 					<div
 						className={`${classes.imageCard}`}
