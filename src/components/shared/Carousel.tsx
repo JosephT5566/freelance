@@ -175,9 +175,9 @@ export default function Carousel({ images: oriImages }: Props) {
 		currentPosition.current = -(index * transDistance - bias);
 		// translateX can't larger then 0 (but that's ok in react-spring)
 		isOverflow.current
-			? api.start({
+			? api.set({
+					// update state without animating
 					x: currentPosition.current,
-					immediate: true,
 			  })
 			: api.start({
 					x: currentPosition.current,
