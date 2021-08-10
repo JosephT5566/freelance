@@ -7,6 +7,7 @@ import Loading from '../../views/layout/Loading';
 import ErrorPage from '../../views/layout/Error';
 
 import { useFlickrGetPhotos } from '../../api/flickrHook';
+import Carousel from '../../components/shared/Carousel';
 
 const useStyle = makeStyles((theme) => ({
 	album: {
@@ -23,7 +24,7 @@ const useStyle = makeStyles((theme) => ({
 		width: '100%',
 		position: 'relative',
 		[theme.breakpoints.up('md')]: {
-			height: '45em',
+			height: '45rem',
 		},
 		[theme.breakpoints.down('sm')]: {
 			paddingTop: '56.25%',
@@ -67,7 +68,7 @@ export default function Album() {
 			<div className={classes.outerWrapper}>
 				{photos ? (
 					<div className={classes.wrapper}>
-						<ViewPager pages={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
+						<Carousel images={photos.photoset.photo.map((photo) => ({ imageLink: photo.url_o }))} />
 					</div>
 				) : (
 					<Loading />
