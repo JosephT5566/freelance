@@ -23,14 +23,14 @@ export default function Projects() {
 			<HorizontalScroll_trans>
 				<Project
 					title={'Megaport selector'}
-					image={'https://i.imgur.com/OgYq1S8.png'}
+					image={'https://i.imgur.com/MKtF24C.png'}
 					description={`
-						A performance selector for 2021 Megaport Festival.
+						A performance selector for Megaport Festival.
 						There are lots of shows in the two days, so I design a website
 						to make scheduling easier. And people may participate the party with only mobile device,
 						so RWD is required.
 					`}
-					url={'https://josepht5566.github.io/musicFest'}
+					url={'https://musicfest.josephtseng-tw.com'}
 					tools={['RWD web', 'React js', 'Gh-pages']}
 				/>
 				<Project title={'Next'} />
