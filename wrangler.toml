@@ -1,5 +1,5 @@
 name = "freelance"
-main = "workers-site",
+main = "workers-site"
 compatibility_date = "2023-03-30"
 type = 'webpack'
 account_id = '1f7783c7c3c593ab98bad669c80ae933'
