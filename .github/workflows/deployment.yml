@@ -40,3 +40,4 @@ jobs:
               with:
                   apiToken: ${{ secrets.CF_API_TOKEN }}
                   preCommands: npm install
+                  command: publish
