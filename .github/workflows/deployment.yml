@@ -19,7 +19,7 @@ jobs:
             # https://github.com/marketplace/actions/version-check
             # the pushed commit message should contain version number (like <WHATEVER 1.2.3>) and MATCHS `package.json`, outputs will be set then.
             - name: Check package version
-              uses: EndBug/version-check@v1
+              uses: EndBug/version-check@v2
               id: check
 
             - name: Get Package Version
