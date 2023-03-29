@@ -31,7 +31,7 @@ jobs:
               run: 'echo "No version change :/"'
 
             - name: Build If Version Changed
-              if: steps.check.outputs.changed == 'true'
+              # if: steps.check.outputs.changed == 'true'
               run: |-
                   yarn install && yarn build && yarn export
 
