@@ -91,6 +91,17 @@ export default function Experience() {
 					/>
 				</PopupAnimate>
 				<Divider className={classes.divider} />
+				<PopupAnimate>
+					<ExperienceItem
+						year={'2022'}
+						description={`
+							Joining Houzz in May. It presents a significant challenge for me, as it is not only a foreign company but also a global one.
+							As such, I will need to learn how to effectively collaborate with colleagues and teams from diverse backgrounds. 
+							I am eager to take on this challenge and look forward to gaining valuable experience and skills as a result.
+						`}
+					/>
+				</PopupAnimate>
+				<Divider className={classes.divider} />
 			</div>
 		</section>
 	);
