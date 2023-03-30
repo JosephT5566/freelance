@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { IndexProvider } from './IndexProvider';
 import useLocation from '../../../hooks/useLocation';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from 'tss-react/mui';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Button from './Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
 import Snackbar, { defaultSnackbarProps } from '../../../components/shared/snackbar';
 
 import { debounce } from '../../../utils/helpers';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	navigation_lg: {
 		position: 'fixed',
 		top: '0.5em',
@@ -113,7 +114,7 @@ const Items = (props: { btnClicked?: any }) => {
 };
 
 const NavigatorLg = () => {
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	const [prevScrollPos, setPrevScrollPos] = useState(0);
 	const [visible, setVisible] = useState(true);
@@ -148,7 +149,7 @@ const NavigatorLg = () => {
 };
 
 const NavigatorMd = () => {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const [visible, setVisible] = useState(false);
 
 	const handleClick = () => {

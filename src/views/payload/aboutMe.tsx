@@ -1,9 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	aboutme: {
 		width: '100%',
 		overflow: 'hidden',
@@ -57,7 +57,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function AboutMe() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	return (
 		<section className={classes.aboutme}>
 			<Typography variant="h1" className={classes.title}>

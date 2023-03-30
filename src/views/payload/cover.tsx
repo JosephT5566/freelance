@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import Sphere from './sphere';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	cover: {
 		display: 'flex',
 		position: 'relative',
@@ -32,7 +32,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Cover() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	return (
 		<div className={classes.cover} style={{ backgroundImage: `url(/cover.jpg)` }}>
 			<div className={classes.text}>

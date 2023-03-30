@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { fetcher } from '../utils/fetcher';
-import { SWRConfiguration } from 'swr/dist/types';
+import type { SWRConfiguration } from 'swr'
 import { useEffect } from 'react';
 
 // Api Doc

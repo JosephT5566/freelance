@@ -1,12 +1,13 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from 'tss-react/mui';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import PopupAnimate from '../../components/shared/popupAnimate';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	project: {
 		[theme.breakpoints.up('md')]: {
 			width: '100vw',
@@ -115,7 +116,7 @@ export default function Project(props: {
 	tools?: string[];
 }) {
 	const { title, description, image, url, tools } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const theme = useTheme();
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
 

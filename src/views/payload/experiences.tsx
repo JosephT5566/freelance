@@ -1,12 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import ExperienceItem from '../../components/shared/experienceItem';
 import PopupAnimate from '../../components/shared/popupAnimate';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	experiences: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -45,7 +45,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Experience() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	return (
 		<section className={classes.experiences}>
 			<Typography variant="h1" className={classes.title}>

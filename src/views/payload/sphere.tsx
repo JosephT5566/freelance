@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import { useEffect } from 'react';
 import * as THREE from 'three';
 import { GUI } from 'dat.gui';
 
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles()(() => ({
 	sphere: {
 		position: 'absolute',
 		top: 0,
@@ -201,7 +201,7 @@ const fragmentShader = `
 `;
 
 export default function Sphere() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const canvasRef = useRef(null);
 
 	const settings = {
