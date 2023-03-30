@@ -15,7 +15,6 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.15",
-    "@mui/styles": "^5.11.13",
     "@react-spring/web": "^9.7.1",
     "@svgr/webpack": "^5.5.0",
     "@types/dat.gui": "^0.7.6",

@@ -1,7 +1,6 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
-import { ServerStyleSheets } from '@mui/styles';
 import { getInitColorSchemeScript } from '@mui/material/styles';
 import theme from '../styles/theme';
 import createEmotionCache from '../src/createEmotionCache';
@@ -50,7 +49,6 @@ export default class MyDocument extends Document {
 
 	static async getInitialProps(ctx) {
 		// Render app and page and get the context of the page with collected side effects.
-		const sheets = new ServerStyleSheets();
 		const originalRenderPage = ctx.renderPage;
 
 		// You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
@@ -60,7 +58,7 @@ export default class MyDocument extends Document {
 
 		ctx.renderPage = () =>
 			originalRenderPage({
-				enhanceApp: (App) => (props) => sheets.collect(<App emotionCache={cache} {...props} />),
+				enhanceApp: (App) => (props) => <App emotionCache={cache} {...props} />,
 			});
 
 		const initialProps = await Document.getInitialProps(ctx);
@@ -78,23 +76,9 @@ export default class MyDocument extends Document {
 			/>
 		));
 
-		// Generate the css string for the styles coming from jss
-		let css = sheets.toString();
-
 		return {
 			...initialProps,
-			// Styles fragment is rendered after the app and page rendering finish.
-			styles: [
-				...emotionStyleTags,
-				<style
-					id="jss-server-side"
-					key="jss-server-side"
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: css }}
-				/>,
-				...React.Children.toArray(initialProps.styles),
-				sheets.getStyleElement(),
-			],
+			emotionStyleTags,
 		};
 	}
 }
