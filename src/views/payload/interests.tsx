@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import PopupAnimate from '../../components/shared/popupAnimate';
 import Instagram from '../../../public/icons/instagram.svg';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	interests: {
 		width: '100%',
 		height: '100vh',
@@ -31,7 +31,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Interests() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	return (
 		<article className={classes.interests}>
 			<Typography variant="h1" className={classes.title}>

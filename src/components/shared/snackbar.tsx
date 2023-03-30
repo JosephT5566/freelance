@@ -1,10 +1,10 @@
-import MaterialSnackbar from '@material-ui/core/Snackbar';
-import Slide from '@material-ui/core/Slide';
-import WarningIcon from '@material-ui/icons/Error';
-import CheckIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Cancel';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import MaterialSnackbar from '@mui/material/Snackbar';
+import Slide from '@mui/material/Slide';
+import WarningIcon from '@mui/icons-material/Error';
+import CheckIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Cancel';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from 'tss-react/mui';
 
 interface SnackbarType {
 	__typename: 'Snackbar';
@@ -22,7 +22,7 @@ export const defaultSnackbarProps: SnackbarType = {
 	severity: 'success',
 };
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	snackbar: {},
 	content: {
 		borderRadius: '1em',
@@ -49,7 +49,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Snackbar(props: { snackbarProps: SnackbarType; onClose: any }) {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const { snackbarProps, onClose } = props;
 
 	const Icon = () => {

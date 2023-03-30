@@ -1,9 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	header: {
 		height: '0',
 		width: '100%',
@@ -31,7 +31,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Header() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	return (
 		<header className={classes.header}>
 			<a className={classes.a} href="/">

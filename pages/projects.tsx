@@ -1,19 +1,19 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import { HorizontalScroll_trans } from '../src/components/shared/horizontalScroll';
 
 import Head from 'next/head';
 import Project from '../src/views/payload/project';
 import { APP_NAME } from '../src/utils/static';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	projectPage: {
 		backgroundColor: theme.palette.background.default,
 	},
 }));
 
 export default function Projects() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	return (
 		<div className={classes.projectPage}>

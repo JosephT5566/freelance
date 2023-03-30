@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import { useIndex, useUpdateIndex } from './IndexProvider';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	button: {
 		display: 'flex',
 		position: 'relative',
@@ -78,7 +78,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Button({ index, onClick = null, children }) {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const currentIndex = useIndex();
 	const updateIndex = useUpdateIndex();
 	const active = index === currentIndex ? 'active' : '';

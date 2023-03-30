@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useCallback, ReactNode } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from 'tss-react/mui';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSpring, animated } from '@react-spring/web';
 import _ from 'lodash';
 import useWidth from '../../hooks/useWidth';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	outerWrapper_trans: {
 		position: 'fixed',
 		left: '0',
@@ -73,7 +74,7 @@ const useStyle = makeStyles((theme) => ({
 // *** NOTICE: The SIZE of children should be set, like (width: '100vw', height: '100vh') ***
 export function HorizontalScroll_trans(props: { children: ReactNode }) {
 	const { children } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const theme = useTheme();
 
 	// get the width of wrappers
@@ -180,7 +181,7 @@ export function HorizontalScroll_trans(props: { children: ReactNode }) {
 // *** NOTICE: The SIZE of children should be set, like (width: '100vw', height: '100vh') ***
 export function HorizontalScroll_rotate(props: { children: ReactNode }) {
 	const { children } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	return (
 		<div className={classes.outerWrapper_rotate}>

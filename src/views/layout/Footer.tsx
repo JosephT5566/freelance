@@ -1,15 +1,15 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import Behance from '../../../public/icons/behance.svg';
 import Flickr from '../../../public/icons/flickr.svg';
 import Github from '../../../public/icons/github.svg';
 import Instagram from '../../../public/icons/instagram.svg';
 import Linkedin from '../../../public/icons/linkedin.svg';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	footer: {
 		width: '100%',
 		height: '10rem',
@@ -49,7 +49,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Footer() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	return (
 		<footer className={classes.footer}>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import ViewPager from '../../components/shared/viewPager';
 import Loading from '../../views/layout/Loading';
 import ErrorPage from '../../views/layout/Error';
@@ -9,7 +9,7 @@ import ErrorPage from '../../views/layout/Error';
 import { useFlickrGetPhotos } from '../../api/flickrHook';
 import Carousel from '../../components/shared/Carousel';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	album: {
 		width: '100%',
 		marginBottom: '3em',
@@ -55,7 +55,7 @@ const developPages = [
 ];
 
 export default function Album() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const { photos, error } = useFlickrGetPhotos({
 		revalidateOnFocus: false,
 	});

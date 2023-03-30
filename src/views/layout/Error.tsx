@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import { makeStyles } from 'tss-react/mui';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles()(() => ({
 	errorPage: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -14,7 +14,7 @@ const useStyle = makeStyles(() => ({
 
 export default function ErrorPage(props: { err: Error }) {
 	const { err } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	console.log(err);
 	return (

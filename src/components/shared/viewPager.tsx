@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSprings, animated } from '@react-spring/web';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import { useDrag } from 'react-use-gesture';
 import _ from 'lodash';
 
-import IconButton from '@material-ui/core/IconButton';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
+import IconButton from '@mui/material/IconButton';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	viewPager: {
 		position: 'relative',
 		width: '100%',
@@ -100,7 +100,7 @@ const PageDots = (props: {
 	action: any;
 }) => {
 	const { pages, index, setIndex, pageIndexRef, action } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	return (
 		<div className={classes.pageDots}>
@@ -146,7 +146,7 @@ const useWidth = (ref: React.MutableRefObject<any>): number => {
 
 export default function ViewPager(props: { pages: PageType[] }) {
 	const { pages = defaultPages } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const [dotIndex, setDotIndex] = useState(0);
 	const pageIndexRef = useRef(0);
 	const containerRef = useRef(null);
@@ -257,7 +257,7 @@ export default function ViewPager(props: { pages: PageType[] }) {
 
 export function ViewPager_finite_scroll(props: { pages: PageType[] }) {
 	const { pages = defaultPages } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const [dotIndex, setDotIndex] = useState(0);
 	const pageIndexRef = useRef(0);
 	const containerRef = useRef(null);

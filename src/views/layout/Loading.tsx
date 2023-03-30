@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from 'tss-react/mui';
+import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
 
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles()(() => ({
 	loading: {
 		display: 'flex',
 		justifyContent: 'center',
@@ -13,7 +13,7 @@ const useStyle = makeStyles(() => ({
 }));
 
 export default function Loading() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	return (
 		<Container className={classes.loading}>

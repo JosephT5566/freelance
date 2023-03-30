@@ -1,9 +1,9 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
 import { palette } from './palette';
 import { typography } from './typography';
 
-declare module '@material-ui/core/styles/createTypography' {
+declare module '@mui/material/styles/createTypography' {
 	interface Typography {
 		navWidth?: string;
 		headerHeight?: string;

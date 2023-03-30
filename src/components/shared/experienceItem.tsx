@@ -1,9 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	experienceItem: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(2, 1fr)',
@@ -27,7 +27,7 @@ const useStyle = makeStyles((theme) => ({
 
 export default function ExperienceItem(props: { year: string; description: string }) {
 	const { year, description } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	return (
 		<article className={classes.experienceItem}>

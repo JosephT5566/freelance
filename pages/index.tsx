@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import Interests from '../src/views/payload/interests';
 import Footer from '../src/views/layout/Footer';
 import { APP_NAME } from '../src/utils/static';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	home: {
 		width: '100%',
 		backgroundColor: theme.palette.background.default,
@@ -19,7 +19,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function Home() {
-	const classes = useStyle();
+	const { classes } = useStyle();
 	console.log(`${process.env.NEXT_PUBLIC_NAME} v${process.env.NEXT_PUBLIC_VERSION}`);
 
 	return (

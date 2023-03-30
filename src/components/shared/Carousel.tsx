@@ -1,19 +1,20 @@
 // credit: https://codesandbox.io/s/infinite-carousel-example-ifebt
 
 import React, { useState, useEffect, useRef } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from 'react-use-gesture';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
+import { makeStyles } from 'tss-react/mui';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import IconButton from '@mui/material/IconButton';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
 
 import useWidth from '../../hooks/useWidth';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles()((theme) => ({
 	carousel: {
 		width: '100%',
 		height: '100%',
@@ -72,7 +73,7 @@ const useStyle = makeStyles((theme) => ({
 
 const NavButton = (props: { isSelected: boolean; onClick: () => void }) => {
 	const { isSelected, onClick } = props;
-	const classes = useStyle();
+	const { classes } = useStyle();
 
 	return (
 		<IconButton className={classes.navButton} onClick={onClick}>
@@ -110,7 +111,7 @@ export default function Carousel({ images: oriImages }: Props) {
 
 	const theme = useTheme();
 	const isViewLg = useMediaQuery(theme.breakpoints.up('md'));
-	const classes = useStyle();
+	const { classes } = useStyle();
 	const [position, api] = useSpring(() => ({
 		x: 0,
 		cursor: 'grab',
