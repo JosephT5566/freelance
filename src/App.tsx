@@ -10,7 +10,7 @@ import Interests from './views/payload/interests';
 import Footer from './views/layout/Footer';
 import Project from './views/payload/project';
 import { HorizontalScroll_trans } from './components/shared/horizontalScroll';
-import { APP_NAME } from './utils/static';
+import { APP_NAME, SITE_DESCRIPTION, SITE_URL } from './utils/static';
 
 const useStyle = makeStyles()((theme) => ({
 	page: {
@@ -25,8 +25,8 @@ function Home() {
 			<Cover />
 			<AboutMe />
 			<Experiences />
-			<Album />
 			<Interests />
+			<Album />
 			<Footer />
 		</>
 	);
@@ -52,6 +52,10 @@ function Projects() {
 	);
 }
 
+function setMetaContent(selector: string, content: string) {
+	document.querySelector<HTMLMetaElement>(selector)?.setAttribute('content', content);
+}
+
 export default function App() {
 	const { classes } = useStyle();
 	const [pathname, setPathname] = useState(window.location.pathname);
@@ -64,7 +68,20 @@ export default function App() {
 	}, []);
 
 	useEffect(() => {
-		document.title = isProjectsPage ? `Projects - ${APP_NAME}` : APP_NAME;
+		const title = isProjectsPage ? `Projects | ${APP_NAME}` : APP_NAME;
+		const description = isProjectsPage
+			? 'Selected web projects by Joseph Tseng, a software engineer specializing in modern frontend product development.'
+			: SITE_DESCRIPTION;
+		const url = `${SITE_URL}${isProjectsPage ? '/projects/' : '/'}`;
+
+		document.title = title;
+		setMetaContent('meta[name="description"]', description);
+		setMetaContent('meta[property="og:title"]', title);
+		setMetaContent('meta[property="og:description"]', description);
+		setMetaContent('meta[property="og:url"]', url);
+		setMetaContent('meta[name="twitter:title"]', title);
+		setMetaContent('meta[name="twitter:description"]', description);
+		document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', url);
 	}, [isProjectsPage]);
 
 	useEffect(() => {

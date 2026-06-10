@@ -200,7 +200,7 @@ const fragmentShader = `
 
 export default function Sphere() {
 	const { classes } = useStyle();
-	const canvasRef = useRef(null);
+	const canvasRef = useRef<HTMLDivElement>(null);
 
 	const settings = {
 		speed: 0.2,
@@ -212,8 +212,14 @@ export default function Sphere() {
 	};
 
 	useEffect(() => {
+		const container = canvasRef.current;
+		if (!container) {
+			return;
+		}
+
+		let gui: GUI | undefined;
 		if (DEBUG_GUI) {
-			const gui = createGUI();
+			gui = createGUI();
 
 			const folder1 = gui.addFolder('Noise');
 			const folder2 = gui.addFolder('Rotation');
@@ -276,7 +282,7 @@ export default function Sphere() {
 		});
 		renderer.setSize(sizes.width, sizes.height);
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-		canvasRef.current.appendChild(renderer.domElement);
+		container.appendChild(renderer.domElement);
 
 		let mouseX = 0;
 		let mouseY = 0;
@@ -305,6 +311,7 @@ export default function Sphere() {
 		};
 
 		const clock = new THREE.Clock();
+		let animationFrameId = 0;
 
 		const animate = () => {
 			// mesh.rotation.y = 0.5 * elapsedTime;
@@ -326,7 +333,7 @@ export default function Sphere() {
 			renderer.render(scene, camera);
 
 			// Call tick again on the next frame
-			window.requestAnimationFrame(animate);
+			animationFrameId = window.requestAnimationFrame(animate);
 		};
 
 		animate();
@@ -336,11 +343,20 @@ export default function Sphere() {
 		window.addEventListener('scroll', onScreenScroll);
 
 		return () => {
+			window.cancelAnimationFrame(animationFrameId);
 			window.removeEventListener('resize', onResize);
 			window.removeEventListener('mousemove', onMouseMove);
 			window.removeEventListener('scroll', onScreenScroll);
+
+			gui?.destroy();
+			scene.remove(mesh);
+			geometry.dispose();
+			material.dispose();
+			renderer.dispose();
+			renderer.forceContextLoss();
+			renderer.domElement.remove();
 		};
 	}, []);
 
-	return <div className={classes.sphere} ref={canvasRef}></div>;
+	return <div className={classes.sphere} ref={canvasRef} />;
 }

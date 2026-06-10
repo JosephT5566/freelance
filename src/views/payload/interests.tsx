@@ -35,17 +35,16 @@ export default function Interests() {
 	return (
 		<article className={classes.interests}>
 			<Typography variant="h1" className={classes.title}>
-				{'Interests'}
+				{'Beyond Engineering'}
 			</Typography>
 			<PopupAnimate>
 				<div className={classes.description}>
 					<Typography variant="body1">
 						{`
-							I like to take photos, just like the pictures in the album above.
-							I like to create, just like a deep desire, it can bring me a sense of accomplishment.
-							I like to diving. Yeah, I have AOW (advenced open water) licence, got it in Green Island.
-							The ocean there is really beautiful, you should try if you haven't been there before.
-							Besides that, I like travel, with camera absolutely, and snowboarding also.
+							Outside product development, I build practical side projects with SvelteKit,
+							TypeScript, Supabase, Google Apps Script, and AI-assisted workflows. I also enjoy
+							photography, travel, snowboarding, and scuba diving, and hold an Advanced Open
+							Water certification.
 						`}
 					</Typography>
 					<div style={{ display: 'flex', alignItems: 'center' }}>

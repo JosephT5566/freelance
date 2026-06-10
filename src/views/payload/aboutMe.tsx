@@ -64,13 +64,23 @@ export default function AboutMe() {
 				{'About Me'}
 			</Typography>
 			<article className={classes.description}>
-				<Typography variant="body1">{'Hi, this is Joseph'}</Typography>
+				<Typography variant="body1">
+					{'Product-minded software engineer building reliable web experiences.'}
+				</Typography>
 				<Typography variant="body1">
 					{`
-						A front-end developer. I enjoy interesting and meaningful projects, the development process is really fascinating.
-						I like to focus not just on code but also on quality. Try to design perfection and optimized UX/UI is always the primary purpose,
-						and I keep improving myself to achieve that.
-						I always take my work seriously as I treat myself.
+						I specialize in frontend and full-stack product development with React, TypeScript,
+						Next.js, SvelteKit, GraphQL, and modern web architecture. At Houzz, I have delivered
+						marketplace search and browse improvements, CMS-driven campaign platforms,
+						experimentation workflows, and 3D and AI-assisted product integrations.
+					`}
+				</Typography>
+				<Typography variant="body1">
+					{`
+						I work across product, design, backend, platform, personalization, and data teams to
+						turn ambiguous requirements into maintainable releases. My approach combines product
+						thinking with production debugging, QA planning, feature flags, analytics, and
+						release monitoring.
 					`}
 				</Typography>
 			</article>

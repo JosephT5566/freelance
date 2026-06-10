@@ -37,6 +37,22 @@ const useStyle = makeStyles()((theme) => ({
 			},
 		},
 	},
+	skills: {
+		display: 'grid',
+		gridTemplateColumns: 'repeat(2, 1fr)',
+		gap: '2rem',
+		marginBottom: '3rem',
+		[theme.breakpoints.down('sm')]: {
+			gridTemplateColumns: '1fr',
+			padding: '0 2em',
+		},
+		'& h2': {
+			marginBottom: '0.75rem',
+		},
+		'& p': {
+			marginBottom: '0.5rem',
+		},
+	},
 	items: {
 		[theme.breakpoints.down('sm')]: {
 			padding: '0 2em',
@@ -54,53 +70,73 @@ export default function Experience() {
 			<div className={classes.description}>
 				<Typography variant="body1">
 					{`
-						Join the front-end is 1 year although, I've been an engineer about 4 years.
-						In my opinion, the program is not just a complicated and confusing data manager,
-						but can be used as a kind of creative tool.
+						Nearly a decade of engineering experience spanning web products, marketplace and CMS
+						platforms, embedded firmware, production tooling, quality ownership, and
+						cross-functional delivery.
 					`}
 				</Typography>
+			</div>
+			<div className={classes.skills}>
+				<div>
+					<Typography variant="h2">{'Core Engineering'}</Typography>
+					<Typography variant="body1">
+						{'TypeScript, JavaScript, React, Next.js, SvelteKit, HTML, CSS, SQL'}
+					</Typography>
+					<Typography variant="body1">
+						{'GraphQL, Supabase, PostgreSQL, API integration, frontend architecture'}
+					</Typography>
+				</div>
+				<div>
+					<Typography variant="h2">{'Quality & Delivery'}</Typography>
+					<Typography variant="body1">
+						{'A/B testing, QA planning, feature flags, bug bash coordination, root-cause debugging'}
+					</Typography>
+					<Typography variant="body1">
+						{'Prismic, Amplitude, Redash, Coralogix, Jira, GitHub Actions, CI/CD'}
+					</Typography>
+				</div>
 			</div>
 			<div className={classes.items}>
 				<Divider className={classes.divider} />
 				<PopupAnimate>
 					<ExperienceItem
-						year={'-2019'}
-						description={`
-							F/W engineer in Memoright and Socle tech. Develop, maintain and test system drivers
-						`}
+						year={'2022 - 2026'}
+						role={'Software Engineer'}
+						company={'Houzz | Marketplace, Lead Nurture, and 3D'}
+						highlights={[
+							'Delivered marketplace search and browse improvements across desktop and mobile web, including A/B-tested discovery experiences.',
+							'Built reusable Prismic CMS page patterns with GraphQL schema and resolver support for landing pages, campaigns, and event experiences.',
+							'Integrated frontend workflows with personalization, 3D, and external AI services while working across product, platform, backend, and data teams.',
+							'Improved release quality through design docs, feature flags, QA guides, bug bashes, production debugging, analytics, and release monitoring.',
+						]}
 					/>
 				</PopupAnimate>
 				<Divider className={classes.divider} />
 				<PopupAnimate>
 					<ExperienceItem
-						year={'2020'}
-						description={`
-							After leaving the original job and having an unforgettable time in green island,
-							I've been hired to a start up company for front-end develop.
-						`}
+						year={'2020 - 2022'}
+						role={'Frontend Engineer'}
+						company={'Chung Yung Consultant Company | Taipei'}
+						highlights={[
+							'Built responsive membership and administration applications using React, Next.js, TypeScript, HTML, and CSS.',
+							'Implemented authentication and state flows with XState, API integrations, form-driven interfaces, and PostgreSQL changes.',
+							'Supported GitHub-based CI/CD and GitOps deployment workflows on cloud infrastructure.',
+						]}
 					/>
 				</PopupAnimate>
 				<Divider className={classes.divider} />
 				<PopupAnimate>
 					<ExperienceItem
-						year={'2021'}
-						description={`
-							Keep working on front-end. I help to build a member system, in addition to websites for general user
-							and administrator, and also back-end maintenance.
-						`}
+						year={'2016 - 2020'}
+						role={'Firmware & Application Engineer'}
+						company={'Foxconn, Mega Design Tech, and Memoright Tech | Hsinchu'}
+						highlights={[
+							'Developed embedded firmware, memory-controller test patterns, and production application tooling using C, C++, and C#.',
+							'Established Ceedling unit tests for driver development to improve test coverage and reliability.',
+						]}
 					/>
 				</PopupAnimate>
 				<Divider className={classes.divider} />
-				<PopupAnimate>
-					<ExperienceItem
-						year={'2022'}
-						description={`
-							Joining Houzz in May. It presents a significant challenge for me, as it is not only a foreign company but also a global one.
-							As such, I will need to learn how to effectively collaborate with colleagues and teams from diverse backgrounds. 
-							I am eager to take on this challenge and look forward to gaining valuable experience and skills as a result.
-						`}
-					/>
-				</PopupAnimate>
 				<Divider className={classes.divider} />
 			</div>
 		</section>

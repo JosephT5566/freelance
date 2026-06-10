@@ -36,8 +36,8 @@ export default function Cover() {
 	return (
 		<div className={classes.cover} style={{ backgroundImage: `url(/cover.jpg)` }}>
 			<div className={classes.text}>
-				<h1>THIS IS</h1>
 				<h1>JOSEPH TSENG</h1>
+				<h1>SOFTWARE ENGINEER</h1>
 			</div>
 			<Sphere />
 		</div>
