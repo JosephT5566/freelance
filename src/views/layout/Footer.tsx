@@ -3,11 +3,11 @@ import { makeStyles } from 'tss-react/mui';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Behance from '../../../public/icons/behance.svg';
-import Flickr from '../../../public/icons/flickr.svg';
-import Github from '../../../public/icons/github.svg';
-import Instagram from '../../../public/icons/instagram.svg';
-import Linkedin from '../../../public/icons/linkedin.svg';
+import Behance from '../../assets/icons/behance.svg?react';
+import Flickr from '../../assets/icons/flickr.svg?react';
+import Github from '../../assets/icons/github.svg?react';
+import Instagram from '../../assets/icons/instagram.svg?react';
+import Linkedin from '../../assets/icons/linkedin.svg?react';
 
 const useStyle = makeStyles()((theme) => ({
 	footer: {
@@ -72,7 +72,7 @@ export default function Footer() {
 				</a>
 			</div>
 			<Container className={classes.copyright}>
-				<div>{`© Design by Joseph v${process.env.NEXT_PUBLIC_VERSION}`}</div>
+				<div>{`© Design by Joseph v${__APP_VERSION__}`}</div>
 			</Container>
 		</footer>
 	);

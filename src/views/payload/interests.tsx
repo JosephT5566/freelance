@@ -3,7 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 
 import Typography from '@mui/material/Typography';
 import PopupAnimate from '../../components/shared/popupAnimate';
-import Instagram from '../../../public/icons/instagram.svg';
+import Instagram from '../../assets/icons/instagram.svg?react';
 
 const useStyle = makeStyles()((theme) => ({
 	interests: {

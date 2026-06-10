@@ -8,12 +8,13 @@
 # testing
 /coverage
 
-# next.js
+# legacy Next.js output
 /.next/
 /out/
 
 # production
-/build
+/dist
+/.wrangler
 
 # misc
 .DS_Store

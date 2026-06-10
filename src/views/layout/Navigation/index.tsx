@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { IndexProvider } from './IndexProvider';
-import useLocation from '../../../hooks/useLocation';
 import { makeStyles } from 'tss-react/mui';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -70,9 +68,7 @@ const useStyle = makeStyles()((theme) => ({
 
 const Items = (props: { btnClicked?: any }) => {
 	const { btnClicked = null } = props;
-	const router = useRouter();
 	const [snackbarProps, setSnackbarProps] = useState(defaultSnackbarProps);
-	const url = useLocation();
 
 	const handleCloseSnackbar = () => {
 		setSnackbarProps((prev) => ({ ...prev, open: false }));
@@ -93,7 +89,8 @@ const Items = (props: { btnClicked?: any }) => {
 			<Button
 				index={1}
 				onClick={() => {
-					router.push(`/projects`);
+					window.history.pushState({}, '', '/projects');
+					window.dispatchEvent(new PopStateEvent('popstate'));
 					btnClicked && btnClicked();
 				}}
 			>

@@ -1,43 +1,31 @@
 name: Deploy Freelance website
 
 on:
-    push:
-        branches:
-            - 'main'
-
-env:
-    PROJECT_ID: freelance
+  push:
+    branches:
+      - main
 
 jobs:
-    setup-build-deploy:
-        name: Setup, Build, and Deploy
-        runs-on: ubuntu-latest
+  build-and-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v4
 
-            # https://github.com/marketplace/actions/version-check
-            # the pushed commit message should contain version number (like <WHATEVER 1.2.3>) and MATCHS `package.json`, outputs will be set then.
-            - name: Check package version
-              uses: EndBug/version-check@v2
-              id: check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
-            - name: Get Package Version
-              id: get_version
-              run: echo "package version - ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"
+      - name: Install dependencies
+        run: npm ci
 
-            - name: Log when unchanged
-              if: steps.check.outputs.changed == 'false'
-              run: 'echo "No version change :/"'
+      - name: Check and build
+        run: npm run check
 
-            - name: Build If Version Changed
-              # if: steps.check.outputs.changed == 'true'
-              run: |-
-                  yarn install && yarn build && yarn export
-
-            - name: Publish
-              uses: cloudflare/wrangler-action@2.0.0
-              with:
-                  apiToken: ${{ secrets.CF_API_TOKEN }}
-                  preCommands: npm install @cloudflare/kv-asset-handler@0.2.0
-                  command: publish
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          command: deploy

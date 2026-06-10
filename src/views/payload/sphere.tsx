@@ -14,8 +14,6 @@ const useStyle = makeStyles()(() => ({
 }));
 
 const createGUI = (): GUI => {
-	const module = require('dat.gui');
-	const { GUI } = module;
 	return new GUI();
 };
 

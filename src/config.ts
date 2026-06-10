@@ -1,1 +1,1 @@
-export const DEVELOP = process.env.NEXT_PUBLIC_ENV == 'dev'
+export const DEVELOP = import.meta.env.DEV;

@@ -13,7 +13,7 @@ const useStyle = makeStyles()((theme) => ({
 			width: '100vw',
 			height: '100vh',
 			padding: '6rem',
-			flexShrink: '0',
+			flexShrink: 0,
 
 			display: 'grid',
 			gridTemplateColumns: '66% 33%',

@@ -1,5 +1,21 @@
 # freelance
 
+React portfolio built with Vite and deployed to Cloudflare Workers Static Assets.
+
+## Development
+
+```sh
+npm install
+npm run dev
+```
+
+## Verification and deployment
+
+```sh
+npm run check
+npm run deploy
+```
+
 # Change log
 
 ## v1.2.0

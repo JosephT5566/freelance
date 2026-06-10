@@ -1,10 +1,12 @@
 name = "freelance"
-main = "workers-site/index.js"
-compatibility_date = "2023-03-30"
-type = 'webpack'
-account_id = '1f7783c7c3c593ab98bad669c80ae933'
+main = "worker/index.ts"
+compatibility_date = "2026-06-10"
+account_id = "1f7783c7c3c593ab98bad669c80ae933"
 routes = ["josephtseng-tw.com/*", "www.josephtseng-tw.com/*"]
 workers_dev = true
 
-[site]
-bucket = "./out"
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = true
