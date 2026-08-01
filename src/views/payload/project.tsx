@@ -10,23 +10,25 @@ import PopupAnimate from '../../components/shared/popupAnimate';
 
 const useStyle = makeStyles()((theme) => ({
 	project: {
+		scrollMarginTop: '5rem',
 		[theme.breakpoints.up('md')]: {
-			width: '100vw',
-			height: '100vh',
+			width: '100%',
+			minHeight: '100vh',
 			padding: '6rem',
 			flexShrink: 0,
 
 			display: 'grid',
-			gridTemplateColumns: '66% 33%',
+			gridTemplateColumns: 'minmax(0, 2fr) minmax(16rem, 1fr)',
 			gridTemplateRows: 'repeat(7, 1fr)',
 			gridGap: '1rem',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			width: '100%',
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'center',
 			marginBottom: '1em',
+			scrollMarginTop: '9rem',
 		},
 	},
 	header: {
@@ -34,7 +36,7 @@ const useStyle = makeStyles()((theme) => ({
 			gridColumn: '1 / span 2',
 			gridRow: '1 / 1',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			width: '100%',
 			padding: '0 0.5rem',
 		},
@@ -47,7 +49,7 @@ const useStyle = makeStyles()((theme) => ({
 		color: theme.palette.secondary.main,
 	},
 	title: {
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			alignSelf: 'flex-start',
 			marginBottom: '0.5em',
 		},
@@ -57,7 +59,7 @@ const useStyle = makeStyles()((theme) => ({
 			gridColumn: '2 / 2',
 			gridRow: '2 / 2',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			alignSelf: 'flex-start',
 			paddingLeft: '0.5rem',
 			marginBottom: '0.5em',
@@ -65,7 +67,7 @@ const useStyle = makeStyles()((theme) => ({
 	},
 	description: {
 		width: '100%',
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			padding: '0',
 		},
 		'& > hr': {
@@ -77,13 +79,14 @@ const useStyle = makeStyles()((theme) => ({
 	},
 	contentPanel: {
 		width: '100%',
+		minWidth: 0,
 		[theme.breakpoints.up('md')]: {
 			gridColumn: '2 / 2',
 			gridRow: '2 / span 4',
 			overflow: 'auto',
 			paddingRight: '0.25rem',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			padding: '0 0.5rem',
 		},
 	},
@@ -128,7 +131,7 @@ const useStyle = makeStyles()((theme) => ({
 			gridColumn: '1 / 1',
 			gridRow: '2 / span 6',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			width: 'calc(100% - 1em)',
 			paddingTop: '56.25%',
 		},
@@ -139,7 +142,7 @@ const useStyle = makeStyles()((theme) => ({
 			alignItems: 'flex-end',
 			color: theme.palette.text.secondary,
 			fontSize: '2em',
-			[theme.breakpoints.down('sm')]: {
+			[theme.breakpoints.down('md')]: {
 				alignItems: 'flex-start',
 			},
 			'& > h1': {
@@ -156,7 +159,7 @@ const useStyle = makeStyles()((theme) => ({
 			gridRow: '6 / span 2',
 			alignSelf: 'end',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			padding: '0 0.5rem',
 			alignSelf: 'flex-end',
 		},
@@ -191,6 +194,7 @@ function ProjectLinkItem({ link, className }: { link: ProjectLink; className: st
 }
 
 export default function Project(props: {
+	id?: string;
 	title: string;
 	eyebrow?: string;
 	description?: string;
@@ -205,6 +209,7 @@ export default function Project(props: {
 	titleComponent?: 'h1' | 'h2';
 }) {
 	const {
+		id,
 		title,
 		eyebrow,
 		description,
@@ -229,7 +234,7 @@ export default function Project(props: {
 	};
 
 	return (
-		<article className={classes.project}>
+		<article className={classes.project} id={id}>
 			<header className={classes.header}>
 				{eyebrow && (
 					<Typography className={classes.eyebrow} variant="body1">
