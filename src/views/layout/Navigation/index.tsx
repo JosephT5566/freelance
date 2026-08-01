@@ -3,6 +3,7 @@ import { IndexProvider } from './IndexProvider';
 import { makeStyles } from 'tss-react/mui';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { usePathname, useRouter } from 'next/navigation';
 
 import Button from './Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -69,6 +70,9 @@ const useStyle = makeStyles()((theme) => ({
 const Items = (props: { btnClicked?: any }) => {
 	const { btnClicked = null } = props;
 	const [snackbarProps, setSnackbarProps] = useState(defaultSnackbarProps);
+	const router = useRouter();
+	const pathname = usePathname();
+	const isProjectsPage = pathname === '/projects' || pathname === '/projects/';
 
 	const handleCloseSnackbar = () => {
 		setSnackbarProps((prev) => ({ ...prev, open: false }));
@@ -88,9 +92,9 @@ const Items = (props: { btnClicked?: any }) => {
 		<IndexProvider>
 			<Button
 				index={1}
+				active={isProjectsPage}
 				onClick={() => {
-					window.history.pushState({}, '', '/projects');
-					window.dispatchEvent(new PopStateEvent('popstate'));
+					router.push('/projects');
 					btnClicked && btnClicked();
 				}}
 			>

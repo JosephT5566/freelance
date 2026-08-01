@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
-import Sphere from './sphere';
+import dynamic from 'next/dynamic';
+
+const Sphere = dynamic(() => import('./sphere'), { ssr: false });
 
 const useStyle = makeStyles()((theme) => ({
 	cover: {
