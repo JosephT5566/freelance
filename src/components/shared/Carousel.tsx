@@ -7,10 +7,7 @@ import { makeStyles } from 'tss-react/mui';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import IconButton from '@mui/material/IconButton';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
+import { ArrowLeft, ArrowRight, Circle, CircleDot } from 'lucide-react';
 
 import useWidth from '../../hooks/useWidth';
 
@@ -77,11 +74,7 @@ const NavButton = (props: { isSelected: boolean; onClick: () => void }) => {
 
 	return (
 		<IconButton className={classes.navButton} onClick={onClick}>
-			{isSelected ? (
-				<FiberManualRecordIcon className={classes.dotIcon} fontSize="small" />
-			) : (
-				<FiberManualRecordOutlinedIcon className={classes.dotIcon} fontSize="small" />
-			)}
+			{isSelected ? <CircleDot className={classes.dotIcon} size={18} /> : <Circle className={classes.dotIcon} size={18} />}
 		</IconButton>
 	);
 };
@@ -232,10 +225,10 @@ export default function Carousel({ images: oriImages }: Props) {
 				})}
 			</div>
 			<IconButton className={`${classes.iconButton} right`} onClick={handleNext}>
-				<ArrowForwardIcon />
+				<ArrowRight />
 			</IconButton>
 			<IconButton className={`${classes.iconButton} left`} onClick={handlePrev}>
-				<ArrowBackIcon />
+				<ArrowLeft />
 			</IconButton>
 		</div>
 	);

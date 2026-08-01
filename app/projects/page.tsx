@@ -3,22 +3,22 @@ import AppShell from '../../src/app/AppShell';
 import Projects from '../../src/app/Projects';
 
 export const metadata: Metadata = {
-	title: 'Projects',
+	title: "Joseph's Projects",
 	description:
-		'Selected web projects by Joseph Tseng, a software engineer specializing in modern frontend product development.',
+		'A collection of personal applications built by Joseph Tseng to solve everyday problems and explore better product experiences.',
 	alternates: {
-		canonical: '/projects/',
+		canonical: '/projects',
 	},
 	openGraph: {
-		title: 'Projects | Joseph Tseng | Software Engineer',
+		title: "Joseph's Projects | Joseph Tseng",
 		description:
-			'Selected web projects by Joseph Tseng, a software engineer specializing in modern frontend product development.',
-		url: '/projects/',
+			'A collection of personal applications built by Joseph Tseng to solve everyday problems and explore better product experiences.',
+		url: '/projects',
 	},
 	twitter: {
-		title: 'Projects | Joseph Tseng | Software Engineer',
+		title: "Joseph's Projects | Joseph Tseng",
 		description:
-			'Selected web projects by Joseph Tseng, a software engineer specializing in modern frontend product development.',
+			'A collection of personal applications built by Joseph Tseng to solve everyday problems and explore better product experiences.',
 	},
 };
 

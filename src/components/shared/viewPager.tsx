@@ -5,10 +5,7 @@ import { useDrag } from 'react-use-gesture';
 import _ from 'lodash';
 
 import IconButton from '@mui/material/IconButton';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
+import { ArrowLeft, ArrowRight, Circle, CircleDot } from 'lucide-react';
 
 const useStyle = makeStyles()((theme) => ({
 	viewPager: {
@@ -114,11 +111,7 @@ const PageDots = (props: {
 						setIndex(pageIndexRef.current);
 					}}
 				>
-					{i === index ? (
-						<FiberManualRecordIcon className={classes.dotIcon} fontSize="small" />
-					) : (
-						<FiberManualRecordOutlinedIcon className={classes.dotIcon} fontSize="small" />
-					)}
+					{i === index ? <CircleDot className={classes.dotIcon} size={18} /> : <Circle className={classes.dotIcon} size={18} />}
 				</div>
 			))}
 		</div>
@@ -224,10 +217,10 @@ export default function ViewPager(props: { pages: PageType[] }) {
 	return (
 		<div className={classes.viewPager}>
 			<IconButton className={`${classes.arrowBtn} next`} onClick={handleClickNext}>
-				<ArrowForwardIcon />
+				<ArrowRight />
 			</IconButton>
 			<IconButton className={`${classes.arrowBtn} previous`} onClick={handleClickPrev}>
-				<ArrowBackIcon />
+				<ArrowLeft />
 			</IconButton>
 			<div
 				className={classes.pagesContainer}
@@ -326,10 +319,10 @@ export function ViewPager_finite_scroll(props: { pages: PageType[] }) {
 	return (
 		<div className={classes.viewPager}>
 			<IconButton className={`${classes.arrowBtn} next`} onClick={handleClickNext}>
-				<ArrowForwardIcon />
+				<ArrowRight />
 			</IconButton>
 			<IconButton className={`${classes.arrowBtn} previous`} onClick={handleClickPrev}>
-				<ArrowBackIcon />
+				<ArrowLeft />
 			</IconButton>
 			<div
 				className={classes.pagesContainer}

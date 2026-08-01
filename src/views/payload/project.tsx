@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { makeStyles } from 'tss-react/mui';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -28,11 +29,24 @@ const useStyle = makeStyles()((theme) => ({
 			marginBottom: '1em',
 		},
 	},
-	title: {
+	header: {
 		[theme.breakpoints.up('md')]: {
 			gridColumn: '1 / span 2',
 			gridRow: '1 / 1',
 		},
+		[theme.breakpoints.down('sm')]: {
+			width: '100%',
+			padding: '0 0.5rem',
+		},
+	},
+	eyebrow: {
+		marginBottom: '0.35rem',
+		fontWeight: 700,
+		letterSpacing: '0.08em',
+		textTransform: 'uppercase',
+		color: theme.palette.secondary.main,
+	},
+	title: {
 		[theme.breakpoints.down('sm')]: {
 			alignSelf: 'flex-start',
 			marginBottom: '0.5em',
@@ -51,12 +65,8 @@ const useStyle = makeStyles()((theme) => ({
 	},
 	description: {
 		width: '100%',
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '2 / 2',
-			gridRow: '3 / span 3',
-		},
 		[theme.breakpoints.down('sm')]: {
-			padding: '0 0.5rem',
+			padding: '0',
 		},
 		'& > hr': {
 			marginBottom: '1em',
@@ -64,6 +74,51 @@ const useStyle = makeStyles()((theme) => ({
 		'& .content': {
 			marginBottom: '1em',
 		},
+	},
+	contentPanel: {
+		width: '100%',
+		[theme.breakpoints.up('md')]: {
+			gridColumn: '2 / 2',
+			gridRow: '2 / span 4',
+			overflow: 'auto',
+			paddingRight: '0.25rem',
+		},
+		[theme.breakpoints.down('sm')]: {
+			padding: '0 0.5rem',
+		},
+	},
+	section: {
+		marginBottom: '1em',
+	},
+	sectionList: {
+		margin: '0.25em 0 1em',
+		paddingLeft: '1.2em',
+		'& li': {
+			marginBottom: '0.25em',
+		},
+	},
+	links: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		gap: '0.5rem',
+		marginTop: '1rem',
+	},
+	link: {
+		border: `1px solid ${theme.palette.primary.light}`,
+		borderRadius: '0.5rem',
+		padding: '0.45rem 0.75rem',
+		fontWeight: 700,
+		color: theme.palette.primary.main,
+		transition: '0.2s',
+		'&:hover, &:focus': {
+			color: theme.palette.secondary.main,
+			borderColor: theme.palette.secondary.main,
+			outline: 'none',
+		},
+	},
+	footerNote: {
+		marginTop: '1rem',
+		color: theme.palette.primary.light,
 	},
 	image: {
 		backgroundPosition: 'center',
@@ -108,60 +163,165 @@ const useStyle = makeStyles()((theme) => ({
 	},
 }));
 
+type ProjectSection = {
+	title: string;
+	paragraphs?: string[];
+	items?: string[];
+};
+
+type ProjectLink = {
+	label: string;
+	href: string;
+};
+
+function ProjectLinkItem({ link, className }: { link: ProjectLink; className: string }) {
+	if (link.href.startsWith('/')) {
+		return (
+			<Link className={className} href={link.href}>
+				{link.label}
+			</Link>
+		);
+	}
+
+	return (
+		<a className={className} href={link.href} target="_blank" rel="noopener noreferrer">
+			{link.label}
+		</a>
+	);
+}
+
 export default function Project(props: {
 	title: string;
+	eyebrow?: string;
 	description?: string;
+	descriptionTitle?: string;
 	image?: string;
+	placeholder?: string;
 	url?: string;
 	tools?: string[];
+	sections?: ProjectSection[];
+	links?: ProjectLink[];
+	footerNote?: string;
+	titleComponent?: 'h1' | 'h2';
 }) {
-	const { title, description, image, url, tools } = props;
+	const {
+		title,
+		eyebrow,
+		description,
+		descriptionTitle = 'Description',
+		image,
+		placeholder = 'Coming Soon...',
+		url,
+		tools,
+		sections,
+		links,
+		footerNote,
+		titleComponent = 'h2',
+	} = props;
 	const { classes } = useStyle();
 	const theme = useTheme();
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
+	const hasContent = Boolean(description || sections?.length || links?.length || footerNote);
+
+	const openProject = () => {
+		if (!url) return;
+		window.open(url, '_blank', 'noopener,noreferrer')?.focus();
+	};
 
 	return (
-		<div className={classes.project}>
-			<Typography className={classes.title} variant={'h1'}>
-				{title}
-			</Typography>
+		<article className={classes.project}>
+			<header className={classes.header}>
+				{eyebrow && (
+					<Typography className={classes.eyebrow} variant="body1">
+						{eyebrow}
+					</Typography>
+				)}
+				<Typography className={classes.title} variant="h1" component={titleComponent}>
+					{title}
+				</Typography>
+			</header>
 			{image ? (
 				<div
 					className={classes.image}
 					style={{ backgroundImage: `url(${image})` }}
-					onClick={() => url && window.open(url, '_blank').focus()}
-				></div>
+					onClick={openProject}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter' || event.key === ' ') {
+							openProject();
+						}
+					}}
+					role={url ? 'link' : undefined}
+					tabIndex={url ? 0 : undefined}
+					aria-label={url ? `Open ${title}` : undefined}
+				/>
 			) : (
 				<div className={`${classes.image} default`}>
 					<PopupAnimate disabled={isViewPortLarge}>
-						<Typography variant={'h1'}>{'Coming Soon...'}</Typography>
+						<Typography variant="h1">{placeholder}</Typography>
 					</PopupAnimate>
 				</div>
 			)}
-			{description && (
-				<article>
-					<Typography className={classes.descriptionTitle} variant={'h2'}>
-						{'Description'}
-					</Typography>
-					<div className={classes.description}>
-						<PopupAnimate disabled={isViewPortLarge}>
-							<Typography className={'content'} variant={'body1'}>
-								{description}
+			{hasContent && (
+				<div className={classes.contentPanel}>
+					{description && (
+						<>
+							<Typography className={classes.descriptionTitle} variant="h2" component="h3">
+								{descriptionTitle}
 							</Typography>
-						</PopupAnimate>
-						<Divider />
-					</div>
-				</article>
+							<div className={classes.description}>
+								<PopupAnimate disabled={isViewPortLarge}>
+									<Typography className="content" variant="body1">
+										{description}
+									</Typography>
+								</PopupAnimate>
+								<Divider />
+							</div>
+						</>
+					)}
+					{sections?.map((section) => (
+						<section className={classes.section} key={section.title}>
+							<Typography variant="h3" component="h3">
+								{section.title}
+							</Typography>
+							{section.paragraphs?.map((paragraph) => (
+								<Typography className="content" variant="body1" key={paragraph}>
+									{paragraph}
+								</Typography>
+							))}
+							{section.items && (
+								<ul className={classes.sectionList}>
+									{section.items.map((item) => (
+										<Typography component="li" variant="body1" key={item}>
+											{item}
+										</Typography>
+									))}
+								</ul>
+							)}
+						</section>
+					))}
+					{links && (
+						<nav className={classes.links} aria-label={`${title} links`}>
+							{links.map((link) => (
+								<ProjectLinkItem className={classes.link} key={`${link.label}-${link.href}`} link={link} />
+							))}
+						</nav>
+					)}
+					{footerNote && (
+						<Typography className={classes.footerNote} variant="body1">
+							{footerNote}
+						</Typography>
+					)}
+				</div>
 			)}
 			{tools && (
 				<div className={classes.tools}>
 					{tools.map((tool, index) => (
-						<Typography key={index} variant={'body1'}>
+						<Typography key={index} variant="body1">
 							{tool}
 						</Typography>
 					))}
 				</div>
 			)}
-		</div>
+		</article>
 	);
 }

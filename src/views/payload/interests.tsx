@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
+import { FaInstagram } from 'react-icons/fa';
 
 import Typography from '@mui/material/Typography';
 import PopupAnimate from '../../components/shared/popupAnimate';
-import Instagram from '../../assets/icons/instagram.svg';
 
 const useStyle = makeStyles()((theme) => ({
 	interests: {
@@ -55,7 +55,7 @@ export default function Interests() {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<Instagram className={classes.icon} />
+							<FaInstagram className={classes.icon} aria-label="Instagram" />
 						</a>
 					</div>
 				</div>
