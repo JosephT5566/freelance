@@ -1,6 +1,6 @@
 # freelance
 
-React portfolio built with Vite and deployed to Cloudflare Workers Static Assets.
+React portfolio built with Next.js App Router and deployed to Cloudflare Workers Static Assets.
 
 ## Development
 

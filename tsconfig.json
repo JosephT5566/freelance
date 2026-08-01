@@ -17,15 +17,21 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "types": [
-      "vite/client",
-      "vite-plugin-svgr/client"
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
     ]
   },
   "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "app",
     "src",
     "styles",
-    "vite.config.ts"
+    "next.config.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

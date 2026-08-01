@@ -77,11 +77,18 @@ const useStyle = makeStyles()((theme) => ({
 	},
 }));
 
-export default function Button({ index, onClick = null, children }) {
+type ButtonProps = {
+	index: number;
+	active?: boolean;
+	onClick?: (() => void) | null;
+	children: React.ReactNode;
+};
+
+export default function Button({ index, active: activeOverride, onClick = null, children }: ButtonProps) {
 	const { classes } = useStyle();
 	const currentIndex = useIndex();
 	const updateIndex = useUpdateIndex();
-	const active = index === currentIndex ? 'active' : '';
+	const active = (activeOverride ?? index === currentIndex) ? 'active' : '';
 	return (
 		<button
 			className={`${classes.button} ${active}`}

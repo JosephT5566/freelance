@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
+import Link from 'next/link';
 
 import Typography from '@mui/material/Typography';
 
@@ -34,9 +35,9 @@ export default function Header() {
 	const { classes } = useStyle();
 	return (
 		<header className={classes.header}>
-			<a className={classes.a} href="/">
+			<Link className={classes.a} href="/">
 				Joseph Tseng
-			</a>
+			</Link>
 		</header>
 	);
 }
