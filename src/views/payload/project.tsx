@@ -113,6 +113,11 @@ const useStyle = makeStyles()((theme) => ({
 			},
 		},
 	},
+	contentPanelFrameFullWidth: {
+		[theme.breakpoints.up('md')]: {
+			gridColumn: '1 / span 2',
+		},
+	},
 	contentPanel: {
 		width: '100%',
 		minWidth: 0,
@@ -171,20 +176,6 @@ const useStyle = makeStyles()((theme) => ({
 			width: 'calc(100% - 1em)',
 			paddingTop: '56.25%',
 		},
-		'&.default': {
-			backgroundColor: theme.palette.background.paper,
-			padding: '1em',
-			display: 'flex',
-			alignItems: 'flex-end',
-			color: theme.palette.text.secondary,
-			fontSize: '2em',
-			[theme.breakpoints.down('md')]: {
-				alignItems: 'flex-start',
-			},
-			'& > h1': {
-				fontFamily: 'Lobster',
-			},
-		},
 		'&:hover': {
 			cursor: 'pointer',
 		},
@@ -200,6 +191,14 @@ const useStyle = makeStyles()((theme) => ({
 			alignSelf: 'flex-end',
 		},
 	},
+	toolsWithoutImage: {
+		[theme.breakpoints.up('md')]: {
+			gridColumn: '1',
+		},
+		[theme.breakpoints.down('md')]: {
+			alignSelf: 'flex-start',
+		},
+	},
 }));
 
 type ProjectSection = {
@@ -213,7 +212,13 @@ type ProjectLink = {
 	href: string;
 };
 
-function ProjectLinkItem({ link, className }: { link: ProjectLink; className: string }) {
+function ProjectLinkItem({
+	link,
+	className,
+}: {
+	link: ProjectLink;
+	className: string;
+}) {
 	if (link.href.startsWith('/')) {
 		return (
 			<Link className={className} href={link.href}>
@@ -223,7 +228,12 @@ function ProjectLinkItem({ link, className }: { link: ProjectLink; className: st
 	}
 
 	return (
-		<a className={className} href={link.href} target="_blank" rel="noopener noreferrer">
+		<a
+			className={className}
+			href={link.href}
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			{link.label}
 		</a>
 	);
@@ -251,7 +261,6 @@ export default function Project(props: {
 		description,
 		descriptionTitle = 'Description',
 		image,
-		placeholder = 'Coming Soon...',
 		url,
 		tools,
 		sections,
@@ -262,16 +271,22 @@ export default function Project(props: {
 	const { classes } = useStyle();
 	const theme = useTheme();
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
-	const hasContent = Boolean(description || sections?.length || links?.length || footerNote);
+	const hasContent = Boolean(
+		description || sections?.length || links?.length || footerNote,
+	);
 	const contentPanelRef = useRef<HTMLDivElement>(null);
-	const [scrollGradient, setScrollGradient] = useState({ top: false, bottom: false });
+	const [scrollGradient, setScrollGradient] = useState({
+		top: false,
+		bottom: false,
+	});
 
 	const updateScrollGradient = () => {
 		const contentPanel = contentPanelRef.current;
 		if (!contentPanel) return;
 
 		const scrollTop = contentPanel.scrollTop;
-		const maxScrollTop = contentPanel.scrollHeight - contentPanel.clientHeight;
+		const maxScrollTop =
+			contentPanel.scrollHeight - contentPanel.clientHeight;
 
 		setScrollGradient({
 			top: scrollTop > 0,
@@ -304,11 +319,15 @@ export default function Project(props: {
 						{eyebrow}
 					</Typography>
 				)}
-				<Typography className={classes.title} variant="h1" component={titleComponent}>
+				<Typography
+					className={classes.title}
+					variant="h1"
+					component={titleComponent}
+				>
 					{title}
 				</Typography>
 			</header>
-			{image ? (
+			{image && (
 				<div
 					className={classes.image}
 					style={{ backgroundImage: `url(${image})` }}
@@ -322,18 +341,12 @@ export default function Project(props: {
 					tabIndex={url ? 0 : undefined}
 					aria-label={url ? `Open ${title}` : undefined}
 				/>
-			) : (
-				<div className={`${classes.image} default`}>
-					<PopupAnimate disabled={isViewPortLarge}>
-						<Typography variant="h1">{placeholder}</Typography>
-					</PopupAnimate>
-				</div>
 			)}
 			{hasContent && (
 				<div
-					className={`${classes.contentPanelFrame} ${scrollGradient.top ? 'has-top-gradient' : ''} ${
-						scrollGradient.bottom ? 'has-bottom-gradient' : ''
-					}`}
+					className={`${classes.contentPanelFrame} ${!image ? classes.contentPanelFrameFullWidth : ''} ${
+						scrollGradient.top ? 'has-top-gradient' : ''
+					} ${scrollGradient.bottom ? 'has-bottom-gradient' : ''}`}
 				>
 					<div
 						className={classes.contentPanel}
@@ -341,7 +354,9 @@ export default function Project(props: {
 						onScroll={(event: UIEvent<HTMLDivElement>) => {
 							const contentPanel = event.currentTarget;
 							const scrollTop = contentPanel.scrollTop;
-							const maxScrollTop = contentPanel.scrollHeight - contentPanel.clientHeight;
+							const maxScrollTop =
+								contentPanel.scrollHeight -
+								contentPanel.clientHeight;
 
 							setScrollGradient({
 								top: scrollTop > 0,
@@ -351,12 +366,19 @@ export default function Project(props: {
 					>
 						{description && (
 							<>
-								<Typography className={classes.descriptionTitle} variant="h2" component="h3">
+								<Typography
+									className={classes.descriptionTitle}
+									variant="h2"
+									component="h3"
+								>
 									{descriptionTitle}
 								</Typography>
 								<div className={classes.description}>
 									<PopupAnimate disabled={isViewPortLarge}>
-										<Typography className="content" variant="body1">
+										<Typography
+											className="content"
+											variant="body1"
+										>
 											{description}
 										</Typography>
 									</PopupAnimate>
@@ -365,19 +387,30 @@ export default function Project(props: {
 							</>
 						)}
 						{sections?.map((section) => (
-							<section className={classes.section} key={section.title}>
+							<section
+								className={classes.section}
+								key={section.title}
+							>
 								<Typography variant="h3" component="h3">
 									{section.title}
 								</Typography>
 								{section.paragraphs?.map((paragraph) => (
-									<Typography className="content" variant="body1" key={paragraph}>
+									<Typography
+										className="content"
+										variant="body1"
+										key={paragraph}
+									>
 										{paragraph}
 									</Typography>
 								))}
 								{section.items && (
 									<ul className={classes.sectionList}>
 										{section.items.map((item) => (
-											<Typography component="li" variant="body1" key={item}>
+											<Typography
+												component="li"
+												variant="body1"
+												key={item}
+											>
 												{item}
 											</Typography>
 										))}
@@ -386,14 +419,24 @@ export default function Project(props: {
 							</section>
 						))}
 						{links && (
-							<nav className={classes.links} aria-label={`${title} links`}>
+							<nav
+								className={classes.links}
+								aria-label={`${title} links`}
+							>
 								{links.map((link) => (
-									<ProjectLinkItem className={classes.link} key={`${link.label}-${link.href}`} link={link} />
+									<ProjectLinkItem
+										className={classes.link}
+										key={`${link.label}-${link.href}`}
+										link={link}
+									/>
 								))}
 							</nav>
 						)}
 						{footerNote && (
-							<Typography className={classes.footerNote} variant="body1">
+							<Typography
+								className={classes.footerNote}
+								variant="body1"
+							>
 								{footerNote}
 							</Typography>
 						)}
@@ -401,11 +444,13 @@ export default function Project(props: {
 				</div>
 			)}
 			{tools && (
-				<div className={classes.tools}>
+				<div
+					className={`${classes.tools} ${!image ? classes.toolsWithoutImage : ''}`}
+				>
 					{tools.map((tool, index) => (
-						<Typography key={index} variant="body1">
+						<p className="m-0 text-sm text-gray-500" key={index}>
 							{tool}
-						</Typography>
+						</p>
 					))}
 				</div>
 			)}
