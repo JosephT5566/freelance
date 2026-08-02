@@ -168,15 +168,6 @@ const projectItems = [
 				],
 			},
 			{
-				title: 'Google data usage',
-				paragraphs: [
-					'Travel Split signs users in through a Cloudflare Worker auth proxy that manages secure cookies and authenticated backend requests.',
-					'Expense and trip configuration data come from the selected Google Sheet through a Google Cloud Function API.',
-					'The application may receive basic account information including name, email address, profile image, and Google account identifier.',
-					"Travel Split does not access Gmail, Google Calendar, contacts, or the user's Google password.",
-				],
-			},
-			{
 				title: 'Data notes',
 				items: [
 					'Google Sheet-backed expense records',
@@ -190,6 +181,7 @@ const projectItems = [
 			},
 		],
 		links: [
+			{ label: 'Joseph OAuth', href: '/projects/joseph-oauth' },
 			{ label: 'Privacy', href: '/privacy' },
 			{ label: 'Terms', href: '/terms' },
 		],
@@ -228,14 +220,6 @@ const projectItems = [
 				],
 			},
 			{
-				title: 'Google data usage',
-				paragraphs: [
-					'English Word Cards uses Google Identity Services for sign-in and stores the Google ID token plus expiration locally in the browser.',
-					'The app sends a valid ID token when submitting review updates through a Google Apps Script endpoint connected to a Google Sheet.',
-					"It does not access Gmail, Google Drive, Google Calendar, contacts, or the user's Google password.",
-				],
-			},
-			{
 				title: 'Data notes',
 				items: [
 					'Sheet-backed vocabulary review data',
@@ -247,6 +231,7 @@ const projectItems = [
 			},
 		],
 		links: [
+			{ label: 'Joseph OAuth', href: '/projects/joseph-oauth' },
 			{ label: 'Privacy', href: '/privacy' },
 			{ label: 'Terms', href: '/terms' },
 		],
@@ -260,63 +245,6 @@ const projectItems = [
 			'Google Sheets',
 			'Spaced repetition',
 			'Static hosting',
-		],
-	},
-	{
-		id: 'google-sign-in',
-		navLabel: 'OAuth proxy',
-		title: 'Google OAuth Proxy',
-		eyebrow: 'Cloudflare Worker',
-		placeholder: 'OAuth',
-		description:
-			"A shared Cloudflare Worker OAuth proxy that centralizes Google login, session cookies, token refresh, profile lookup, logout, and authenticated backend proxying for Joseph's frontend apps.",
-		sections: [
-			{
-				title: 'Features',
-				items: [
-					'Starts Google OAuth login by app id',
-					'Validates callback state',
-					'Stores sessions in Cloudflare KV',
-					'Refreshes expired access tokens',
-					'Returns authenticated profile data',
-					'Proxies app API calls to Google Apps Script',
-					'Supports app-specific allowed origins',
-				],
-			},
-			{
-				title: 'Requested data',
-				paragraphs: [
-					'The OAuth proxy requests OpenID, email, profile, and Google Apps Script project scopes so frontend apps can authenticate users and make authorized backend calls.',
-					'It may receive basic profile information such as name, email address, profile image, and Google account identifier.',
-					'It does not access Gmail, Google Drive, Google Calendar, contacts, or other Google services unless an individual application explicitly adds that behavior.',
-				],
-			},
-			{
-				title: 'Security notes',
-				items: [
-					'Strict redirect origin validation',
-					'Credentialed CORS limited to configured origins',
-					'HttpOnly session cookies',
-					'Short-lived OAuth state records',
-					'App configuration stored under config:<app_id>',
-				],
-			},
-		],
-		links: [
-			{ label: 'Privacy', href: '/privacy' },
-			{ label: 'Terms', href: '/terms' },
-			{ label: 'Contact', href: '/' },
-		],
-		tools: [
-			'TypeScript',
-			'Cloudflare Workers',
-			'Wrangler',
-			'Cloudflare KV',
-			'Google OAuth 2.0',
-			'OpenID Connect',
-			'Secure cookies',
-			'Credentialed CORS',
-			'Google Apps Script proxy',
 		],
 	},
 ] satisfies Array<ComponentProps<typeof Project> & { navLabel: string; id: string }>;
