@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { UIEvent, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { makeStyles } from 'tss-react/mui';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -9,31 +10,46 @@ import PopupAnimate from '../../components/shared/popupAnimate';
 
 const useStyle = makeStyles()((theme) => ({
 	project: {
+		scrollMarginTop: '5rem',
 		[theme.breakpoints.up('md')]: {
-			width: '100vw',
-			height: '100vh',
+			minHeight: '100vh',
+			maxHeight: '100vh',
 			padding: '6rem',
 			flexShrink: 0,
 
 			display: 'grid',
-			gridTemplateColumns: '66% 33%',
-			gridTemplateRows: 'repeat(7, 1fr)',
+			gridTemplateColumns: 'minmax(0, 2fr) minmax(16rem, 1fr)',
+			gridTemplateRows: 'auto repeat(6, minmax(0, 1fr))',
 			gridGap: '1rem',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			width: '100%',
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'center',
 			marginBottom: '1em',
+			scrollMarginTop: '9rem',
 		},
 	},
-	title: {
+	header: {
 		[theme.breakpoints.up('md')]: {
 			gridColumn: '1 / span 2',
 			gridRow: '1 / 1',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
+			width: '100%',
+			padding: '0 0.5rem',
+		},
+	},
+	eyebrow: {
+		marginBottom: '0.35rem',
+		fontWeight: 700,
+		letterSpacing: '0.08em',
+		textTransform: 'uppercase',
+		color: theme.palette.secondary.main,
+	},
+	title: {
+		[theme.breakpoints.down('md')]: {
 			alignSelf: 'flex-start',
 			marginBottom: '0.5em',
 		},
@@ -43,7 +59,7 @@ const useStyle = makeStyles()((theme) => ({
 			gridColumn: '2 / 2',
 			gridRow: '2 / 2',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			alignSelf: 'flex-start',
 			paddingLeft: '0.5rem',
 			marginBottom: '0.5em',
@@ -51,12 +67,8 @@ const useStyle = makeStyles()((theme) => ({
 	},
 	description: {
 		width: '100%',
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '2 / 2',
-			gridRow: '3 / span 3',
-		},
-		[theme.breakpoints.down('sm')]: {
-			padding: '0 0.5rem',
+		[theme.breakpoints.down('md')]: {
+			padding: '0',
 		},
 		'& > hr': {
 			marginBottom: '1em',
@@ -64,6 +76,93 @@ const useStyle = makeStyles()((theme) => ({
 		'& .content': {
 			marginBottom: '1em',
 		},
+	},
+	contentPanelFrame: {
+		width: '100%',
+		minWidth: 0,
+		position: 'relative',
+		[theme.breakpoints.up('md')]: {
+			gridColumn: '2 / 2',
+			gridRow: '2 / span 4',
+			minHeight: 0,
+			maxHeight: '100%',
+			'&::before, &::after': {
+				content: '""',
+				position: 'absolute',
+				left: 0,
+				right: '0.25rem',
+				zIndex: 1,
+				height: '2rem',
+				opacity: 0,
+				pointerEvents: 'none',
+				transition: 'opacity 0.2s ease',
+			},
+			'&::before': {
+				top: 0,
+				background: `linear-gradient(${theme.palette.background.default}, rgba(255, 255, 255, 0))`,
+			},
+			'&::after': {
+				bottom: 0,
+				background: `linear-gradient(rgba(255, 255, 255, 0), ${theme.palette.background.default})`,
+			},
+			'&.has-top-gradient::before': {
+				opacity: 1,
+			},
+			'&.has-bottom-gradient::after': {
+				opacity: 1,
+			},
+		},
+	},
+	contentPanelFrameFullWidth: {
+		[theme.breakpoints.up('md')]: {
+			gridColumn: '1 / span 2',
+		},
+	},
+	contentPanel: {
+		width: '100%',
+		minWidth: 0,
+		[theme.breakpoints.up('md')]: {
+			height: '100%',
+			maxHeight: '100%',
+			overflowY: 'auto',
+			paddingRight: '0.25rem',
+		},
+		[theme.breakpoints.down('md')]: {
+			padding: '0 0.5rem',
+		},
+	},
+	section: {
+		marginBottom: '1em',
+	},
+	sectionList: {
+		margin: '0.25em 0 1em',
+		paddingLeft: '1.2em',
+		'& li': {
+			marginBottom: '0.25em',
+		},
+	},
+	links: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		gap: '0.5rem',
+		marginTop: '1rem',
+	},
+	link: {
+		border: `1px solid ${theme.palette.primary.light}`,
+		borderRadius: '0.5rem',
+		padding: '0.45rem 0.75rem',
+		fontWeight: 700,
+		color: theme.palette.primary.main,
+		transition: '0.2s',
+		'&:hover, &:focus': {
+			color: theme.palette.secondary.main,
+			borderColor: theme.palette.secondary.main,
+			outline: 'none',
+		},
+	},
+	footerNote: {
+		marginTop: '1rem',
+		color: theme.palette.primary.light,
 	},
 	image: {
 		backgroundPosition: 'center',
@@ -73,23 +172,9 @@ const useStyle = makeStyles()((theme) => ({
 			gridColumn: '1 / 1',
 			gridRow: '2 / span 6',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			width: 'calc(100% - 1em)',
 			paddingTop: '56.25%',
-		},
-		'&.default': {
-			backgroundColor: theme.palette.background.paper,
-			padding: '1em',
-			display: 'flex',
-			alignItems: 'flex-end',
-			color: theme.palette.text.secondary,
-			fontSize: '2em',
-			[theme.breakpoints.down('sm')]: {
-				alignItems: 'flex-start',
-			},
-			'& > h1': {
-				fontFamily: 'Lobster',
-			},
 		},
 		'&:hover': {
 			cursor: 'pointer',
@@ -101,67 +186,274 @@ const useStyle = makeStyles()((theme) => ({
 			gridRow: '6 / span 2',
 			alignSelf: 'end',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			padding: '0 0.5rem',
 			alignSelf: 'flex-end',
 		},
 	},
+	toolsWithoutImage: {
+		[theme.breakpoints.up('md')]: {
+			gridColumn: '1',
+		},
+		[theme.breakpoints.down('md')]: {
+			alignSelf: 'flex-start',
+		},
+	},
 }));
 
-export default function Project(props: {
+type ProjectSection = {
 	title: string;
+	paragraphs?: string[];
+	items?: string[];
+};
+
+type ProjectLink = {
+	label: string;
+	href: string;
+};
+
+function ProjectLinkItem({
+	link,
+	className,
+}: {
+	link: ProjectLink;
+	className: string;
+}) {
+	if (link.href.startsWith('/')) {
+		return (
+			<Link className={className} href={link.href}>
+				{link.label}
+			</Link>
+		);
+	}
+
+	return (
+		<a
+			className={className}
+			href={link.href}
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			{link.label}
+		</a>
+	);
+}
+
+export default function Project(props: {
+	id?: string;
+	title: string;
+	eyebrow?: string;
 	description?: string;
+	descriptionTitle?: string;
 	image?: string;
+	placeholder?: string;
 	url?: string;
 	tools?: string[];
+	sections?: ProjectSection[];
+	links?: ProjectLink[];
+	footerNote?: string;
+	titleComponent?: 'h1' | 'h2';
 }) {
-	const { title, description, image, url, tools } = props;
+	const {
+		id,
+		title,
+		eyebrow,
+		description,
+		descriptionTitle = 'Description',
+		image,
+		url,
+		tools,
+		sections,
+		links,
+		footerNote,
+		titleComponent = 'h2',
+	} = props;
 	const { classes } = useStyle();
 	const theme = useTheme();
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
+	const hasContent = Boolean(
+		description || sections?.length || links?.length || footerNote,
+	);
+	const contentPanelRef = useRef<HTMLDivElement>(null);
+	const [scrollGradient, setScrollGradient] = useState({
+		top: false,
+		bottom: false,
+	});
+
+	const updateScrollGradient = () => {
+		const contentPanel = contentPanelRef.current;
+		if (!contentPanel) return;
+
+		const scrollTop = contentPanel.scrollTop;
+		const maxScrollTop =
+			contentPanel.scrollHeight - contentPanel.clientHeight;
+
+		setScrollGradient({
+			top: scrollTop > 0,
+			bottom: maxScrollTop - scrollTop > 1,
+		});
+	};
+
+	const openProject = () => {
+		if (!url) return;
+		window.open(url, '_blank', 'noopener,noreferrer')?.focus();
+	};
+
+	useEffect(() => {
+		updateScrollGradient();
+
+		const contentPanel = contentPanelRef.current;
+		if (!contentPanel) return;
+
+		const resizeObserver = new ResizeObserver(updateScrollGradient);
+		resizeObserver.observe(contentPanel);
+
+		return () => resizeObserver.disconnect();
+	}, [description, sections, links, footerNote, isViewPortLarge]);
 
 	return (
-		<div className={classes.project}>
-			<Typography className={classes.title} variant={'h1'}>
-				{title}
-			</Typography>
-			{image ? (
+		<article className={classes.project} id={id}>
+			<header className={classes.header}>
+				{eyebrow && (
+					<Typography className={classes.eyebrow} variant="body1">
+						{eyebrow}
+					</Typography>
+				)}
+				<Typography
+					className={classes.title}
+					variant="h1"
+					component={titleComponent}
+				>
+					{title}
+				</Typography>
+			</header>
+			{image && (
 				<div
 					className={classes.image}
 					style={{ backgroundImage: `url(${image})` }}
-					onClick={() => url && window.open(url, '_blank').focus()}
-				></div>
-			) : (
-				<div className={`${classes.image} default`}>
-					<PopupAnimate disabled={isViewPortLarge}>
-						<Typography variant={'h1'}>{'Coming Soon...'}</Typography>
-					</PopupAnimate>
+					onClick={openProject}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter' || event.key === ' ') {
+							openProject();
+						}
+					}}
+					role={url ? 'link' : undefined}
+					tabIndex={url ? 0 : undefined}
+					aria-label={url ? `Open ${title}` : undefined}
+				/>
+			)}
+			{hasContent && (
+				<div
+					className={`${classes.contentPanelFrame} ${!image ? classes.contentPanelFrameFullWidth : ''} ${
+						scrollGradient.top ? 'has-top-gradient' : ''
+					} ${scrollGradient.bottom ? 'has-bottom-gradient' : ''}`}
+				>
+					<div
+						className={classes.contentPanel}
+						ref={contentPanelRef}
+						onScroll={(event: UIEvent<HTMLDivElement>) => {
+							const contentPanel = event.currentTarget;
+							const scrollTop = contentPanel.scrollTop;
+							const maxScrollTop =
+								contentPanel.scrollHeight -
+								contentPanel.clientHeight;
+
+							setScrollGradient({
+								top: scrollTop > 0,
+								bottom: maxScrollTop - scrollTop > 1,
+							});
+						}}
+					>
+						{description && (
+							<>
+								<Typography
+									className={classes.descriptionTitle}
+									variant="h2"
+									component="h3"
+								>
+									{descriptionTitle}
+								</Typography>
+								<div className={classes.description}>
+									<PopupAnimate disabled={isViewPortLarge}>
+										<Typography
+											className="content"
+											variant="body1"
+										>
+											{description}
+										</Typography>
+									</PopupAnimate>
+									<Divider />
+								</div>
+							</>
+						)}
+						{sections?.map((section) => (
+							<section
+								className={classes.section}
+								key={section.title}
+							>
+								<Typography variant="h3" component="h3">
+									{section.title}
+								</Typography>
+								{section.paragraphs?.map((paragraph) => (
+									<Typography
+										className="content"
+										variant="body1"
+										key={paragraph}
+									>
+										{paragraph}
+									</Typography>
+								))}
+								{section.items && (
+									<ul className={classes.sectionList}>
+										{section.items.map((item) => (
+											<Typography
+												component="li"
+												variant="body1"
+												key={item}
+											>
+												{item}
+											</Typography>
+										))}
+									</ul>
+								)}
+							</section>
+						))}
+						{links && (
+							<nav
+								className={classes.links}
+								aria-label={`${title} links`}
+							>
+								{links.map((link) => (
+									<ProjectLinkItem
+										className={classes.link}
+										key={`${link.label}-${link.href}`}
+										link={link}
+									/>
+								))}
+							</nav>
+						)}
+						{footerNote && (
+							<Typography
+								className={classes.footerNote}
+								variant="body1"
+							>
+								{footerNote}
+							</Typography>
+						)}
+					</div>
 				</div>
 			)}
-			{description && (
-				<article>
-					<Typography className={classes.descriptionTitle} variant={'h2'}>
-						{'Description'}
-					</Typography>
-					<div className={classes.description}>
-						<PopupAnimate disabled={isViewPortLarge}>
-							<Typography className={'content'} variant={'body1'}>
-								{description}
-							</Typography>
-						</PopupAnimate>
-						<Divider />
-					</div>
-				</article>
-			)}
 			{tools && (
-				<div className={classes.tools}>
+				<div
+					className={`${classes.tools} ${!image ? classes.toolsWithoutImage : ''}`}
+				>
 					{tools.map((tool, index) => (
-						<Typography key={index} variant={'body1'}>
+						<p className="m-0 text-sm text-gray-500" key={index}>
 							{tool}
-						</Typography>
+						</p>
 					))}
 				</div>
 			)}
-		</div>
+		</article>
 	);
 }

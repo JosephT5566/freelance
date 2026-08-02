@@ -1,11 +1,19 @@
 import React, { useState, createContext, useContext, ReactNode } from 'react';
-const IndexContext = createContext(null);
-const IndexUpdateContext = createContext(null);
+const IndexContext = createContext<number | null>(null);
+const IndexUpdateContext = createContext<((currentIndex: number) => void) | null>(null);
 
 export const useIndex = () => useContext(IndexContext);
-export const useUpdateIndex = () => useContext(IndexUpdateContext);
+export const useUpdateIndex = () => {
+	const updateIndex = useContext(IndexUpdateContext);
 
-const defaultIndex: number = null;
+	if (!updateIndex) {
+		throw new Error('useUpdateIndex must be used within an IndexProvider');
+	}
+
+	return updateIndex;
+};
+
+const defaultIndex: number | null = null;
 
 export function IndexProvider(props: { children: ReactNode }) {
 	const { children } = props;

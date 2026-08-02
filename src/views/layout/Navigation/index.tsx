@@ -7,9 +7,8 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import Button from './Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
-import Snackbar, { defaultSnackbarProps } from '../../../components/shared/snackbar';
+import { Menu } from 'lucide-react';
 
 import { debounce } from '../../../utils/helpers';
 
@@ -67,49 +66,33 @@ const useStyle = makeStyles()((theme) => ({
 	},
 }));
 
-const Items = (props: { btnClicked?: any }) => {
+const navItems = [
+	{ label: 'Projects', href: '/projects' },
+	{ label: 'Legal', href: '/legal', activePaths: ['/legal', '/privacy', '/terms'] },
+];
+
+const Items = (props: { btnClicked?: () => void }) => {
 	const { btnClicked = null } = props;
-	const [snackbarProps, setSnackbarProps] = useState(defaultSnackbarProps);
 	const router = useRouter();
 	const pathname = usePathname();
-	const isProjectsPage = pathname === '/projects' || pathname === '/projects/';
-
-	const handleCloseSnackbar = () => {
-		setSnackbarProps((prev) => ({ ...prev, open: false }));
-	};
-
-	const copyEmail = async () => {
-		await navigator.clipboard.writeText(`zxp930110@hotmail.com.tw`); // copy to clipboard
-		setSnackbarProps((prev) => ({
-			...prev,
-			open: true,
-			severity: 'success',
-			message: 'e-mail address copied',
-		}));
-	};
 
 	return (
 		<IndexProvider>
-			<Button
-				index={1}
-				active={isProjectsPage}
-				onClick={() => {
-					router.push('/projects');
-					btnClicked && btnClicked();
-				}}
-			>
-				Projects
-			</Button>
-			<Button
-				index={2}
-				onClick={async () => {
-					await copyEmail();
-					btnClicked && btnClicked();
-				}}
-			>
-				Contact me
-			</Button>
-			<Snackbar snackbarProps={snackbarProps} onClose={handleCloseSnackbar} />
+			{navItems.map((item, index) => (
+				<Button
+					key={item.href}
+					index={index + 1}
+					active={(item.activePaths ?? [item.href]).some(
+						(path) => pathname === path || pathname === `${path}/`
+					)}
+					onClick={() => {
+						router.push(item.href);
+						btnClicked && btnClicked();
+					}}
+				>
+					{item.label}
+				</Button>
+			))}
 		</IndexProvider>
 	);
 };
@@ -172,7 +155,7 @@ const NavigatorMd = () => {
 			<nav className={`${classes.navigation_md} ${visible}`}>
 				<div className={classes.itemsContainer}>
 					<IconButton className={classes.navButton} aria-label="menu" onClick={handleClick}>
-						<MenuIcon />
+						<Menu aria-hidden="true" />
 					</IconButton>
 					<Items btnClicked={handleButtonClicked} />
 				</div>

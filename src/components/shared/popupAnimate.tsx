@@ -5,7 +5,7 @@ import { debounce } from '../../utils/helpers';
 export default function PupupAnimate(props: { disabled?: boolean; children: ReactNode }) {
 	const { disabled = false, children } = props;
 	const [display, setDisplay] = useState(false);
-	const animateRef = useRef(null);
+	const animateRef = useRef<HTMLDivElement | null>(null);
 
 	const springProps = useSpring({ opacity: display ? 1 : 0, y: display ? 0 : 30 });
 

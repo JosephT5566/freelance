@@ -1,10 +1,9 @@
+import type { ComponentProps } from 'react';
 import MaterialSnackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
-import WarningIcon from '@mui/icons-material/Error';
-import CheckIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Cancel';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'tss-react/mui';
+import { AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 
 interface SnackbarType {
 	__typename: 'Snackbar';
@@ -48,18 +47,20 @@ const useStyle = makeStyles()((theme) => ({
 	},
 }));
 
-export default function Snackbar(props: { snackbarProps: SnackbarType; onClose: any }) {
+type SnackbarCloseHandler = ComponentProps<typeof MaterialSnackbar>['onClose'];
+
+export default function Snackbar(props: { snackbarProps: SnackbarType; onClose: SnackbarCloseHandler }) {
 	const { classes } = useStyle();
 	const { snackbarProps, onClose } = props;
 
 	const Icon = () => {
 		switch (snackbarProps.severity) {
 			case 'success':
-				return <CheckIcon className={classes.icon} />;
+				return <CheckCircle className={classes.icon} />;
 			case 'warning':
-				return <WarningIcon className={classes.icon} />;
+				return <AlertTriangle className={classes.icon} />;
 			case 'error':
-				return <ErrorIcon className={classes.icon} />;
+				return <XCircle className={classes.icon} />;
 			default:
 				return null;
 		}

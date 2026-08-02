@@ -1,13 +1,9 @@
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
+import { FaBehance, FaFlickr, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Behance from '../../assets/icons/behance.svg';
-import Flickr from '../../assets/icons/flickr.svg';
-import Github from '../../assets/icons/github.svg';
-import Linkedin from '../../assets/icons/linkedin.svg';
-import packageJson from '../../../package.json';
 
 const useStyle = makeStyles()((theme) => ({
 	footer: {
@@ -50,29 +46,30 @@ const useStyle = makeStyles()((theme) => ({
 
 export default function Footer() {
 	const { classes } = useStyle();
+	const currentYear = new Date().getFullYear();
 
 	return (
 		<footer className={classes.footer}>
 			<Typography variant="body1">{'Elsewhere on the Internet'}</Typography>
 			<div className={classes.icons}>
 				<a href="https://www.behance.net/zxp9301107b6a" target="_blank" rel="noopener noreferrer">
-					<Behance className={classes.icon} />
+					<FaBehance className={classes.icon} aria-label="Behance" />
 				</a>
 				<a href="https://www.flickr.com/photos/joseph-t_0304/" target="_blank" rel="noopener noreferrer">
-					<Flickr className={classes.icon} />
+					<FaFlickr className={classes.icon} aria-label="Flickr" />
 				</a>
 				<a href="https://github.com/JosephT5566" target="_blank" rel="noopener noreferrer">
-					<Github className={classes.icon} />
+					<FaGithub className={classes.icon} aria-label="GitHub" />
 				</a>
 				{/* <a href="https://www.instagram.com/tsengchun34/" target="_blank" rel="noopener noreferrer">
 					<Instagram className={classes.icon} />
 				</a> */}
 				<a href="https://www.linkedin.com/in/joseph-tseng-50ba36136" target="_blank" rel="noopener noreferrer">
-					<Linkedin className={classes.icon} />
+					<FaLinkedin className={classes.icon} aria-label="LinkedIn" />
 				</a>
 			</div>
 			<Container className={classes.copyright}>
-				<div>{`© Design by Joseph v${packageJson.version}`}</div>
+				<div>{`© ${currentYear} Joseph Tseng`}</div>
 			</Container>
 		</footer>
 	);
