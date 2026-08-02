@@ -68,8 +68,7 @@ const useStyle = makeStyles()((theme) => ({
 
 const navItems = [
 	{ label: 'Projects', href: '/projects' },
-	{ label: 'Privacy', href: '/privacy' },
-	{ label: 'Terms', href: '/terms' },
+	{ label: 'Legal', href: '/legal', activePaths: ['/legal', '/privacy', '/terms'] },
 ];
 
 const Items = (props: { btnClicked?: () => void }) => {
@@ -83,7 +82,9 @@ const Items = (props: { btnClicked?: () => void }) => {
 				<Button
 					key={item.href}
 					index={index + 1}
-					active={pathname === item.href || pathname === `${item.href}/`}
+					active={(item.activePaths ?? [item.href]).some(
+						(path) => pathname === path || pathname === `${path}/`
+					)}
 					onClick={() => {
 						router.push(item.href);
 						btnClicked && btnClicked();

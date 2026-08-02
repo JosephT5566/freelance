@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from './infoPages.module.css';
 
 const LAST_UPDATED = 'August 2, 2026';
-const CONTACT_EMAIL = '[CONTACT_EMAIL]';
+const CONTACT_EMAIL = 'zxp930110gg@gmail.com';
 const CURRENT_YEAR = 2026;
 
 type ProjectCardProps = {
@@ -72,11 +72,8 @@ function PageLinks() {
 			<Link className={styles.link} href="/projects">
 				Projects
 			</Link>
-			<Link className={styles.link} href="/privacy">
-				Privacy
-			</Link>
-			<Link className={styles.link} href="/terms">
-				Terms
+			<Link className={styles.link} href="/legal">
+				Legal
 			</Link>
 		</nav>
 	);
@@ -84,21 +81,6 @@ function PageLinks() {
 
 function PageFooter() {
 	return <footer className={styles.footer}>© {CURRENT_YEAR} Joseph Tseng</footer>;
-}
-
-function LegalSection({
-	title,
-	children,
-}: {
-	title: string;
-	children: React.ReactNode;
-}) {
-	return (
-		<section className={styles.legalSection}>
-			<h2>{title}</h2>
-			{children}
-		</section>
-	);
 }
 
 export function ProjectsContent() {
@@ -215,6 +197,49 @@ export function ProjectsContent() {
 	);
 }
 
+export function LegalContent() {
+	return (
+		<>
+			<main className={styles.page}>
+				<div className={styles.container}>
+					<header className={styles.hero}>
+						<p className={styles.eyebrow}>Legal</p>
+						<h1 className={styles.title}>Policies, plainly stated.</h1>
+						<p className={styles.lead}>
+							Read how Joseph&apos;s applications handle your information and the terms that apply when you use them.
+						</p>
+						<PageLinks />
+					</header>
+
+					<section className={styles.grid} aria-label="Legal documents">
+						<Link className={styles.documentCard} href="/privacy">
+							<span className={styles.documentLabel}>Your information</span>
+							<h2 className={styles.cardTitle}>Privacy Policy</h2>
+							<p className={styles.cardText}>
+								What information the applications collect, why it is used, and how it is protected.
+							</p>
+							<span className={styles.documentAction}>
+								Read privacy policy <span aria-hidden="true">→</span>
+							</span>
+						</Link>
+						<Link className={styles.documentCard} href="/terms">
+							<span className={styles.documentLabel}>Using the applications</span>
+							<h2 className={styles.cardTitle}>Terms of Service</h2>
+							<p className={styles.cardText}>
+								The responsibilities, limitations, and conditions that apply when using the applications.
+							</p>
+							<span className={styles.documentAction}>
+								Read terms of service <span aria-hidden="true">→</span>
+							</span>
+						</Link>
+					</section>
+				</div>
+			</main>
+			<PageFooter />
+		</>
+	);
+}
+
 export function PrivacyContent() {
 	return (
 		<>
@@ -225,56 +250,87 @@ export function PrivacyContent() {
 						<p className={styles.lastUpdated}>Last updated: {LAST_UPDATED}</p>
 						<PageLinks />
 					</header>
-					<article className={styles.legalArticle}>
-					<LegalSection title="1. Overview">
-						<p>
-							This Privacy Policy explains how Joseph Tseng&apos;s personal applications collect, use, and protect
-							information for authentication and app functionality.
-						</p>
-					</LegalSection>
-					<LegalSection title="2. Applications Covered">
-						<p>This policy applies to Travel Split and English Word Cards.</p>
-					</LegalSection>
-					<LegalSection title="3. Information We Collect">
-						<p>Applications may collect basic Google OAuth profile data: name, email, profile image, and Google account ID.</p>
-						<p>Applications may also store user-generated app data, including Travel Split expenses and English Word Cards vocabulary.</p>
-					</LegalSection>
-					<LegalSection title="4. Google Sign-In">
-						<p>
-							Google Sign-In is used to authenticate users and identify their accounts. These applications do not
-							store Google passwords.
-						</p>
-						<p>
-							They do not access Gmail, Google Drive, Google Calendar, contacts, or other Google services unless
-							explicitly stated by an individual application.
-						</p>
-					</LegalSection>
-					<LegalSection title="5. How We Use Information">
-						<p>Information is used to provide account-based access, associate user data with the correct account, and support core app features.</p>
-						<p>Information is not sold and is not used for advertising tracking.</p>
-					</LegalSection>
-					<LegalSection title="6. Data Storage and Security">
-						<p>
-							Application data may be stored using third-party cloud services. Reasonable safeguards are used to
-							protect stored information, but no online service can guarantee absolute security.
-						</p>
-					</LegalSection>
-					<LegalSection title="7. Data Sharing">
-						<p>Personal data is not sold. Data may be processed by third-party cloud services used to operate the applications.</p>
-					</LegalSection>
-					<LegalSection title="8. Data Retention and Deletion">
-						<p>Data may be retained while an account or application record remains active.</p>
-						<p>Users may request deletion of their data by contacting {CONTACT_EMAIL}.</p>
-					</LegalSection>
-					<LegalSection title="9. Children's Privacy">
-						<p>These applications are not intended for children. Children should not provide personal information through these applications.</p>
-					</LegalSection>
-					<LegalSection title="10. Changes">
-						<p>This policy may be updated as the applications change. Updates will be reflected by the last updated date on this page.</p>
-					</LegalSection>
-					<LegalSection title="11. Contact">
-						<p>Contact: {CONTACT_EMAIL}</p>
-					</LegalSection>
+					<article>
+						<ol className={styles.legalList}>
+							<li>
+								<h2>1. Overview</h2>
+								<p>
+									This Privacy Policy explains how Joseph Tseng&apos;s personal applications collect, use, and
+									protect information for authentication and app functionality.
+								</p>
+							</li>
+							<li>
+								<h2>2. Applications Covered</h2>
+								<p>This policy applies to Travel Split and English Word Cards.</p>
+							</li>
+							<li>
+								<h2>3. Information We Collect</h2>
+								<p>
+									Applications may collect basic Google OAuth profile data: name, email, profile image, and Google
+									account ID.
+								</p>
+								<p>
+									Applications may also store user-generated app data, including Travel Split expenses and English
+									Word Cards vocabulary.
+								</p>
+							</li>
+							<li>
+								<h2>4. Google Sign-In</h2>
+								<p>
+									Google Sign-In is used to authenticate users and identify their accounts. These applications do
+									not store Google passwords.
+								</p>
+								<p>
+									They do not access Gmail, Google Drive, Google Calendar, contacts, or other Google services unless
+									explicitly stated by an individual application.
+								</p>
+							</li>
+							<li>
+								<h2>5. How We Use Information</h2>
+								<p>
+									Information is used to provide account-based access, associate user data with the correct account,
+									and support core app features.
+								</p>
+								<p>Information is not sold and is not used for advertising tracking.</p>
+							</li>
+							<li>
+								<h2>6. Data Storage and Security</h2>
+								<p>
+									Application data may be stored using third-party cloud services. Reasonable safeguards are used to
+									protect stored information, but no online service can guarantee absolute security.
+								</p>
+							</li>
+							<li>
+								<h2>7. Data Sharing</h2>
+								<p>
+									Personal data is not sold. Data may be processed by third-party cloud services used to operate the
+									applications.
+								</p>
+							</li>
+							<li>
+								<h2>8. Data Retention and Deletion</h2>
+								<p>Data may be retained while an account or application record remains active.</p>
+								<p>Users may request deletion of their data by contacting {CONTACT_EMAIL}.</p>
+							</li>
+							<li>
+								<h2>9. Children&apos;s Privacy</h2>
+								<p>
+									These applications are not intended for children. Children should not provide personal information
+									through these applications.
+								</p>
+							</li>
+							<li>
+								<h2>10. Changes</h2>
+								<p>
+									This policy may be updated as the applications change. Updates will be reflected by the last
+									updated date on this page.
+								</p>
+							</li>
+							<li>
+								<h2>11. Contact</h2>
+								<p>Contact: {CONTACT_EMAIL}</p>
+							</li>
+						</ol>
 					</article>
 				</div>
 			</main>
@@ -293,48 +349,89 @@ export function TermsContent() {
 						<p className={styles.lastUpdated}>Last updated: {LAST_UPDATED}</p>
 						<PageLinks />
 					</header>
-					<article className={styles.legalArticle}>
-					<LegalSection title="1. Acceptance">
-						<p>By using Travel Split or English Word Cards, you agree to these Terms of Service.</p>
-					</LegalSection>
-					<LegalSection title="2. Applications Covered">
-						<p>These terms apply to Travel Split and English Word Cards.</p>
-					</LegalSection>
-					<LegalSection title="3. Personal Use">
-						<p>The applications are provided for personal, non-commercial use.</p>
-					</LegalSection>
-					<LegalSection title="4. Accounts">
-						<p>Some applications support Google Sign-In. You are responsible for your account access and activity.</p>
-					</LegalSection>
-					<LegalSection title="5. User Content">
-						<p>You are responsible for expenses, vocabulary, notes, definitions, and other content you create or save in the applications.</p>
-					</LegalSection>
-					<LegalSection title="6. Acceptable Use">
-						<p>You may not abuse, disrupt, reverse engineer, or attempt to gain unauthorized access to the applications or related systems.</p>
-					</LegalSection>
-					<LegalSection title="7. Availability">
-						<p>The services may change, break, be interrupted, or be discontinued. There is no guarantee of data persistence.</p>
-					</LegalSection>
-					<LegalSection title="8. Third-Party Services">
-						<p>The applications may use Google Sign-In and third-party cloud services for authentication, hosting, storage, or operation.</p>
-					</LegalSection>
-					<LegalSection title="9. Disclaimer">
-						<p>The applications are provided on an as-is basis.</p>
-						<p>Travel Split calculations are not guaranteed to be accurate, complete, or suitable for financial decisions.</p>
-						<p>English Word Cards content, definitions, notes, and review behavior are not guaranteed to be accurate or complete.</p>
-					</LegalSection>
-					<LegalSection title="10. Liability">
-						<p>Use the applications at your own discretion. Joseph Tseng is not responsible for losses caused by use of, inability to use, or reliance on the applications.</p>
-					</LegalSection>
-					<LegalSection title="11. Termination">
-						<p>Access may be limited or ended if an application is misused or discontinued.</p>
-					</LegalSection>
-					<LegalSection title="12. Changes">
-						<p>These terms may be updated as the applications change. Updates will be reflected by the last updated date on this page.</p>
-					</LegalSection>
-					<LegalSection title="13. Contact">
-						<p>Contact: {CONTACT_EMAIL}</p>
-					</LegalSection>
+					<article>
+						<ol className={styles.legalList}>
+							<li>
+								<h2>1. Acceptance</h2>
+								<p>By using Travel Split or English Word Cards, you agree to these Terms of Service.</p>
+							</li>
+							<li>
+								<h2>2. Applications Covered</h2>
+								<p>These terms apply to Travel Split and English Word Cards.</p>
+							</li>
+							<li>
+								<h2>3. Personal Use</h2>
+								<p>The applications are provided for personal, non-commercial use.</p>
+							</li>
+							<li>
+								<h2>4. Accounts</h2>
+								<p>
+									Some applications support Google Sign-In. You are responsible for your account access and activity.
+								</p>
+							</li>
+							<li>
+								<h2>5. User Content</h2>
+								<p>
+									You are responsible for expenses, vocabulary, notes, definitions, and other content you create or
+									save in the applications.
+								</p>
+							</li>
+							<li>
+								<h2>6. Acceptable Use</h2>
+								<p>
+									You may not abuse, disrupt, reverse engineer, or attempt to gain unauthorized access to the
+									applications or related systems.
+								</p>
+							</li>
+							<li>
+								<h2>7. Availability</h2>
+								<p>
+									The services may change, break, be interrupted, or be discontinued. There is no guarantee of data
+									persistence.
+								</p>
+							</li>
+							<li>
+								<h2>8. Third-Party Services</h2>
+								<p>
+									The applications may use Google Sign-In and third-party cloud services for authentication,
+									hosting, storage, or operation.
+								</p>
+							</li>
+							<li>
+								<h2>9. Disclaimer</h2>
+								<p>The applications are provided on an as-is basis.</p>
+								<p>
+									Travel Split calculations are not guaranteed to be accurate, complete, or suitable for financial
+									decisions.
+								</p>
+								<p>
+									English Word Cards content, definitions, notes, and review behavior are not guaranteed to be
+									accurate or complete.
+								</p>
+							</li>
+							<li>
+								<h2>10. Liability</h2>
+								<p>
+									Use the applications at your own discretion. Joseph Tseng is not responsible for losses caused by
+									use of, inability to use, or reliance on the applications.
+								</p>
+							</li>
+							<li>
+								<h2>11. Termination</h2>
+								<p>Access may be limited or ended if an application is misused or discontinued.</p>
+							</li>
+							<li>
+								<h2>12. Changes</h2>
+								<p>
+									These terms may be updated as the applications change. Updates will be reflected by the last
+									updated date on this page.
+								</p>
+							</li>
+							<li>
+								<h2>13. Contact</h2>
+								<p>Contact: {CONTACT_EMAIL}</p>
+							</li>
+						</ol>
 					</article>
 				</div>
 			</main>

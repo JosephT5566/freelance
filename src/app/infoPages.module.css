@@ -76,6 +76,54 @@
 	line-height: 1.75;
 }
 
+.documentCard {
+	display: flex;
+	min-height: 250px;
+	flex-direction: column;
+	border: 1px solid rgba(37, 66, 81, 0.16);
+	border-radius: 8px;
+	padding: 1.5rem;
+	background: rgba(255, 255, 255, 0.28);
+	transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.documentCard:hover,
+.documentCard:focus-visible {
+	transform: translateY(-3px);
+	border-color: #f04b00;
+	background: rgba(255, 255, 255, 0.46);
+	outline: none;
+}
+
+.documentLabel {
+	margin-bottom: 1.5rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #829da9;
+}
+
+.documentAction {
+	display: flex;
+	justify-content: space-between;
+	margin-top: auto;
+	padding-top: 2rem;
+	font-weight: 700;
+	color: #f04b00;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.documentCard {
+		transition: none;
+	}
+
+	.documentCard:hover,
+	.documentCard:focus-visible {
+		transform: none;
+	}
+}
+
 .list {
 	margin: 0.75rem 0 0;
 	padding-left: 1.25rem;
@@ -118,17 +166,20 @@
 	outline: none;
 }
 
-.legalArticle {
+.legalList {
 	display: grid;
 	gap: 1.75rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-.legalSection {
+.legalList > li {
 	border-top: 1px solid rgba(37, 66, 81, 0.16);
 	padding-top: 1.5rem;
 }
 
-.legalSection h2 {
+.legalList h2 {
 	margin: 0 0 0.75rem;
 	font-family: Vidaloka, serif;
 	font-size: 1.65rem;
@@ -136,16 +187,16 @@
 	line-height: 1.15;
 }
 
-.legalSection p {
+.legalList p {
 	margin: 0 0 0.75rem;
 	line-height: 1.8;
 }
 
-.legalSection p:last-child {
+.legalList p:last-child {
 	margin-bottom: 0;
 }
 
-.legalSection ul {
+.legalList ul {
 	margin: 0.75rem 0 0;
 	padding-left: 1.25rem;
 	line-height: 1.8;
