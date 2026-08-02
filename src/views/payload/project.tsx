@@ -12,14 +12,12 @@ const useStyle = makeStyles()((theme) => ({
 	project: {
 		scrollMarginTop: '5rem',
 		[theme.breakpoints.up('md')]: {
-			width: '100%',
-			minHeight: '100vh',
+			maxHight: '100vh',
 			padding: '6rem',
 			flexShrink: 0,
 
 			display: 'grid',
 			gridTemplateColumns: 'minmax(0, 2fr) minmax(16rem, 1fr)',
-			gridTemplateRows: 'repeat(7, 1fr)',
 			gridGap: '1rem',
 		},
 		[theme.breakpoints.down('md')]: {
