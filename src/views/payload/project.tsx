@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { UIEvent, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { makeStyles } from 'tss-react/mui';
 import { useTheme } from '@mui/material/styles';
@@ -12,12 +12,14 @@ const useStyle = makeStyles()((theme) => ({
 	project: {
 		scrollMarginTop: '5rem',
 		[theme.breakpoints.up('md')]: {
-			maxHight: '100vh',
+			minHeight: '100vh',
+			maxHeight: '100vh',
 			padding: '6rem',
 			flexShrink: 0,
 
 			display: 'grid',
 			gridTemplateColumns: 'minmax(0, 2fr) minmax(16rem, 1fr)',
+			gridTemplateRows: 'auto repeat(6, minmax(0, 1fr))',
 			gridGap: '1rem',
 		},
 		[theme.breakpoints.down('md')]: {
@@ -75,13 +77,49 @@ const useStyle = makeStyles()((theme) => ({
 			marginBottom: '1em',
 		},
 	},
+	contentPanelFrame: {
+		width: '100%',
+		minWidth: 0,
+		position: 'relative',
+		[theme.breakpoints.up('md')]: {
+			gridColumn: '2 / 2',
+			gridRow: '2 / span 4',
+			minHeight: 0,
+			maxHeight: '100%',
+			'&::before, &::after': {
+				content: '""',
+				position: 'absolute',
+				left: 0,
+				right: '0.25rem',
+				zIndex: 1,
+				height: '2rem',
+				opacity: 0,
+				pointerEvents: 'none',
+				transition: 'opacity 0.2s ease',
+			},
+			'&::before': {
+				top: 0,
+				background: `linear-gradient(${theme.palette.background.default}, rgba(255, 255, 255, 0))`,
+			},
+			'&::after': {
+				bottom: 0,
+				background: `linear-gradient(rgba(255, 255, 255, 0), ${theme.palette.background.default})`,
+			},
+			'&.has-top-gradient::before': {
+				opacity: 1,
+			},
+			'&.has-bottom-gradient::after': {
+				opacity: 1,
+			},
+		},
+	},
 	contentPanel: {
 		width: '100%',
 		minWidth: 0,
 		[theme.breakpoints.up('md')]: {
-			gridColumn: '2 / 2',
-			gridRow: '2 / span 4',
-			overflow: 'auto',
+			height: '100%',
+			maxHeight: '100%',
+			overflowY: 'auto',
 			paddingRight: '0.25rem',
 		},
 		[theme.breakpoints.down('md')]: {
@@ -225,11 +263,38 @@ export default function Project(props: {
 	const theme = useTheme();
 	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
 	const hasContent = Boolean(description || sections?.length || links?.length || footerNote);
+	const contentPanelRef = useRef<HTMLDivElement>(null);
+	const [scrollGradient, setScrollGradient] = useState({ top: false, bottom: false });
+
+	const updateScrollGradient = () => {
+		const contentPanel = contentPanelRef.current;
+		if (!contentPanel) return;
+
+		const scrollTop = contentPanel.scrollTop;
+		const maxScrollTop = contentPanel.scrollHeight - contentPanel.clientHeight;
+
+		setScrollGradient({
+			top: scrollTop > 0,
+			bottom: maxScrollTop - scrollTop > 1,
+		});
+	};
 
 	const openProject = () => {
 		if (!url) return;
 		window.open(url, '_blank', 'noopener,noreferrer')?.focus();
 	};
+
+	useEffect(() => {
+		updateScrollGradient();
+
+		const contentPanel = contentPanelRef.current;
+		if (!contentPanel) return;
+
+		const resizeObserver = new ResizeObserver(updateScrollGradient);
+		resizeObserver.observe(contentPanel);
+
+		return () => resizeObserver.disconnect();
+	}, [description, sections, links, footerNote, isViewPortLarge]);
 
 	return (
 		<article className={classes.project} id={id}>
@@ -265,55 +330,74 @@ export default function Project(props: {
 				</div>
 			)}
 			{hasContent && (
-				<div className={classes.contentPanel}>
-					{description && (
-						<>
-							<Typography className={classes.descriptionTitle} variant="h2" component="h3">
-								{descriptionTitle}
-							</Typography>
-							<div className={classes.description}>
-								<PopupAnimate disabled={isViewPortLarge}>
-									<Typography className="content" variant="body1">
-										{description}
-									</Typography>
-								</PopupAnimate>
-								<Divider />
-							</div>
-						</>
-					)}
-					{sections?.map((section) => (
-						<section className={classes.section} key={section.title}>
-							<Typography variant="h3" component="h3">
-								{section.title}
-							</Typography>
-							{section.paragraphs?.map((paragraph) => (
-								<Typography className="content" variant="body1" key={paragraph}>
-									{paragraph}
+				<div
+					className={`${classes.contentPanelFrame} ${scrollGradient.top ? 'has-top-gradient' : ''} ${
+						scrollGradient.bottom ? 'has-bottom-gradient' : ''
+					}`}
+				>
+					<div
+						className={classes.contentPanel}
+						ref={contentPanelRef}
+						onScroll={(event: UIEvent<HTMLDivElement>) => {
+							const contentPanel = event.currentTarget;
+							const scrollTop = contentPanel.scrollTop;
+							const maxScrollTop = contentPanel.scrollHeight - contentPanel.clientHeight;
+
+							setScrollGradient({
+								top: scrollTop > 0,
+								bottom: maxScrollTop - scrollTop > 1,
+							});
+						}}
+					>
+						{description && (
+							<>
+								<Typography className={classes.descriptionTitle} variant="h2" component="h3">
+									{descriptionTitle}
 								</Typography>
-							))}
-							{section.items && (
-								<ul className={classes.sectionList}>
-									{section.items.map((item) => (
-										<Typography component="li" variant="body1" key={item}>
-											{item}
+								<div className={classes.description}>
+									<PopupAnimate disabled={isViewPortLarge}>
+										<Typography className="content" variant="body1">
+											{description}
 										</Typography>
-									))}
-								</ul>
-							)}
-						</section>
-					))}
-					{links && (
-						<nav className={classes.links} aria-label={`${title} links`}>
-							{links.map((link) => (
-								<ProjectLinkItem className={classes.link} key={`${link.label}-${link.href}`} link={link} />
-							))}
-						</nav>
-					)}
-					{footerNote && (
-						<Typography className={classes.footerNote} variant="body1">
-							{footerNote}
-						</Typography>
-					)}
+									</PopupAnimate>
+									<Divider />
+								</div>
+							</>
+						)}
+						{sections?.map((section) => (
+							<section className={classes.section} key={section.title}>
+								<Typography variant="h3" component="h3">
+									{section.title}
+								</Typography>
+								{section.paragraphs?.map((paragraph) => (
+									<Typography className="content" variant="body1" key={paragraph}>
+										{paragraph}
+									</Typography>
+								))}
+								{section.items && (
+									<ul className={classes.sectionList}>
+										{section.items.map((item) => (
+											<Typography component="li" variant="body1" key={item}>
+												{item}
+											</Typography>
+										))}
+									</ul>
+								)}
+							</section>
+						))}
+						{links && (
+							<nav className={classes.links} aria-label={`${title} links`}>
+								{links.map((link) => (
+									<ProjectLinkItem className={classes.link} key={`${link.label}-${link.href}`} link={link} />
+								))}
+							</nav>
+						)}
+						{footerNote && (
+							<Typography className={classes.footerNote} variant="body1">
+								{footerNote}
+							</Typography>
+						)}
+					</div>
 				</div>
 			)}
 			{tools && (
