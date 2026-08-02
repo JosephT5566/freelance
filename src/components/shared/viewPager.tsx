@@ -120,7 +120,7 @@ const PageDots = (props: {
 
 const defaultPages = new Array<PageType>();
 
-const useWidth = (ref: React.MutableRefObject<any>): number => {
+const useWidth = (ref: React.RefObject<HTMLDivElement | null>): number => {
 	const [width, setWidth] = useState(0);
 
 	const updateWidth = () => {
@@ -142,7 +142,7 @@ export default function ViewPager(props: { pages: PageType[] }) {
 	const { classes } = useStyle();
 	const [dotIndex, setDotIndex] = useState(0);
 	const pageIndexRef = useRef(0);
-	const containerRef = useRef(null);
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const width = useWidth(containerRef);
 	const count = pages.length;
@@ -232,7 +232,7 @@ export default function ViewPager(props: { pages: PageType[] }) {
 						<animated.div
 							className="image"
 							style={{ backgroundImage: `url(${pages[i].imageLink})` }}
-							onClick={() => pages[i].content && window.open(pages[i].content, '_blank').focus()}
+							onClick={() => pages[i].content && window.open(pages[i].content, '_blank')?.focus()}
 						/>
 					</animated.div>
 				))}
@@ -253,7 +253,7 @@ export function ViewPager_finite_scroll(props: { pages: PageType[] }) {
 	const { classes } = useStyle();
 	const [dotIndex, setDotIndex] = useState(0);
 	const pageIndexRef = useRef(0);
-	const containerRef = useRef(null);
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const width = useWidth(containerRef);
 
@@ -334,7 +334,7 @@ export function ViewPager_finite_scroll(props: { pages: PageType[] }) {
 						<animated.div
 							className="image"
 							style={{ backgroundImage: `url(${pages[i].imageLink})` }}
-							onClick={() => pages[i].content && window.open(pages[i].content, '_blank').focus()}
+							onClick={() => pages[i].content && window.open(pages[i].content, '_blank')?.focus()}
 						/>
 					</animated.div>
 				))}
