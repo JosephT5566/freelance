@@ -9,7 +9,7 @@ const signInSteps = [
 	},
 	{
 		label: 'Google consent',
-		text: 'Joseph OAuth sends the user to Google and validates the authorization response.',
+		text: 'Joseph Apps sends the user to Google and validates the authorization response.',
 	},
 	{
 		label: 'Secure session',
@@ -42,7 +42,7 @@ const supportedApps = [
 	},
 ];
 
-export default function JosephOAuth() {
+export default function JosephApps() {
 	return (
 		<>
 			<main className="min-h-screen bg-[#f1ece8] px-4 pt-26 pb-14 text-[#254251] sm:px-6 sm:pt-30 sm:pb-20">
@@ -60,15 +60,15 @@ export default function JosephOAuth() {
 								Authentication service
 							</p>
 							<h1 className="m-0 font-[Vidaloka,serif] text-[clamp(3.75rem,21vw,6.5rem)] leading-[0.82] font-normal tracking-[-0.035em] lg:text-[clamp(4rem,10vw,8.5rem)]">
-								Joseph OAuth
+								Joseph Apps
 							</h1>
 							<p className="mt-8 max-w-[720px] text-[clamp(1.08rem,2vw,1.28rem)] leading-[1.75]">
-								Joseph OAuth is an authentication service operated by Joseph Tseng. It lets the supported
-								applications below use Google Sign-In, establishes secure sessions, and routes authenticated
-								requests to their application backends.
+								Joseph Apps is the shared sign-in service for applications operated by Joseph Tseng. It lets the
+								supported applications below use Google Sign-In, creates secure sessions, and routes authenticated
+								requests to the appropriate application backend.
 							</p>
 							<p className="mt-5 max-w-[690px] border-l-[3px] border-[#f04b00] pl-4 text-[0.92rem] leading-[1.65]">
-								Joseph OAuth is independently operated and is not affiliated with or endorsed by Google.
+								Joseph Apps is independently operated and is not affiliated with or endorsed by Google.
 							</p>
 						</div>
 
@@ -80,7 +80,7 @@ export default function JosephOAuth() {
 								<dt className="mb-1 text-[0.68rem] font-bold tracking-[0.09em] text-[#b7c9cf] uppercase">
 									OAuth application name
 								</dt>
-								<dd className="m-0 text-base leading-[1.4] font-bold">Joseph OAuth</dd>
+								<dd className="m-0 text-base leading-[1.4] font-bold">Joseph Apps</dd>
 							</div>
 							<div className="mt-6 border-t border-[#f1ece8]/25 pt-6">
 								<dt className="mb-1 text-[0.68rem] font-bold tracking-[0.09em] text-[#b7c9cf] uppercase">
@@ -103,7 +103,7 @@ export default function JosephOAuth() {
 							className="m-0 max-w-[760px] font-[Vidaloka,serif] text-[clamp(2.35rem,6vw,4.5rem)] leading-[0.96] font-normal"
 							id="sign-in-flow-title"
 						>
-							How Joseph OAuth works
+							How Joseph Apps works
 						</h2>
 						<div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-0">
 							{signInSteps.map((step, index) => (
@@ -164,7 +164,7 @@ export default function JosephOAuth() {
 									Additional app access
 								</h3>
 								<p className="m-0 leading-[1.7]">
-									When required by a supported app, Joseph OAuth may request the Google permission shown on the
+									When required by a supported app, Joseph Apps may request the Google permission shown on the
 									consent screen to call that app&apos;s Google Apps Script backend.
 								</p>
 							</article>
@@ -173,7 +173,7 @@ export default function JosephOAuth() {
 									What it does not access
 								</h3>
 								<p className="m-0 leading-[1.7]">
-									Joseph OAuth does not request a Google password or access Gmail, personal Drive files, Google
+									Joseph Apps does not request a Google password or access Gmail, personal Drive files, Google
 									Calendar, or Contacts.
 								</p>
 							</article>
@@ -191,7 +191,7 @@ export default function JosephOAuth() {
 							Supported applications
 						</h2>
 						<p className="mt-5 max-w-[640px] text-[1.05rem] leading-[1.7]">
-							Joseph OAuth currently supports only the applications listed here.
+							Joseph Apps currently supports only the applications listed here.
 						</p>
 						<div className="mt-12 grid gap-5">
 							{supportedApps.map((app) => (
@@ -206,7 +206,7 @@ export default function JosephOAuth() {
 									</div>
 									<div>
 										<strong className="mb-3 block text-xs tracking-[0.08em] text-[#f04b00] uppercase">
-											Why it uses Joseph OAuth
+											Why it uses Joseph Apps
 										</strong>
 										<p className="m-0 leading-[1.7]">{app.signIn}</p>
 									</div>
@@ -266,7 +266,7 @@ export default function JosephOAuth() {
 								Review or get in touch
 							</h2>
 						</div>
-						<nav className="flex flex-wrap gap-3 lg:justify-end" aria-label="Joseph OAuth policy links">
+						<nav className="flex flex-wrap gap-3 lg:justify-end" aria-label="Joseph Apps policy links">
 							<Link
 								className="inline-flex min-h-11 items-center border border-[#254251]/35 px-4 py-2 font-bold transition-colors duration-200 hover:border-[#f04b00] hover:bg-white/30 hover:text-[#f04b00] focus-visible:border-[#f04b00] focus-visible:bg-white/30 focus-visible:text-[#f04b00] focus-visible:outline-none motion-reduce:transition-none"
 								href="/privacy"
