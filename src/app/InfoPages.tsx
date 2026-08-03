@@ -72,8 +72,8 @@ function PageLinks() {
 			<Link className={styles.link} href="/projects">
 				Projects
 			</Link>
-			<Link className={styles.link} href="/projects/joseph-oauth">
-				Joseph OAuth
+			<Link className={styles.link} href="/joseph-apps">
+				Joseph Apps
 			</Link>
 			<Link className={styles.link} href="/legal">
 				Legal
@@ -258,13 +258,13 @@ export function PrivacyContent() {
 							<li>
 								<h2>1. Overview</h2>
 								<p>
-									This Privacy Policy explains how Joseph OAuth and Joseph Tseng&apos;s supported applications
+									This Privacy Policy explains how Joseph Apps and Joseph Tseng&apos;s supported applications
 									collect, use, and protect information for authentication and app functionality.
 								</p>
 							</li>
 							<li>
 								<h2>2. Applications Covered</h2>
-								<p>This policy applies to Joseph OAuth, Travel Split, and English Word Cards.</p>
+								<p>This policy applies to Joseph Apps, Travel Split, and English Word Cards.</p>
 							</li>
 							<li>
 								<h2>3. Information We Collect</h2>
@@ -280,8 +280,8 @@ export function PrivacyContent() {
 							<li>
 								<h2>4. Google Sign-In</h2>
 								<p>
-									Joseph OAuth provides Google Sign-In for the supported applications. It is used to authenticate
-									users and identify their accounts. Joseph OAuth and the supported applications do not store
+									Joseph Apps provides Google Sign-In for the supported applications. It is used to authenticate
+									users and identify their accounts. Joseph Apps and the supported applications do not store
 									Google passwords.
 								</p>
 								<p>
@@ -300,7 +300,7 @@ export function PrivacyContent() {
 							<li>
 								<h2>6. Data Storage and Security</h2>
 								<p>
-									Joseph OAuth session records may be stored in Cloudflare KV, and application data may be stored
+									Joseph Apps session records may be stored in Cloudflare KV, and application data may be stored
 									using other third-party cloud services. Reasonable safeguards are used to protect stored
 									information, but no online service can guarantee absolute security.
 								</p>
@@ -358,11 +358,11 @@ export function TermsContent() {
 						<ol className={styles.legalList}>
 							<li>
 								<h2>1. Acceptance</h2>
-								<p>By using Joseph OAuth, Travel Split, or English Word Cards, you agree to these Terms of Service.</p>
+								<p>By using Joseph Apps, Travel Split, or English Word Cards, you agree to these Terms of Service.</p>
 							</li>
 							<li>
 								<h2>2. Applications Covered</h2>
-								<p>These terms apply to Joseph OAuth, Travel Split, and English Word Cards.</p>
+								<p>These terms apply to Joseph Apps, Travel Split, and English Word Cards.</p>
 							</li>
 							<li>
 								<h2>3. Personal Use</h2>
@@ -371,7 +371,7 @@ export function TermsContent() {
 							<li>
 								<h2>4. Accounts</h2>
 								<p>
-									Joseph OAuth provides Google Sign-In for the supported applications. You are responsible for your
+									Joseph Apps provides Google Sign-In for the supported applications. You are responsible for your
 									account access and activity.
 								</p>
 							</li>

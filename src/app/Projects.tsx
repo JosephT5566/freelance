@@ -181,7 +181,7 @@ const projectItems = [
 			},
 		],
 		links: [
-			{ label: 'Joseph OAuth', href: '/projects/joseph-oauth' },
+			{ label: 'Joseph Apps', href: '/joseph-apps' },
 			{ label: 'Privacy', href: '/privacy' },
 			{ label: 'Terms', href: '/terms' },
 		],
@@ -231,7 +231,7 @@ const projectItems = [
 			},
 		],
 		links: [
-			{ label: 'Joseph OAuth', href: '/projects/joseph-oauth' },
+			{ label: 'Joseph Apps', href: '/joseph-apps' },
 			{ label: 'Privacy', href: '/privacy' },
 			{ label: 'Terms', href: '/terms' },
 		],
