@@ -64,3 +64,7 @@ For visual or interaction changes, also inspect the affected routes at desktop a
 ## Maintaining repository memory
 
 When a change alters architecture, commands, deployment, route ownership, or a durable product constraint, update the relevant file in `doc/` in the same change. Record durable decisions in `doc/decisions.md`; do not use it as a chronological work log.
+
+## PR preparation harness
+
+Use [the project pr-ready skill](.agents/skills/pr-ready/SKILL.md) for "PR to dev", "PR ready", and local PR preparation. Read [doc/harness.md](doc/harness.md) before running it. The configured base is `main`. pstack supplies working and review principles; the repo-owned LangGraph CLI controls checks, isolated reviewers, independent adjudication, durable pauses and at most two repair rounds. Never invent passing evidence or operator visual validation. This local workflow does not authorize publishing, deployment or merge, and its reports are not trusted CI attestations.

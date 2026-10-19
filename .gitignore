@@ -34,3 +34,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Local harness evidence and Python environment
+/.harness/runs/
+/tools/harness/.venv/
+__pycache__/
+*.pyc

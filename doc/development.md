@@ -19,15 +19,15 @@ The development server uses Next.js with webpack. The default local URL is `http
 
 ## Commands
 
-| Command | Effect |
-| --- | --- |
-| `npm run dev` | Start the Next.js development server with webpack |
+| Command             | Effect                                             |
+| ------------------- | -------------------------------------------------- |
+| `npm run dev`       | Start the Next.js development server with webpack  |
 | `npm run typecheck` | Type-check the site and Worker TypeScript projects |
-| `npm run build` | Build the static site into `out/` |
-| `npm run start` | Serve `out/` on port 3000 with Python |
-| `npm run preview` | Alias for `npm run start` |
-| `npm run check` | Run type-checking, then the production build |
-| `npm run deploy` | Run the full check, then deploy with Wrangler |
+| `npm run build`     | Build the static site into `out/`                  |
+| `npm run start`     | Serve `out/` on port 3000 with Python              |
+| `npm run preview`   | Alias for `npm run start`                          |
+| `npm run check`     | Run type-checking, then the production build       |
+| `npm run deploy`    | Run the full check, then deploy with Wrangler      |
 
 There are currently no repository scripts for linting, formatting, or automated tests. Do not claim test coverage from `npm run check`; its guarantees are type correctness and a successful static production build.
 
@@ -68,3 +68,9 @@ Do not edit or commit:
 - `.wrangler/`
 - `*.tsbuildinfo`
 - local `.env.*` files
+
+## Harness development
+
+For the optional local Codex team workflow, see [Run an oat-agents team](oat-agents.md).
+
+The optional local delivery tool lives in `tools/harness/` and uses Python 3.12+, uv and locked LangGraph dependencies. It is separate from the Next.js dependency graph. See [harness setup and operation](harness.md) for pstack/Codex requirements, scans, commands and evidence limits. Its unit tests exercise orchestration only; the application still has no automated test or lint suite.
