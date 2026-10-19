@@ -67,4 +67,7 @@ When a change alters architecture, commands, deployment, route ownership, or a d
 
 ## PR preparation harness
 
+Repo-scoped native Codex subagents are defined in `.codex/agents/`. See
+[their roles and usage](doc/codex-subagents.md). Request them explicitly when useful.
+
 Use [the project pr-ready skill](.agents/skills/pr-ready/SKILL.md) for "PR to dev", "PR ready", and local PR preparation. Read [doc/harness.md](doc/harness.md) before running it. The configured base is `main`. pstack supplies working and review principles; the repo-owned LangGraph CLI controls checks, isolated reviewers, independent adjudication, durable pauses and at most two repair rounds. Never invent passing evidence or operator visual validation. This local workflow does not authorize publishing, deployment or merge, and its reports are not trusted CI attestations.
