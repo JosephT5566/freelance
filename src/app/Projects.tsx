@@ -145,6 +145,52 @@ const projectItems = [
 		tools: ['Responsive web', 'React', 'GitHub Pages'],
 	},
 	{
+		id: 'jopie',
+		navLabel: 'JoPie',
+		title: 'JoPie',
+		eyebrow: 'Personal & Household Expenses',
+		description:
+			'JoPie is a personal and household expense tracker with a mobile-friendly Traditional Chinese interface. It brings daily records, shared-cost settlement, recurring expenses, and AI-assisted entry into one app.',
+		sections: [
+			{
+				title: 'Everyday expense tracking',
+				items: [
+					'Add and edit personal or household expenses',
+					'Browse daily records, monthly category summaries, and charts',
+					'Search expenses by keyword and settle shared household costs',
+					'Schedule one-off expenses or daily, weekly, and monthly repeats',
+				],
+			},
+			{
+				title: 'AI-assisted entry',
+				items: [
+					'Describe an expense in natural language and answer follow-up questions for missing details',
+					'View streamed analysis as valid text entries save automatically',
+					'Upload receipts, review and edit extracted items, exclude unwanted rows, and confirm before saving',
+				],
+			},
+			{
+				title: 'Built for daily use',
+				items: [
+					'Google sign-in and expense records through Supabase',
+					'IndexedDB cache for previously loaded records',
+					'Taiwan-local date and month boundaries',
+					'Installable PWA with a statically built frontend',
+				],
+			},
+		],
+		tools: [
+			'Svelte 5 / SvelteKit',
+			'TypeScript',
+			'Tailwind CSS / DaisyUI',
+			'Supabase',
+			'IndexedDB / PWA',
+			'Python / FastAPI',
+			'LangGraph / Gemini',
+			'GitHub Pages',
+		],
+	},
+	{
 		id: 'travel-split',
 		navLabel: 'Travel Split',
 		title: 'Travel Split',
@@ -276,7 +322,8 @@ function SectionRail({
 		}
 
 		const startY = window.scrollY;
-		const targetY = startY + section.getBoundingClientRect().top;
+		const scrollMarginTop = parseFloat(window.getComputedStyle(section).scrollMarginTop);
+		const targetY = startY + section.getBoundingClientRect().top - scrollMarginTop;
 		const distance = targetY - startY;
 		const duration = 650;
 		const startedAt = performance.now();
