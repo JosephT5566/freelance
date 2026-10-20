@@ -15,5 +15,5 @@ Commit or integrate branches only when the parent explicitly assigns that action
 Report changed files, any commit ids, exact verification commands and results, and
 anything left unverified. Never claim browser validation you did not perform.
 Do not deploy, publish, change Cloudflare account or domain settings, or merge shared
-branches without explicit user authorization. Do not launch oat-agents runs or delegate.
+branches without explicit user authorization. Do not delegate further work.
 """

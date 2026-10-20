@@ -44,8 +44,8 @@ The repository currently has no automated test or lint suite. CI considers `npm 
 
 Implication: visual and interaction checks remain manual, and handoff notes should distinguish them from automated verification.
 
-## Local PR preparation uses pstack and LangGraph
+## Local agent work uses native Codex roles
 
-The repo-owned Python harness runs checks, fresh read-only Codex review roles and independent adjudication. LangGraph persists local checkpoints. pstack supplies review principles. Fixes require explicit human/pstack handoff and committed descendant revisions, with at most two repair rounds. Local policy and prompt changes invalidate old runs.
+Repository-scoped Codex roles provide planning, implementation, and independent review. Their configuration lives in `.codex/agents/`. See [their roles and usage](codex-subagents.md).
 
-Implication: local evidence hashes detect drift but do not establish trusted provenance. Sensitive changes need human approval. This tool does not publish or merge; trusted CI evidence and protected GitHub gates remain separate future work. Node application dependencies and Cloudflare deployment are unchanged. See [harness.md](harness.md).
+Implication: run `npm run check` for handoff and report manual checks separately. Native agent reviews supplement the existing verification workflow.

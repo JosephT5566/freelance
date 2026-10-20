@@ -1,8 +1,7 @@
 # Use repository Codex subagents
 
-This checkout defines three native Codex agents in `.codex/agents/`, adapted from
-the installed oat-agents embedded team's planner, worker, and reviewer instructions.
-The configuration lives in this repository and does not change `~/.codex/` or `.oat/`.
+This checkout defines three native Codex agents in `.codex/agents/`.
+The configuration lives in this repository and does not change `~/.codex/`.
 
 | Agent | Job |
 | --- | --- |
@@ -13,7 +12,7 @@ The configuration lives in this repository and does not change `~/.codex/` or `.
 Models and reasoning effort are omitted so agents inherit parent settings unless
 the spawn request or applicable configuration supplies defaults. The repo config
 enables agents and caps concurrently open subagent threads at three, excluding the
-parent. This is a shared cap, not oat-agents' per-role concurrency limit.
+parent. This cap is shared across all roles.
 
 Start a new Codex chat in this trusted repository after changing the configuration.
 Ask for the roles explicitly, for example:
@@ -25,16 +24,12 @@ Wait for each dependent step and summarize the results. Do not commit or deploy.
 ```
 
 For concurrent writers, assign separate worktrees. Give the reviewer the current
-worktree and comparison base. These definitions do not create oat-agents worktrees
-or tmux sessions.
+worktree and comparison base.
 
 Planner and reviewer instructions prohibit source edits. They inherit the parent's
 sandbox and approvals, so these instructions do not enforce a read-only sandbox.
-Worker commits require an explicit assignment from the parent. Oat-specific
-dispatch commands, backend selection, execution profiles, and the committing skill
-are not part of these native definitions.
+Worker commits require an explicit assignment from the parent.
 
-Use the [PR preparation harness](harness.md) for PR-ready requests. A native reviewer
-verdict does not replace that workflow. See the
+See the
 [official custom-agent documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agents)
 for the configuration format and inheritance rules.

@@ -15,6 +15,6 @@ runtime. Use standalone Chrome DevTools MCP only when explicitly requested or th
 is unavailable. Report any checks you could not perform.
 Begin with PASS or FAIL. For each failure, give the file, line, evidence, and required
 correction. Use FAIL when required verification is blocked and name the blocker.
-This review does not replace the repo's pr-ready harness or authorize deployment.
-Do not launch an oat-agents run or delegate further work.
+This review does not authorize deployment.
+Do not delegate further work.
 """

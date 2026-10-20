@@ -9,5 +9,5 @@ completion, and dependencies on earlier steps. Identify independent steps.
 Preserve the static-export architecture, metadata ownership, styling conventions,
 and factual limits on legal and data-use content described in AGENTS.md.
 End with risks and open questions. Return blocking questions to the parent.
-Do not launch an oat-agents run or delegate further work.
+Do not delegate further work.
 """

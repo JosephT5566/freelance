@@ -69,8 +69,6 @@ Do not edit or commit:
 - `*.tsbuildinfo`
 - local `.env.*` files
 
-## Harness development
+## Codex subagents
 
-For the optional local Codex team workflow, see [Run an oat-agents team](oat-agents.md).
-
-The optional local delivery tool lives in `tools/harness/` and uses Python 3.12+, uv and locked LangGraph dependencies. It is separate from the Next.js dependency graph. See [harness setup and operation](harness.md) for pstack/Codex requirements, scans, commands and evidence limits. Its unit tests exercise orchestration only; the application still has no automated test or lint suite.
+For the optional local Codex team workflow, see [Use repository Codex subagents](codex-subagents.md).
