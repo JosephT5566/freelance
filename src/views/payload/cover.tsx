@@ -1,3 +1,4 @@
+import type { RefObject } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()((theme) => ({
@@ -28,19 +29,35 @@ const useStyles = makeStyles()((theme) => ({
 		background: theme.palette.secondary.main,
 		[theme.breakpoints.down('sm')]: { display: 'none' },
 	},
+	imageFrame: {
+		position: 'relative',
+		overflow: 'hidden',
+		height: 'clamp(180px, 21vw, 280px)',
+	},
 	image: {
 		width: '100%',
-		height: 'clamp(180px, 21vw, 280px)',
+		height: '100%',
 		objectFit: 'cover',
 		objectPosition: 'center 30%',
 		display: 'block',
+		'@media (min-width: 721px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)': {
+			position: 'absolute',
+			top: -12,
+			left: -12,
+			width: 'calc(100% + 24px)',
+			maxWidth: 'none',
+			height: 'calc(100% + 24px)',
+		},
 	},
 }));
 
-export default function Cover() {
+export default function Cover({ heroRef, imageRef }: {
+	heroRef: RefObject<HTMLElement | null>;
+	imageRef: RefObject<HTMLImageElement | null>;
+}) {
 	const { classes } = useStyles();
 	return (
-		<section className={`site-container ${classes.cover}`} aria-labelledby="intro-title">
+		<section ref={heroRef} className={`site-container ${classes.cover}`} aria-labelledby="intro-title">
 			<p className="section-kicker">Software engineer · Frontend & product</p>
 			<h1 id="intro-title" className={classes.name}>
 				Joseph Tseng
@@ -52,14 +69,17 @@ export default function Cover() {
 				</p>
 				<span className={classes.mark} aria-hidden="true" />
 			</div>
-			<img
-				className={classes.image}
-				src="https://cdn.josephtseng-tw.com/profile-website/hero-2026.jpg"
-				alt="Rock pinnacles above misty green hills and lochs"
-				width={1920}
-				height={1280}
-				fetchPriority="high"
-			/>
+			<div className={classes.imageFrame}>
+				<img
+					ref={imageRef}
+					className={classes.image}
+					src="https://cdn.josephtseng-tw.com/profile-website/hero-2026.jpg"
+					alt="Rock pinnacles above misty green hills and lochs"
+					width={1920}
+					height={1280}
+					fetchPriority="high"
+				/>
+			</div>
 		</section>
 	);
 }
