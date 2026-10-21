@@ -4,15 +4,14 @@ import Link from 'next/link';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'tss-react/mui';
 import type { CaseStudy } from '../content/projects';
-import Footer from '../views/layout/Footer';
 
 const useStyles = makeStyles()((theme) => ({
 	main: {
 		width: '100%',
-		maxWidth: '72rem',
+		maxWidth: '54rem',
 		margin: '0 auto',
-		padding: '7rem 3rem 4rem',
-		[theme.breakpoints.down('md')]: { padding: '6rem 1.5rem 3rem' },
+		padding: '3.5rem 3rem 4rem',
+		[theme.breakpoints.down('md')]: { padding: '2.5rem 1.25rem 3rem' },
 	},
 	header: { margin: '2rem 0 3rem', '& h1': { overflowWrap: 'anywhere' } },
 	intro: { maxWidth: '50rem', marginTop: '1rem' },
@@ -34,7 +33,7 @@ const useStyles = makeStyles()((theme) => ({
 		display: 'flex',
 		flexWrap: 'wrap',
 		gap: '1.5rem',
-		'& a': { padding: '0.5rem 0', textDecoration: 'underline', textUnderlineOffset: '0.2em' },
+		'& a': { minHeight: 44, padding: '0.5rem 0', textDecoration: 'underline', textUnderlineOffset: '0.2em' },
 	},
 }));
 
@@ -43,7 +42,9 @@ export default function ProjectCaseStudy({ project }: { project: CaseStudy }) {
 	return (
 		<>
 			<main className={classes.main}>
-				<Link href="/projects/">All personal projects</Link>
+				<Link className="text-link" href="/projects/">
+					All personal projects
+				</Link>
 				<header className={classes.header}>
 					<Typography variant="body1">Personal project case study</Typography>
 					<Typography variant="h1" component="h1">
@@ -81,7 +82,6 @@ export default function ProjectCaseStudy({ project }: { project: CaseStudy }) {
 					<Link href="/experience/">Professional experience</Link>
 				</div>
 			</main>
-			<Footer />
 		</>
 	);
 }

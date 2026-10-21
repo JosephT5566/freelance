@@ -1,75 +1,51 @@
-import React from 'react';
-import { makeStyles } from 'tss-react/mui';
-
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ExperienceItem from '../../components/shared/experienceItem';
+import { makeStyles } from 'tss-react/mui';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
+import ExperienceItem from '../../components/shared/experienceItem';
 import { experiences, experienceIntro, houzzSummary, skillGroups } from '../../content/experience';
 
-const useStyle = makeStyles()((theme) => ({
-	experiences: {
-		display: 'flex',
-		flexDirection: 'column',
-		width: '100%',
-		padding: '0 16.6%',
-		marginBottom: '95px',
-		[theme.breakpoints.down('sm')]: {
-			padding: '0',
-		},
+const useStyles = makeStyles()((theme) => ({
+	section: {
+		paddingBlock: 64,
+		borderTop: '1px solid rgba(37,66,81,.25)',
+		[theme.breakpoints.down('sm')]: { paddingBlock: 48 },
 	},
-	title: {
-		padding: '1em 0',
-	},
-	divider: {
-		backgroundColor: theme.palette.primary.light,
-	},
-	description: {
+	heading: {
 		display: 'grid',
-		marginBottom: '2em',
-		gridTemplateColumns: 'repeat(2, 1fr)',
-		[theme.breakpoints.down('sm')]: {
-			padding: '0 2em',
-		},
-		'& > p': {
-			gridColumn: '2 / 2',
-			[theme.breakpoints.down('sm')]: {
-				gridColumn: '1 / span 2',
-			},
-		},
+		gridTemplateColumns: '1fr 1fr',
+		alignItems: 'end',
+		gap: 48,
+		marginBottom: 32,
+		[theme.breakpoints.down('sm')]: { gridTemplateColumns: '1fr', gap: 20 },
 	},
+	intro: { margin: 0, maxWidth: 560 },
 	skills: {
 		display: 'grid',
-		gridTemplateColumns: 'repeat(2, 1fr)',
-		gap: '2rem',
-		marginBottom: '3rem',
-		[theme.breakpoints.down('sm')]: {
-			gridTemplateColumns: '1fr',
-			padding: '0 2em',
-		},
-		'& h2': {
-			marginBottom: '0.75rem',
-		},
-		'& p': {
-			marginBottom: '0.5rem',
-		},
-	},
-	items: {
-		[theme.breakpoints.down('sm')]: {
-			padding: '0 2em',
-		},
+		gridTemplateColumns: '1fr 1fr',
+		gap: 40,
+		padding: '24px 0 40px',
+		'& h2': { fontSize: 28, marginBottom: 16 },
+		[theme.breakpoints.down('sm')]: { gridTemplateColumns: '1fr', gap: 24 },
 	},
 }));
 
 export default function Experience({ full = false }: { full?: boolean }) {
-	const { classes } = useStyle();
+	const { classes } = useStyles();
 	return (
-		<section className={classes.experiences} aria-labelledby="experience-title">
-			<Typography variant="h1" component={full ? 'h1' : 'h2'} className={classes.title} id="experience-title">
-				{full ? 'Experience' : 'Professional Experience'}
-			</Typography>
-			<div className={classes.description}>
-				<Typography variant="body1">
+		<section
+			className={`site-container ${classes.section}`}
+			id="experience"
+			aria-labelledby="experience-title"
+		>
+			<div className={classes.heading}>
+				<div>
+					<p className="section-kicker">Professional experience</p>
+					<Typography variant={full ? 'h1' : 'h2'} component={full ? 'h1' : 'h2'} id="experience-title">
+						{full ? 'Experience & skills' : 'A decade of building.'}
+					</Typography>
+				</div>
+				<Typography variant="body1" className={classes.intro}>
 					{full
 						? experienceIntro
 						: 'Frontend and product engineering at Houzz, grounded in earlier web application and firmware work.'}
@@ -79,7 +55,9 @@ export default function Experience({ full = false }: { full?: boolean }) {
 				<div className={classes.skills}>
 					{skillGroups.map((group) => (
 						<div key={group.title}>
-							<Typography variant="h2">{group.title}</Typography>
+							<Typography variant="h2" component="h2">
+								{group.title}
+							</Typography>
 							{group.lines.map((line) => (
 								<Typography key={line} variant="body1">
 									{line}
@@ -89,24 +67,19 @@ export default function Experience({ full = false }: { full?: boolean }) {
 					))}
 				</div>
 			)}
-			<div className={classes.items}>
-				<Divider className={classes.divider} />
-				{experiences.map((experience, index) => (
-					<React.Fragment key={experience.company}>
-						<ExperienceItem
-							{...experience}
-							headingComponent={full ? 'h2' : 'h3'}
-							highlights={full ? experience.highlights : index === 0 ? houzzSummary : []}
-						/>
-						<Divider className={classes.divider} />
-					</React.Fragment>
-				))}
-				{!full && (
-					<p>
-						<Link href="/experience/">View full experience and skills</Link>
-					</p>
-				)}
-			</div>
+			{experiences.map((experience, index) => (
+				<ExperienceItem
+					key={experience.company}
+					{...experience}
+					headingComponent={full ? 'h2' : 'h3'}
+					highlights={full ? experience.highlights : index === 0 ? houzzSummary : []}
+				/>
+			))}
+			{!full && (
+				<Link className="text-link" style={{ marginTop: 24 }} href="/experience/">
+					Full experience and skills <ArrowUpRight size={17} aria-hidden="true" />
+				</Link>
+			)}
 		</section>
 	);
 }

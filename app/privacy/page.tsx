@@ -7,15 +7,18 @@ export const metadata: Metadata = {
 	description:
 		'Privacy Policy for Joseph Tseng personal applications, including Travel Split and English Word Cards.',
 	alternates: {
-		canonical: '/privacy',
+		canonical: '/privacy/',
 	},
 	openGraph: {
+		images: [{ url: '/cover.jpg', alt: 'Joseph Tseng portfolio coastline' }],
 		title: "Privacy Policy | Joseph's Projects",
 		description:
 			'Privacy Policy for Joseph Tseng personal applications, including Travel Split and English Word Cards.',
-		url: '/privacy',
+		url: '/privacy/',
 	},
 	twitter: {
+		card: 'summary_large_image',
+		images: ['/cover.jpg'],
 		title: "Privacy Policy | Joseph's Projects",
 		description:
 			'Privacy Policy for Joseph Tseng personal applications, including Travel Split and English Word Cards.',

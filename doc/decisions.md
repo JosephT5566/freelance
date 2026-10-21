@@ -55,3 +55,15 @@ Implication: run `npm run check` for handoff and report manual checks separately
 The homepage introduces professional frontend/product work and personal backend/cloud/AI projects separately. Complete employment highlights and skills live on `/experience/`. Project case studies describe implementation evidence and its limits without claiming unverified production reliability.
 
 Implication: maintain the shared records in `src/content/experience.ts` and `src/content/projects.ts` when updating summaries or detail pages. Keep the English Learning catalog anchor `english-word-cards` so existing deep links remain useful. Do not publish empty resume or project placeholders.
+
+## Portfolio navigation and personal presentation
+
+The portfolio uses an editorial layout with an in-flow landscape image, section navigation, and a quiet shared footer of accessible profile/contact icons and legal links. The homepage has no quick-action button row or résumé download. The public résumé PDF has been removed at the user's request.
+
+Implication: keep project and full-experience links next to their relevant content. Do not restore a résumé asset, download link, contact pitch, animated sphere, or scroll-controlled project panels as incidental styling work. All pages share the footer through AppShell.
+
+## Homepage contours span the viewport and motion stays finite
+
+One smooth seeded height field supplies the homepage SVG contours behind the central text on desktop and mobile. Marching squares with a bilinear saddle decider yields coherent isolines, and shared edge identities stitch paths without closing open boundaries. The fixed seed keeps geometry stable across renders. Uniform scaling and a central crop preserve terrain proportions on narrow screens. Pointer deformation decays, and inverse landscape movement is limited to 8px inside its existing clipped frame. Text and document scrolling stay stable. No continuous idle animation, entrance gate, scroll hijack, or WebGL dependency is needed.
+
+Implication: retain visible static contours and a neutral image for reduced motion, coarse pointers, and phones. Suspend motion when the tab is hidden or the hero has passed, fade out contours before experience, and clean up every listener, observer, frame, and inline image transform on unmount.

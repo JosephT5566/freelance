@@ -6,8 +6,8 @@ This reference records the content decisions for issue [#21](https://github.com/
 
 | Content | Decision | Destination |
 | --- | --- | --- |
-| Name, role, cover image, sphere | Keep the visual identity; combine the name and role into one H1 | Homepage |
-| About Me | Shorten to two paragraphs; distinguish professional frontend/product work from personal backend/cloud/AI practice | Homepage |
+| Name, role, cover image | Use the user-supplied landscape image and identity in a sans-serif masthead; remove the animated sphere | Homepage |
+| About Me | Distribute professional/frontend positioning and personal/backend context into the introduction, work, and career sections | Homepage |
 | Experience introduction, both skills groups, three career entries, all nine original highlights | Keep complete; use two Houzz summary points and the three-entry timeline on the homepage | `/experience/` and homepage summary |
 | English Learning, JoPie, Travel Split | Add concise featured personal-project summaries | Homepage |
 | English Learning and JoPie engineering detail | Add problem, constraints, solution, decisions, validation evidence, and limits | Two static case studies |
@@ -16,8 +16,8 @@ This reference records the content decisions for issue [#21](https://github.com/
 | Megaport selector | Keep working demo and React/responsive description; remove unsupported GitHub Pages hosting claim | Catalog |
 | Interests | Keep photography, travel, snowboarding, scuba diving, and Advanced Open Water certification; shorten | Beyond the Code |
 | Flickr album carousel | Remove from homepage rendering; retain implementation and direct Flickr link | Existing module; external profile |
-| Contact | Use latest resume email plus existing GitHub and LinkedIn details | Footer |
-| Resume | Export user-supplied resume after removing confidential employer metrics and internal tailoring notes; link a local PDF | Hero and footer |
+| Contact | Use latest resume email plus existing GitHub and LinkedIn details in accessible icon links; no promotional contact block | Shared footer |
+| Resume | Superseded by the user’s redesign request: remove all download links and the public PDF | Not published |
 
 ## Evidence sources
 
@@ -34,8 +34,10 @@ Source paths above refer to the sibling `english-learning`, `expense-app`, and `
 
 The parent agent verified with the GitHub connector that `JosephT5566/english-learning`, `JosephT5566/expense-app`, and `JosephT5566/TravelSplit` are public. It verified HTTP 200 responses for GitHub, Flickr, Instagram, and the Megaport demo, and inspected the Megaport scheduling UI in Chrome. LinkedIn returns HTTP 999 to automated requests; the existing profile URL remains, with its rendered destination unverified.
 
-The user supplied `my-codex-skills/references/resume-2026.md`. The parent exported a two-page PDF after removing the two confidential employer-metric clauses and the internal tailoring paragraph. It rendered and inspected both pages, then the worker copied the artifact to `public/resume/joseph-tseng-resume.pdf`. The original reference remains unchanged. Do not publish that raw reference without the same sanitization. No live English Learning/JoPie demo is claimed; case studies link their public source repositories.
+The user-supplied `my-codex-skills/references/resume-2026.md` remains a private evidence source. The later redesign request removes the previously exported public PDF and all résumé download links. No live English Learning/JoPie demo is claimed; case studies link their public source repositories.
+
+The JoPie feature uses the app's actual `expense-app/static/icon-512.png`, copied to `public/images/projects/jopie-icon.png`. English Learning uses an explicitly labelled review-workflow diagram with its verified SvelteKit, FastAPI, and PostgreSQL stack. The hero uses the user-supplied `https://cdn.josephtseng-tw.com/profile-website/hero-2026.jpg` at 1920 × 1280, cropped to retain the rock formations. The original local coast image remains for social previews, and the portrait remains in the personal section. The existing Megaport catalog image from `https://i.imgur.com/MKtF24C.png` is stored locally as `public/images/projects/megaport.jpg` (1440px JPEG) because the remote image failed in browser verification. No product screens, metrics, or performance claims were fabricated.
 
 ## Verification ownership
 
-The implementing worker checks static generation, headings, complete experience text, metadata, internal links, and `npm run check`. The parent owns desktop/mobile browser inspection and the independent reviewer checks ticket coverage and SEO. Actual browser results belong in the task handoff, rather than being inferred from a successful build.
+The implementing worker checks static generation, headings, complete experience text, metadata, internal links, and `npm run check`. The implementing worker also inspects desktop/mobile layouts and interactions. The user previews the implemented design before independent review. Actual browser results belong in the task handoff, rather than being inferred from a successful build.

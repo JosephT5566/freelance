@@ -45,10 +45,10 @@ const supportedApps = [
 export default function JosephApps() {
 	return (
 		<>
-			<main className="min-h-screen bg-[#f1ece8] px-4 pt-26 pb-14 text-[#254251] sm:px-6 sm:pt-30 sm:pb-20">
+			<main className="min-h-screen bg-[#f1ece8] px-5 pt-10 pb-14 text-[#254251] sm:px-6 sm:pt-14 sm:pb-20">
 				<div className="mx-auto w-full max-w-[1120px]">
 					<Link
-						className="mb-10 inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase transition-colors duration-200 hover:text-[#f04b00] focus-visible:text-[#f04b00] focus-visible:outline-none motion-reduce:transition-none sm:mb-14"
+						className="mb-10 inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase transition-colors duration-200 hover:text-[#254251] focus-visible:text-[#254251] focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none sm:mb-14"
 						href="/projects"
 					>
 						<span aria-hidden="true">←</span> All projects
@@ -56,7 +56,7 @@ export default function JosephApps() {
 
 					<header className="grid items-end gap-10 pb-16 lg:grid-cols-[minmax(0,1.45fr)_minmax(17rem,0.75fr)] lg:gap-[clamp(2rem,6vw,6rem)] lg:pb-20">
 						<div>
-							<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#f04b00] uppercase">
+							<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#254251] uppercase">
 								Authentication service
 							</p>
 							<h1 className="m-0 font-[Vidaloka,serif] text-[clamp(3.75rem,21vw,6.5rem)] leading-[0.82] font-normal tracking-[-0.035em] lg:text-[clamp(4rem,10vw,8.5rem)]">
@@ -98,7 +98,7 @@ export default function JosephApps() {
 					</header>
 
 					<section className="border-t border-[#254251]/20 py-14 sm:py-18" aria-labelledby="sign-in-flow-title">
-						<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#f04b00] uppercase">Sign-in flow</p>
+						<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#254251] uppercase">Sign-in flow</p>
 						<h2
 							className="m-0 max-w-[760px] font-[Vidaloka,serif] text-[clamp(2.35rem,6vw,4.5rem)] leading-[0.96] font-normal"
 							id="sign-in-flow-title"
@@ -111,7 +111,7 @@ export default function JosephApps() {
 									className="relative border border-[#254251]/20 bg-white/25 p-6 lg:min-h-[230px] lg:not-last:border-r-0"
 									key={step.label}
 								>
-									<span className="font-[Montserrat,sans-serif] text-xs font-bold tracking-[0.08em] text-[#829da9]">
+									<span className="font-[Montserrat,sans-serif] text-xs font-bold tracking-[0.08em] text-[#254251]">
 										{String(index + 1).padStart(2, '0')}
 									</span>
 									<h3 className="mt-8 mb-3 font-[Vidaloka,serif] text-2xl font-normal lg:mt-14">
@@ -132,7 +132,7 @@ export default function JosephApps() {
 					</section>
 
 					<section className="border-t border-[#254251]/20 py-14 sm:py-18" aria-labelledby="google-data-title">
-						<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#f04b00] uppercase">
+						<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#254251] uppercase">
 							Google data usage
 						</p>
 						<h2
@@ -181,7 +181,7 @@ export default function JosephApps() {
 					</section>
 
 					<section className="border-t border-[#254251]/20 py-14 sm:py-18" aria-labelledby="supported-apps-title">
-						<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#f04b00] uppercase">
+						<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#254251] uppercase">
 							Current application list
 						</p>
 						<h2
@@ -201,17 +201,17 @@ export default function JosephApps() {
 								>
 									<h3 className="m-0 font-[Vidaloka,serif] text-[1.75rem] leading-[1.1] font-normal">{app.name}</h3>
 									<div>
-										<strong className="mb-3 block text-xs tracking-[0.08em] text-[#f04b00] uppercase">What it does</strong>
+										<strong className="mb-3 block text-xs tracking-[0.08em] text-[#254251] uppercase">What it does</strong>
 										<p className="m-0 leading-[1.7]">{app.purpose}</p>
 									</div>
 									<div>
-										<strong className="mb-3 block text-xs tracking-[0.08em] text-[#f04b00] uppercase">
+										<strong className="mb-3 block text-xs tracking-[0.08em] text-[#254251] uppercase">
 											Why it uses Joseph Apps
 										</strong>
 										<p className="m-0 leading-[1.7]">{app.signIn}</p>
 									</div>
 									<div>
-										<strong className="mb-3 block text-xs tracking-[0.08em] text-[#f04b00] uppercase">Application data</strong>
+										<strong className="mb-3 block text-xs tracking-[0.08em] text-[#254251] uppercase">Application data</strong>
 										<p className="m-0 leading-[1.7]">{app.data}</p>
 									</div>
 								</article>
@@ -224,7 +224,7 @@ export default function JosephApps() {
 						aria-labelledby="security-title"
 					>
 						<div>
-							<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#f04b00] uppercase">
+							<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#254251] uppercase">
 								Security and control
 							</p>
 							<h2
@@ -256,7 +256,7 @@ export default function JosephApps() {
 						aria-labelledby="policies-title"
 					>
 						<div>
-							<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#f04b00] uppercase">
+							<p className="mb-3 text-[0.78rem] font-bold tracking-[0.1em] text-[#254251] uppercase">
 								Policies and support
 							</p>
 							<h2
@@ -268,19 +268,19 @@ export default function JosephApps() {
 						</div>
 						<nav className="flex flex-wrap gap-3 lg:justify-end" aria-label="Joseph Apps policy links">
 							<Link
-								className="inline-flex min-h-11 items-center border border-[#254251]/35 px-4 py-2 font-bold transition-colors duration-200 hover:border-[#f04b00] hover:bg-white/30 hover:text-[#f04b00] focus-visible:border-[#f04b00] focus-visible:bg-white/30 focus-visible:text-[#f04b00] focus-visible:outline-none motion-reduce:transition-none"
+								className="inline-flex min-h-11 items-center border border-[#254251]/35 px-4 py-2 font-bold transition-colors duration-200 hover:border-[#f04b00] hover:bg-white/30 hover:text-[#254251] focus-visible:border-[#f04b00] focus-visible:bg-white/30 focus-visible:text-[#254251] focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none"
 								href="/privacy"
 							>
 								Privacy policy
 							</Link>
 							<Link
-								className="inline-flex min-h-11 items-center border border-[#254251]/35 px-4 py-2 font-bold transition-colors duration-200 hover:border-[#f04b00] hover:bg-white/30 hover:text-[#f04b00] focus-visible:border-[#f04b00] focus-visible:bg-white/30 focus-visible:text-[#f04b00] focus-visible:outline-none motion-reduce:transition-none"
+								className="inline-flex min-h-11 items-center border border-[#254251]/35 px-4 py-2 font-bold transition-colors duration-200 hover:border-[#f04b00] hover:bg-white/30 hover:text-[#254251] focus-visible:border-[#f04b00] focus-visible:bg-white/30 focus-visible:text-[#254251] focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none"
 								href="/terms"
 							>
 								Terms of service
 							</Link>
 							<a
-								className="inline-flex min-h-11 items-center border border-[#254251]/35 px-4 py-2 font-bold transition-colors duration-200 hover:border-[#f04b00] hover:bg-white/30 hover:text-[#f04b00] focus-visible:border-[#f04b00] focus-visible:bg-white/30 focus-visible:text-[#f04b00] focus-visible:outline-none motion-reduce:transition-none"
+								className="inline-flex min-h-11 items-center border border-[#254251]/35 px-4 py-2 font-bold transition-colors duration-200 hover:border-[#f04b00] hover:bg-white/30 hover:text-[#254251] focus-visible:border-[#f04b00] focus-visible:bg-white/30 focus-visible:text-[#254251] focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none"
 								href={`mailto:${CONTACT_EMAIL}`}
 							>
 								Contact Joseph Tseng
@@ -289,7 +289,6 @@ export default function JosephApps() {
 					</section>
 				</div>
 			</main>
-			<footer className="flex justify-center bg-[#f1ece8] px-4 pt-8 pb-12 text-[#829da9]">© 2026 Joseph Tseng</footer>
 		</>
 	);
 }

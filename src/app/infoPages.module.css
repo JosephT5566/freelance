@@ -1,6 +1,6 @@
 .page {
 	min-height: 100vh;
-	padding: 8rem 1.5rem 4rem;
+	padding: 3.5rem 1.5rem 4rem;
 	background: #f1ece8;
 	color: #254251;
 }
@@ -20,7 +20,7 @@
 	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: #f04b00;
+	color: #254251;
 }
 
 .title {
@@ -84,15 +84,19 @@
 	border-radius: 8px;
 	padding: 1.5rem;
 	background: rgba(255, 255, 255, 0.28);
-	transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+	transition:
+		transform 180ms ease,
+		border-color 180ms ease,
+		background-color 180ms ease;
 }
 
 .documentCard:hover,
 .documentCard:focus-visible {
 	transform: translateY(-3px);
-	border-color: #f04b00;
+	border-color: #254251;
 	background: rgba(255, 255, 255, 0.46);
-	outline: none;
+	outline: 2px solid #254251;
+	outline-offset: 4px;
 }
 
 .documentLabel {
@@ -101,7 +105,7 @@
 	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: #829da9;
+	color: #254251;
 }
 
 .documentAction {
@@ -110,7 +114,7 @@
 	margin-top: auto;
 	padding-top: 2rem;
 	font-weight: 700;
-	color: #f04b00;
+	color: #254251;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -151,19 +155,22 @@
 .link {
 	display: inline-flex;
 	align-items: center;
-	min-height: 2.5rem;
+	min-height: 44px;
 	border: 1px solid rgba(37, 66, 81, 0.28);
 	border-radius: 8px;
 	padding: 0.55rem 0.9rem;
 	font-weight: 700;
-	transition: color 180ms, border-color 180ms;
+	transition:
+		color 180ms,
+		border-color 180ms;
 }
 
 .link:hover,
 .link:focus {
-	color: #f04b00;
-	border-color: #f04b00;
-	outline: none;
+	color: #254251;
+	border-color: #254251;
+	outline: 2px solid #254251;
+	outline-offset: 4px;
 }
 
 .legalList {
@@ -207,17 +214,9 @@
 	font-weight: 700;
 }
 
-.footer {
-	display: flex;
-	justify-content: center;
-	padding: 2rem 1rem 3rem;
-	background: #f1ece8;
-	color: #829da9;
-}
-
 @media (max-width: 720px) {
 	.page {
-		padding: 6.5rem 1rem 3rem;
+		padding: 2.5rem 1.25rem 3rem;
 	}
 
 	.grid {

@@ -8,5 +8,3 @@ export const GITHUB_URL = 'https://github.com/JosephT5566';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/joseph-tseng-50ba36136';
 export const FLICKR_URL = 'https://www.flickr.com/photos/joseph-t_0304/';
 export const INSTAGRAM_URL = 'https://www.instagram.com/tsengchun34/';
-
-export const RESUME_URL = '/resume/joseph-tseng-resume.pdf';
