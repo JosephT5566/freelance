@@ -19,15 +19,15 @@ The development server uses Next.js with webpack. The default local URL is `http
 
 ## Commands
 
-| Command | Effect |
-| --- | --- |
-| `npm run dev` | Start the Next.js development server with webpack |
+| Command             | Effect                                             |
+| ------------------- | -------------------------------------------------- |
+| `npm run dev`       | Start the Next.js development server with webpack  |
 | `npm run typecheck` | Type-check the site and Worker TypeScript projects |
-| `npm run build` | Build the static site into `out/` |
-| `npm run start` | Serve `out/` on port 3000 with Python |
-| `npm run preview` | Alias for `npm run start` |
-| `npm run check` | Run type-checking, then the production build |
-| `npm run deploy` | Run the full check, then deploy with Wrangler |
+| `npm run build`     | Build the static site into `out/`                  |
+| `npm run start`     | Serve `out/` on port 3000 with Python              |
+| `npm run preview`   | Alias for `npm run start`                          |
+| `npm run check`     | Run type-checking, then the production build       |
+| `npm run deploy`    | Run the full check, then deploy with Wrangler      |
 
 There are currently no repository scripts for linting, formatting, or automated tests. Do not claim test coverage from `npm run check`; its guarantees are type correctness and a successful static production build.
 
@@ -68,3 +68,7 @@ Do not edit or commit:
 - `.wrangler/`
 - `*.tsbuildinfo`
 - local `.env.*` files
+
+## Codex subagents
+
+For the optional local Codex team workflow, see [Use repository Codex subagents](codex-subagents.md).

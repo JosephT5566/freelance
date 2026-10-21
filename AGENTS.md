@@ -64,3 +64,10 @@ For visual or interaction changes, also inspect the affected routes at desktop a
 ## Maintaining repository memory
 
 When a change alters architecture, commands, deployment, route ownership, or a durable product constraint, update the relevant file in `doc/` in the same change. Record durable decisions in `doc/decisions.md`; do not use it as a chronological work log.
+
+## Local agent workflow
+
+Repo-scoped native Codex subagents are defined in `.codex/agents/`. See
+[their roles and usage](doc/codex-subagents.md). Request them explicitly when useful.
+
+Report actual verification results and any checks you could not perform. Never invent passing evidence or operator visual validation. Local agent work does not authorize publishing, deployment, or merge.
