@@ -1,43 +1,43 @@
-import React from 'react';
 import { makeStyles } from 'tss-react/mui';
-import Link from 'next/link';
+import Navigation from './Navigation';
 
-import Typography from '@mui/material/Typography';
-
-const useStyle = makeStyles()((theme) => ({
+const useStyles = makeStyles()((theme) => ({
 	header: {
-		height: '0',
-		width: '100%',
-		backgroundColor: 'transparent',
+		position: 'sticky',
+		top: 0,
+		zIndex: theme.zIndex.appBar,
+		background: theme.palette.background.default,
+		borderBottom: '1px solid rgba(37,66,81,.18)',
 	},
-	a: {
-		position: 'fixed',
-		top: '1.5rem',
-		left: '2rem',
-		zIndex: theme.zIndex.speedDial,
-		textDecoration: 'none',
-		fontFamily: theme.typography.h1.fontFamily,
-		fontSize: '1.5rem',
-		fontWeight: 'normal',
-		color: theme.palette.text.primary,
-		transition: '0.5s',
-		'&:hover': {
-			color: theme.palette.secondary.main,
-		},
-		'&:focus': {
-			color: theme.palette.secondary.main,
-			outline: 'none',
+	inner: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 76 },
+	brand: {
+		display: 'inline-flex',
+		alignItems: 'center',
+		minHeight: 44,
+		fontSize: 14,
+		fontWeight: 600,
+		letterSpacing: '.02em',
+		gap: 10,
+		'&::before': {
+			content: '""',
+			width: 8,
+			height: 8,
+			background: theme.palette.secondary.main,
+			borderRadius: '50%',
 		},
 	},
 }));
 
 export default function Header() {
-	const { classes } = useStyle();
+	const { classes } = useStyles();
 	return (
 		<header className={classes.header}>
-			<Link className={classes.a} href="/">
-				Joseph Tseng
-			</Link>
+			<div className={`site-container ${classes.inner}`}>
+				<a className={classes.brand} href="/">
+					Joseph Tseng
+				</a>
+				<Navigation />
+			</div>
 		</header>
 	);
 }

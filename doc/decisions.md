@@ -55,3 +55,9 @@ Implication: run `npm run check` for handoff and report manual checks separately
 The homepage introduces professional frontend/product work and personal backend/cloud/AI projects separately. Complete employment highlights and skills live on `/experience/`. Project case studies describe implementation evidence and its limits without claiming unverified production reliability.
 
 Implication: maintain the shared records in `src/content/experience.ts` and `src/content/projects.ts` when updating summaries or detail pages. Keep the English Learning catalog anchor `english-word-cards` so existing deep links remain useful. Do not publish empty resume or project placeholders.
+
+## Portfolio navigation and personal presentation
+
+The portfolio uses an editorial layout with a static landscape image, section navigation, and a quiet shared footer of accessible profile/contact icons and legal links. The homepage has no quick-action button row or résumé download. The public résumé PDF has been removed at the user's request.
+
+Implication: keep project and full-experience links next to their relevant content. Do not restore a résumé asset, download link, contact pitch, animated sphere, or scroll-controlled project panels as incidental styling work. All pages share the footer through AppShell.

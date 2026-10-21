@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
 	width: 'device-width',
 	initialScale: 1,
-	themeColor: '#000000',
+	themeColor: '#F1ECE8',
 };
 
 const personJsonLd = {
@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
 				<link
 					rel="stylesheet"
-					href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&family=Noto+Sans+TC&family=Playfair+Display&family=Roboto:wght@300;400;500;700&family=Vidaloka&display=swap"
+					href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Vidaloka&display=swap"
 				/>
 			</head>
 			<body>

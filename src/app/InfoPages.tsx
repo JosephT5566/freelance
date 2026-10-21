@@ -3,7 +3,6 @@ import styles from './infoPages.module.css';
 
 const LAST_UPDATED = 'August 3, 2026';
 const CONTACT_EMAIL = 'zxp930110gg@gmail.com';
-const CURRENT_YEAR = 2026;
 
 type ProjectCardProps = {
 	title: string;
@@ -82,9 +81,6 @@ function PageLinks() {
 	);
 }
 
-function PageFooter() {
-	return <footer className={styles.footer}>© {CURRENT_YEAR} Joseph Tseng</footer>;
-}
 
 export function ProjectsContent() {
 	return (
@@ -195,7 +191,6 @@ export function ProjectsContent() {
 					/>
 				</div>
 			</main>
-			<PageFooter />
 		</>
 	);
 }
@@ -238,7 +233,6 @@ export function LegalContent() {
 					</section>
 				</div>
 			</main>
-			<PageFooter />
 		</>
 	);
 }
@@ -339,7 +333,6 @@ export function PrivacyContent() {
 					</article>
 				</div>
 			</main>
-			<PageFooter />
 		</>
 	);
 }
@@ -441,7 +434,6 @@ export function TermsContent() {
 					</article>
 				</div>
 			</main>
-			<PageFooter />
 		</>
 	);
 }

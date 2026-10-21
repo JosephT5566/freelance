@@ -7,15 +7,18 @@ export const metadata: Metadata = {
 	description:
 		'Terms of Service for Joseph Tseng personal applications, including Travel Split and English Word Cards.',
 	alternates: {
-		canonical: '/terms',
+		canonical: '/terms/',
 	},
 	openGraph: {
+		images: [{ url: '/cover.jpg', alt: 'Joseph Tseng portfolio coastline' }],
 		title: "Terms of Service | Joseph's Projects",
 		description:
 			'Terms of Service for Joseph Tseng personal applications, including Travel Split and English Word Cards.',
-		url: '/terms',
+		url: '/terms/',
 	},
 	twitter: {
+		card: 'summary_large_image',
+		images: ['/cover.jpg'],
 		title: "Terms of Service | Joseph's Projects",
 		description:
 			'Terms of Service for Joseph Tseng personal applications, including Travel Split and English Word Cards.',

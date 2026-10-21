@@ -1,252 +1,74 @@
-import React, { UIEvent, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { makeStyles } from 'tss-react/mui';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-
-import Divider from '@mui/material/Divider';
+import { ArrowUpRight } from 'lucide-react';
 import Typography from '@mui/material/Typography';
-import PopupAnimate from '../../components/shared/popupAnimate';
+import { makeStyles } from 'tss-react/mui';
 
-const useStyle = makeStyles()((theme) => ({
-	project: {
-		scrollMarginTop: '5rem',
-		[theme.breakpoints.up('md')]: {
-			minHeight: '100vh',
-			maxHeight: '100vh',
-			padding: '6rem',
-			flexShrink: 0,
-
-			display: 'grid',
-			gridTemplateColumns: 'minmax(0, 2fr) minmax(16rem, 1fr)',
-			gridTemplateRows: 'auto repeat(6, minmax(0, 1fr))',
-			gridGap: '1rem',
-		},
-		[theme.breakpoints.down('md')]: {
+const useStyles = makeStyles()((theme) => ({
+	project: { paddingBlock: 48, borderTop: '1px solid rgba(37,66,81,.25)' },
+	header: { marginBottom: 24 },
+	title: { fontSize: 'clamp(2.25rem, 4vw, 3.25rem)' },
+	columns: {
+		display: 'grid',
+		gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
+		gap: 56,
+		[theme.breakpoints.down('md')]: { gridTemplateColumns: '1fr', gap: 28 },
+	},
+	description: { margin: 0 },
+	image: {
+		display: 'block',
+		marginTop: 0,
+		'& img': {
+			display: 'block',
 			width: '100%',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			marginBottom: '1em',
-			scrollMarginTop: '9rem',
-		},
-	},
-	header: {
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '1 / span 2',
-			gridRow: '1 / 1',
-		},
-		[theme.breakpoints.down('md')]: {
-			width: '100%',
-			padding: '0 0.5rem',
-		},
-	},
-	eyebrow: {
-		marginBottom: '0.35rem',
-		fontWeight: 700,
-		letterSpacing: '0.08em',
-		textTransform: 'uppercase',
-		color: theme.palette.secondary.main,
-	},
-	title: {
-		[theme.breakpoints.down('md')]: {
-			alignSelf: 'flex-start',
-			marginBottom: '0.5em',
-		},
-	},
-	descriptionTitle: {
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '2 / 2',
-			gridRow: '2 / 2',
-		},
-		[theme.breakpoints.down('md')]: {
-			alignSelf: 'flex-start',
-			paddingLeft: '0.5rem',
-			marginBottom: '0.5em',
-		},
-	},
-	description: {
-		width: '100%',
-		[theme.breakpoints.down('md')]: {
-			padding: '0',
-		},
-		'& > hr': {
-			marginBottom: '1em',
-		},
-		'& .content': {
-			marginBottom: '1em',
-		},
-	},
-	contentPanelFrame: {
-		width: '100%',
-		minWidth: 0,
-		position: 'relative',
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '2 / 2',
-			gridRow: '2 / span 4',
-			minHeight: 0,
-			maxHeight: '100%',
-			'&::before, &::after': {
-				content: '""',
-				position: 'absolute',
-				left: 0,
-				right: '0.25rem',
-				zIndex: 1,
-				height: '2rem',
-				opacity: 0,
-				pointerEvents: 'none',
-				transition: 'opacity 0.2s ease',
-			},
-			'&::before': {
-				top: 0,
-				background: `linear-gradient(${theme.palette.background.default}, rgba(255, 255, 255, 0))`,
-			},
-			'&::after': {
-				bottom: 0,
-				background: `linear-gradient(rgba(255, 255, 255, 0), ${theme.palette.background.default})`,
-			},
-			'&.has-top-gradient::before': {
-				opacity: 1,
-			},
-			'&.has-bottom-gradient::after': {
-				opacity: 1,
-			},
-		},
-	},
-	contentPanelFrameFullWidth: {
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '1 / span 2',
-		},
-	},
-	contentPanel: {
-		width: '100%',
-		minWidth: 0,
-		[theme.breakpoints.up('md')]: {
-			height: '100%',
-			maxHeight: '100%',
-			overflowY: 'auto',
-			paddingRight: '0.25rem',
-		},
-		[theme.breakpoints.down('md')]: {
-			padding: '0 0.5rem',
+			height: 'auto',
+			aspectRatio: '16 / 10',
+			objectFit: 'cover',
+			objectPosition: 'top',
+			background: '#e5e8e5',
 		},
 	},
 	section: {
-		marginBottom: '1em',
+		marginBottom: 28,
+		'& h3': { marginBottom: 12 },
+		'& p': { marginBottom: 12 },
+		'& ul': { paddingLeft: 20, margin: 0 },
+		'& li': { paddingLeft: 4, marginBottom: 8 },
 	},
-	sectionList: {
-		margin: '0.25em 0 1em',
-		paddingLeft: '1.2em',
-		'& li': {
-			marginBottom: '0.25em',
-		},
-	},
-	links: {
+	links: { display: 'flex', flexWrap: 'wrap', gap: '4px 24px', marginTop: 20 },
+	tools: {
 		display: 'flex',
 		flexWrap: 'wrap',
-		gap: '0.5rem',
-		marginTop: '1rem',
+		gap: '8px 20px',
+		padding: 0,
+		margin: '24px 0 0',
+		listStyle: 'none',
+		fontSize: 12,
+		fontWeight: 500,
 	},
-	link: {
-		border: `1px solid ${theme.palette.primary.light}`,
-		borderRadius: '0.5rem',
-		padding: '0.45rem 0.75rem',
-		fontWeight: 700,
-		color: theme.palette.primary.main,
-		transition: '0.2s',
-		'&:hover, &:focus': {
-			color: theme.palette.secondary.main,
-			borderColor: theme.palette.secondary.main,
-			outline: 'none',
-		},
-	},
-	footerNote: {
-		marginTop: '1rem',
-		color: theme.palette.primary.light,
-	},
-	image: {
-		backgroundPosition: 'center',
-		backgroundSize: 'cover',
-		borderRadius: '0.5em',
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '1 / 1',
-			gridRow: '2 / span 6',
-		},
-		[theme.breakpoints.down('md')]: {
-			width: 'calc(100% - 1em)',
-			paddingTop: '56.25%',
-		},
-		'&:hover': {
-			cursor: 'pointer',
-		},
-	},
-	tools: {
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '2',
-			gridRow: '6 / span 2',
-			alignSelf: 'end',
-		},
-		[theme.breakpoints.down('md')]: {
-			padding: '0 0.5rem',
-			alignSelf: 'flex-end',
-		},
-	},
-	toolsWithoutImage: {
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '1',
-		},
-		[theme.breakpoints.down('md')]: {
-			alignSelf: 'flex-start',
-		},
-	},
+	note: { marginTop: 24 },
 }));
 
-type ProjectSection = {
-	title: string;
-	paragraphs?: string[];
-	items?: string[];
-};
+type ProjectSection = { title: string; paragraphs?: string[]; items?: string[] };
+type ProjectLink = { label: string; href: string };
 
-type ProjectLink = {
-	label: string;
-	href: string;
-};
-
-function ProjectLinkItem({
-	link,
-	className,
+export default function Project({
+	id,
+	title,
+	eyebrow,
+	description,
+	image,
+	url,
+	tools,
+	sections,
+	links,
+	footerNote,
+	titleComponent = 'h2',
 }: {
-	link: ProjectLink;
-	className: string;
-}) {
-	if (link.href.startsWith('/')) {
-		return (
-			<Link className={className} href={link.href}>
-				{link.label}
-			</Link>
-		);
-	}
-
-	return (
-		<a
-			className={className}
-			href={link.href}
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			{link.label}
-		</a>
-	);
-}
-
-export default function Project(props: {
 	id?: string;
 	title: string;
 	eyebrow?: string;
 	description?: string;
-	descriptionTitle?: string;
 	image?: string;
-	placeholder?: string;
 	url?: string;
 	tools?: string[];
 	sections?: ProjectSection[];
@@ -254,206 +76,104 @@ export default function Project(props: {
 	footerNote?: string;
 	titleComponent?: 'h1' | 'h2';
 }) {
-	const {
-		id,
-		title,
-		eyebrow,
-		description,
-		descriptionTitle = 'Description',
-		image,
-		url,
-		tools,
-		sections,
-		links,
-		footerNote,
-		titleComponent = 'h2',
-	} = props;
-	const { classes } = useStyle();
-	const theme = useTheme();
-	const isViewPortLarge = useMediaQuery(theme.breakpoints.up('md'));
-	const hasContent = Boolean(
-		description || sections?.length || links?.length || footerNote,
-	);
-	const contentPanelRef = useRef<HTMLDivElement>(null);
-	const [scrollGradient, setScrollGradient] = useState({
-		top: false,
-		bottom: false,
-	});
-
-	const updateScrollGradient = () => {
-		const contentPanel = contentPanelRef.current;
-		if (!contentPanel) return;
-
-		const scrollTop = contentPanel.scrollTop;
-		const maxScrollTop =
-			contentPanel.scrollHeight - contentPanel.clientHeight;
-
-		setScrollGradient({
-			top: scrollTop > 0,
-			bottom: maxScrollTop - scrollTop > 1,
-		});
-	};
-
-	const openProject = () => {
-		if (!url) return;
-		window.open(url, '_blank', 'noopener,noreferrer')?.focus();
-	};
-
-	useEffect(() => {
-		updateScrollGradient();
-
-		const contentPanel = contentPanelRef.current;
-		if (!contentPanel) return;
-
-		const resizeObserver = new ResizeObserver(updateScrollGradient);
-		resizeObserver.observe(contentPanel);
-
-		return () => resizeObserver.disconnect();
-	}, [description, sections, links, footerNote, isViewPortLarge]);
-
+	const { classes } = useStyles();
 	return (
 		<article className={classes.project} id={id}>
 			<header className={classes.header}>
-				{eyebrow && (
-					<Typography className={classes.eyebrow} variant="body1">
-						{eyebrow}
-					</Typography>
-				)}
-				<Typography
-					className={classes.title}
-					variant="h1"
-					component={titleComponent}
-				>
+				{eyebrow && <p className="section-kicker">{eyebrow}</p>}
+				<Typography className={classes.title} variant="h2" component={titleComponent}>
 					{title}
 				</Typography>
 			</header>
-			{image && (
-				<div
-					className={classes.image}
-					style={{ backgroundImage: `url(${image})` }}
-					onClick={openProject}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter' || event.key === ' ') {
-							openProject();
-						}
-					}}
-					role={url ? 'link' : undefined}
-					tabIndex={url ? 0 : undefined}
-					aria-label={url ? `Open ${title}` : undefined}
-				/>
-			)}
-			{hasContent && (
-				<div
-					className={`${classes.contentPanelFrame} ${!image ? classes.contentPanelFrameFullWidth : ''} ${
-						scrollGradient.top ? 'has-top-gradient' : ''
-					} ${scrollGradient.bottom ? 'has-bottom-gradient' : ''}`}
-				>
-					<div
-						className={classes.contentPanel}
-						ref={contentPanelRef}
-						onScroll={(event: UIEvent<HTMLDivElement>) => {
-							const contentPanel = event.currentTarget;
-							const scrollTop = contentPanel.scrollTop;
-							const maxScrollTop =
-								contentPanel.scrollHeight -
-								contentPanel.clientHeight;
-
-							setScrollGradient({
-								top: scrollTop > 0,
-								bottom: maxScrollTop - scrollTop > 1,
-							});
-						}}
-					>
-						{description && (
-							<>
-								<Typography
-									className={classes.descriptionTitle}
-									variant="h2"
-									component="h3"
-								>
-									{descriptionTitle}
-								</Typography>
-								<div className={classes.description}>
-									<PopupAnimate disabled={isViewPortLarge}>
-										<Typography
-											className="content"
-											variant="body1"
-										>
-											{description}
-										</Typography>
-									</PopupAnimate>
-									<Divider />
-								</div>
-							</>
-						)}
-						{sections?.map((section) => (
-							<section
-								className={classes.section}
-								key={section.title}
-							>
-								<Typography variant="h3" component="h3">
-									{section.title}
-								</Typography>
-								{section.paragraphs?.map((paragraph) => (
-									<Typography
-										className="content"
-										variant="body1"
-										key={paragraph}
+			<div className={classes.columns}>
+				<div>
+					{description && (
+						<Typography className={classes.description} variant="body1">
+							{description}
+						</Typography>
+					)}
+					{tools && (
+						<ul className={classes.tools} aria-label={`${title} technology`}>
+							{tools.map((tool) => (
+								<li key={tool}>{tool}</li>
+							))}
+						</ul>
+					)}
+					{links && (
+						<nav className={classes.links} aria-label={`${title} links`}>
+							{links.map((link) =>
+								link.href.startsWith('/') ? (
+									<Link key={link.href} className="text-link" href={link.href}>
+										{link.label}
+										<ArrowUpRight size={16} aria-hidden="true" />
+									</Link>
+								) : (
+									<a
+										key={link.href}
+										className="text-link"
+										href={link.href}
+										target="_blank"
+										rel="noopener noreferrer"
 									>
-										{paragraph}
-									</Typography>
-								))}
-								{section.items && (
-									<ul className={classes.sectionList}>
-										{section.items.map((item) => (
-											<Typography
-												component="li"
-												variant="body1"
-												key={item}
-											>
-												{item}
-											</Typography>
-										))}
-									</ul>
-								)}
-							</section>
-						))}
-						{links && (
-							<nav
-								className={classes.links}
-								aria-label={`${title} links`}
-							>
-								{links.map((link) => (
-									<ProjectLinkItem
-										className={classes.link}
-										key={`${link.label}-${link.href}`}
-										link={link}
-									/>
-								))}
-							</nav>
-						)}
-						{footerNote && (
-							<Typography
-								className={classes.footerNote}
-								variant="body1"
-							>
-								{footerNote}
-							</Typography>
-						)}
-					</div>
+										{link.label}
+										<ArrowUpRight size={16} aria-hidden="true" />
+									</a>
+								),
+							)}
+						</nav>
+					)}
+					{footerNote && (
+						<Typography className={classes.note} variant="body1">
+							{footerNote}
+						</Typography>
+					)}
 				</div>
-			)}
-			{tools && (
-				<div
-					className={`${classes.tools} ${!image ? classes.toolsWithoutImage : ''}`}
-				>
-					{tools.map((tool, index) => (
-						<p className="m-0 text-sm text-gray-500" key={index}>
-							{tool}
-						</p>
+				<div>
+					{image &&
+						(url ? (
+							<a
+								className={classes.image}
+								href={url}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={`Open ${title} live demo`}
+							>
+								<img
+									src={image}
+									alt={`${title} homepage`}
+									width={960}
+									height={600}
+									loading="lazy"
+								/>
+							</a>
+						) : (
+							<div className={classes.image}>
+								<img src={image} alt={title} width={960} height={600} loading="lazy" />
+							</div>
+						))}
+					{sections?.map((section) => (
+						<section className={classes.section} key={section.title}>
+							<Typography variant="h3" component="h3">
+								{section.title}
+							</Typography>
+							{section.paragraphs?.map((paragraph) => (
+								<Typography variant="body1" key={paragraph}>
+									{paragraph}
+								</Typography>
+							))}
+							{section.items && (
+								<ul>
+									{section.items.map((item) => (
+										<li key={item}>
+											<Typography variant="body1">{item}</Typography>
+										</li>
+									))}
+								</ul>
+							)}
+						</section>
 					))}
 				</div>
-			)}
+			</div>
 		</article>
 	);
 }

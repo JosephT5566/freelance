@@ -28,7 +28,7 @@ There is no application backend in this repository. References to OAuth, Google 
 | `/privacy/` | `app/privacy/page.tsx` | `PrivacyContent` in `src/app/InfoPages.tsx` | Privacy policy |
 | `/terms/` | `app/terms/page.tsx` | `TermsContent` in `src/app/InfoPages.tsx` | Terms of service |
 
-Every route is wrapped in `src/app/AppShell.tsx`, which supplies the shared header and navigation. The root layout in `app/layout.tsx` supplies global metadata, fonts, providers, and Person JSON-LD.
+Every route is wrapped in `src/app/AppShell.tsx`, which supplies the shared sticky header, responsive navigation drawer, and quiet icon footer. The root layout in `app/layout.tsx` supplies global metadata, fonts, providers, and Person JSON-LD.
 
 ## Rendering boundaries
 
@@ -51,7 +51,7 @@ The repository contains two compatible styling approaches:
 
 Tailwind is loaded through `styles/globals.css` and `postcss.config.mjs`. Theme colors and type defaults are defined in `styles/palette.js` and `styles/typography.ts`. Google Fonts are linked in the root layout.
 
-Responsive and motion-heavy behavior is concentrated in client components, including navigation, the project section rail, the album pager, horizontal scrolling, and spring animations. Changes to these components should be checked with keyboard input, reduced-motion preferences, and both mobile and desktop widths.
+The homepage uses a static landscape image and editorial project features. The catalog uses normal document scrolling and an in-flow anchor index. Navigation uses a MUI drawer for mobile keyboard focus and dismissal. Retained album, horizontal-scroll, and spring-animation helpers are not mounted by these portfolio pages. Changes to interactive components should be checked with keyboard input, reduced-motion preferences, and both mobile and desktop widths.
 
 ## Content ownership
 
@@ -65,7 +65,7 @@ Responsive and motion-heavy behavior is concentrated in client components, inclu
 - Legal/privacy/terms copy: `src/app/InfoPages.tsx`.
 - Joseph Apps detail copy: `src/app/JosephApps.tsx`.
 
-The homepage links directly to Flickr. The retained album module can fetch images through `src/api/flickrHook.tsx`; `src/views/payload/album.tsx` also contains static fallback image URLs. Project imagery may use remote URLs. These are browser-to-third-party requests, not Worker-proxied assets.
+The homepage links directly to Flickr. The hero uses the user-supplied `https://cdn.josephtseng-tw.com/profile-website/hero-2026.jpg` landscape image. The portrait and verified JoPie app icon are local assets. The original `/cover.jpg` remains the social-preview image. English Learning uses a labelled HTML review-workflow diagram rather than an invented product screenshot. The retained album module can fetch images through `src/api/flickrHook.tsx`; `src/views/payload/album.tsx` also contains static fallback image URLs. Project imagery may use remote URLs. These are browser-to-third-party requests, not Worker-proxied assets.
 
 ## Hosting layer
 

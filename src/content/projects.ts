@@ -96,7 +96,7 @@ export const projectItems = [
 		id: 'megaport-selector',
 		navLabel: 'Megaport selector',
 		title: 'Megaport selector',
-		image: 'https://i.imgur.com/MKtF24C.png',
+		image: '/images/projects/megaport.jpg',
 		description: `
 					A performance selector for Megaport Festival.
 					There are lots of shows in the two days, so I design a website
@@ -164,12 +164,17 @@ export const projectItems = [
 	englishLearningProject,
 ] satisfies ProjectRecord[];
 
+export type ProjectVisual =
+	| { kind: 'image'; src: string; alt: string; fit: 'contain' | 'cover' }
+	| { kind: 'diagram'; labels: string[]; caption: string };
+
 export type FeaturedProject = {
 	id: string;
 	title: string;
 	summary: string;
 	href: string;
 	linkLabel: string;
+	visual?: ProjectVisual;
 };
 
 export const featuredProjects: FeaturedProject[] = [
@@ -180,6 +185,7 @@ export const featuredProjects: FeaturedProject[] = [
 			'A vocabulary app evolved into a full-stack learning project with an owner-scoped FastAPI API, PostgreSQL, and retry-safe review submissions.',
 		href: '/projects/english-learning/',
 		linkLabel: 'Read the English Learning case study',
+		visual: { kind: 'diagram', labels: ['SvelteKit', 'FastAPI', 'PostgreSQL'], caption: 'Review workflow' },
 	},
 	{
 		id: 'jopie',
@@ -188,6 +194,7 @@ export const featuredProjects: FeaturedProject[] = [
 			'A personal and household expense app with shared-cost settlement, recurring records, and AI-assisted text and receipt entry.',
 		href: '/projects/jopie/',
 		linkLabel: 'Read the JoPie case study',
+		visual: { kind: 'image', src: '/images/projects/jopie-icon.png', alt: 'JoPie app icon', fit: 'contain' },
 	},
 	{
 		id: 'travel-split',

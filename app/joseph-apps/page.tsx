@@ -9,16 +9,19 @@ export const metadata: Metadata = {
 	description:
 		'Joseph Apps provides Google Sign-In and secure sessions for applications operated by Joseph Tseng.',
 	alternates: {
-		canonical: '/joseph-apps',
+		canonical: '/joseph-apps/',
 	},
 	openGraph: {
+		images: [{ url: '/cover.jpg', alt: 'Joseph Tseng portfolio coastline' }],
 		title: 'Joseph Apps | Joseph Tseng',
 		description:
 			'Google Sign-In, data-use details, security practices, and the applications supported by Joseph Apps.',
-		url: '/joseph-apps',
+		url: '/joseph-apps/',
 		type: 'website',
 	},
 	twitter: {
+		card: 'summary_large_image',
+		images: ['/cover.jpg'],
 		title: 'Joseph Apps | Joseph Tseng',
 		description:
 			'Google Sign-In, data-use details, security practices, and the applications supported by Joseph Apps.',
@@ -29,7 +32,7 @@ const softwareApplicationJsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'SoftwareApplication',
 	name: 'Joseph Apps',
-	url: `${SITE_URL}/joseph-apps`,
+	url: `${SITE_URL}/joseph-apps/`,
 	applicationCategory: 'SecurityApplication',
 	operatingSystem: 'Web',
 	description:
