@@ -43,7 +43,10 @@ The primary route smoke-test set is:
 
 ```text
 /
+/experience/
 /projects/
+/projects/english-learning/
+/projects/jopie/
 /joseph-apps/
 /legal/
 /privacy/

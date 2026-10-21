@@ -6,85 +6,54 @@ import Typography from '@mui/material/Typography';
 const useStyle = makeStyles()((theme) => ({
 	aboutme: {
 		width: '100%',
-		overflow: 'hidden',
-		[theme.breakpoints.up('md')]: {
-			height: '600px',
-			display: 'grid',
-			gridTemplateColumns: '50% 50%',
-			gridTemplateRows: 'repeat(6, 1fr)',
-			gridGap: '20px',
-		},
-		[theme.breakpoints.down('sm')]: {
-			display: 'flex',
-			flexDirection: 'column',
-		},
+		display: 'grid',
+		gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
+		gap: '2rem',
+		alignItems: 'center',
+		[theme.breakpoints.down('md')]: { gridTemplateColumns: '1fr', gap: 0 },
 	},
 	profileImage: {
-		backgroundSize: 'cover',
-		backgroundPosition: 'center',
-		[theme.breakpoints.up('md')]: {
-			height: '100%',
-			gridColumn: '2 / auto',
-			gridRow: '1 / span 6',
-		},
-		[theme.breakpoints.down('sm')]: {
-			width: '100%',
-			paddingTop: '133.33%',
-		},
+		width: '100%',
+		height: 'auto',
+		maxHeight: '28rem',
+		aspectRatio: '4 / 3',
+		objectFit: 'cover',
+		[theme.breakpoints.down('md')]: { maxHeight: '22rem' },
 	},
-	title: {
-		marginBottom: '2rem',
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '1',
-			gridRow: '2 / auto',
-			padding: '0 2rem',
-		},
-		[theme.breakpoints.down('sm')]: {
-			paddingTop: '1em',
-		},
-	},
-	description: {
-		marginBottom: '5rem',
-		padding: '0 2em',
-		[theme.breakpoints.up('md')]: {
-			gridColumn: '1',
-			gridRow: '3 / auto',
-		},
-		'& > p': {
-			marginBottom: '1em',
-		},
-	},
+	copy: { padding: '3rem 2rem' },
+	title: { marginBottom: '1.5rem' },
+	description: { '& > p': { marginBottom: '1rem' } },
 }));
 
 export default function AboutMe() {
 	const { classes } = useStyle();
 	return (
-		<section className={classes.aboutme}>
-			<Typography variant="h1" className={classes.title}>
-				{'About Me'}
-			</Typography>
-			<article className={classes.description}>
-				<Typography variant="body1">
-					{'Product-minded software engineer building reliable web experiences.'}
+		<section className={classes.aboutme} aria-labelledby="about-title">
+			<div className={classes.copy}>
+				<Typography variant="h1" component="h2" className={classes.title} id="about-title">
+					About Me
 				</Typography>
-				<Typography variant="body1">
-					{`
-						I specialize in frontend and full-stack product development with React, TypeScript,
-						Next.js, SvelteKit, GraphQL, and modern web architecture. At Houzz, I have delivered
-						marketplace search and browse improvements, CMS-driven campaign platforms,
-						experimentation workflows, and 3D and AI-assisted product integrations.
-					`}
-				</Typography>
-				<Typography variant="body1">
-					{`
-						I work across product, design, backend, platform, personalization, and data teams to
-						turn ambiguous requirements into maintainable releases. My approach combines product
-						thinking with production debugging, QA planning, feature flags, analytics, and
-						release monitoring.
-					`}
-				</Typography>
-			</article>
-			<div className={classes.profileImage} style={{ backgroundImage: `url(/images/profile.jpg)` }}></div>
+				<div className={classes.description}>
+					<Typography variant="body1">
+						I am a software engineer focused on frontend and product development. At Houzz, I worked on
+						marketplace discovery, CMS campaigns, experimentation, and 3D and AI-assisted product integrations
+						with cross-functional teams.
+					</Typography>
+					<Typography variant="body1">
+						In personal projects, I extend that experience into backend APIs, PostgreSQL, cloud delivery, and
+						AI-assisted workflows. I care about clear product behavior, maintainable code, and understanding
+						what happens when a request fails.
+					</Typography>
+				</div>
+			</div>
+			<img
+				className={classes.profileImage}
+				src="/images/profile.jpg"
+				alt="Joseph Tseng"
+				width="1067"
+				height="1600"
+				loading="lazy"
+			/>
 		</section>
 	);
 }

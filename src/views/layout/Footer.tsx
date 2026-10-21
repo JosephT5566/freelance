@@ -3,12 +3,16 @@ import { makeStyles } from 'tss-react/mui';
 import { FaBehance, FaFlickr, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 import Container from '@mui/material/Container';
+import { CONTACT_EMAIL, FLICKR_URL, GITHUB_URL, LINKEDIN_URL, RESUME_URL } from '../../utils/static';
 import Typography from '@mui/material/Typography';
 
 const useStyle = makeStyles()((theme) => ({
 	footer: {
 		width: '100%',
-		height: '10rem',
+		minHeight: '15rem',
+		padding: '2rem 1.5rem 3rem',
+		gap: '0.75rem',
+		textAlign: 'center',
 		backgroundColor: theme.palette.background.default,
 		position: 'relative',
 		display: 'flex',
@@ -50,21 +54,24 @@ export default function Footer() {
 
 	return (
 		<footer className={classes.footer}>
-			<Typography variant="body1">{'Elsewhere on the Internet'}</Typography>
+			<Typography variant="h2" component="h2" id="contact">
+				Get in touch
+			</Typography>
+			<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+			<a href={RESUME_URL} download>
+				Download resume (PDF)
+			</a>
 			<div className={classes.icons}>
 				<a href="https://www.behance.net/zxp9301107b6a" target="_blank" rel="noopener noreferrer">
 					<FaBehance className={classes.icon} aria-label="Behance" />
 				</a>
-				<a href="https://www.flickr.com/photos/joseph-t_0304/" target="_blank" rel="noopener noreferrer">
+				<a href={FLICKR_URL} aria-label="Flickr" target="_blank" rel="noopener noreferrer">
 					<FaFlickr className={classes.icon} aria-label="Flickr" />
 				</a>
-				<a href="https://github.com/JosephT5566" target="_blank" rel="noopener noreferrer">
+				<a href={GITHUB_URL} aria-label="GitHub" target="_blank" rel="noopener noreferrer">
 					<FaGithub className={classes.icon} aria-label="GitHub" />
 				</a>
-				{/* <a href="https://www.instagram.com/tsengchun34/" target="_blank" rel="noopener noreferrer">
-					<Instagram className={classes.icon} />
-				</a> */}
-				<a href="https://www.linkedin.com/in/joseph-tseng-50ba36136" target="_blank" rel="noopener noreferrer">
+				<a href={LINKEDIN_URL} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
 					<FaLinkedin className={classes.icon} aria-label="LinkedIn" />
 				</a>
 			</div>
