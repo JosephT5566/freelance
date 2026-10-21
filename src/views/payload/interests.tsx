@@ -1,65 +1,38 @@
-import React from 'react';
-import { makeStyles } from 'tss-react/mui';
-import { FaInstagram } from 'react-icons/fa';
-
 import Typography from '@mui/material/Typography';
-import PopupAnimate from '../../components/shared/popupAnimate';
+import { makeStyles } from 'tss-react/mui';
+import { FLICKR_URL, INSTAGRAM_URL } from '../../utils/static';
 
-const useStyle = makeStyles()((theme) => ({
-	interests: {
-		width: '100%',
-		height: '100vh',
+const useStyles = makeStyles()((theme) => ({
+	section: { padding: '3rem 16.6% 4rem', [theme.breakpoints.down('md')]: { padding: '3rem 2rem' } },
+	copy: { maxWidth: '46rem', marginTop: '1.5rem' },
+	links: {
 		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	title: {
-		padding: '1em 0',
-	},
-	description: {
-		padding: '0 16.6%',
-	},
-	icon: {
-		width: '1rem',
-		transition: '0.5s',
-		'&:hover': {
-			cursor: 'pointer',
-			color: theme.palette.secondary.main,
-		},
+		flexWrap: 'wrap',
+		gap: '1.5rem',
+		marginTop: '1.5rem',
+		'& a': { textDecoration: 'underline', textUnderlineOffset: '0.2em', padding: '0.5rem 0' },
 	},
 }));
 
 export default function Interests() {
-	const { classes } = useStyle();
+	const { classes } = useStyles();
 	return (
-		<article className={classes.interests}>
-			<Typography variant="h1" className={classes.title}>
-				{'Beyond Engineering'}
+		<section className={classes.section} aria-labelledby="interests-title">
+			<Typography variant="h1" component="h2" id="interests-title">
+				Beyond the Code
 			</Typography>
-			<PopupAnimate>
-				<div className={classes.description}>
-					<Typography variant="body1">
-						{`
-							Outside product development, I build practical side projects with SvelteKit,
-							TypeScript, Supabase, Google Apps Script, and AI-assisted workflows. I also enjoy
-							photography, travel, snowboarding, and scuba diving, and hold an Advanced Open
-							Water certification.
-						`}
-					</Typography>
-					<div style={{ display: 'flex', alignItems: 'center' }}>
-						<Typography variant="body1">{`Check out my`}</Typography>
-						<a
-							href="https://www.instagram.com/tsengchun34/"
-							style={{ padding: '0 4px' }}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<FaInstagram className={classes.icon} aria-label="Instagram" />
-						</a>
-					</div>
-				</div>
-			</PopupAnimate>
-		</article>
+			<Typography variant="body1" className={classes.copy}>
+				Photography and travel take me away from the screen. I also enjoy snowboarding and scuba diving, and
+				hold an Advanced Open Water certification.
+			</Typography>
+			<div className={classes.links}>
+				<a href={FLICKR_URL} target="_blank" rel="noopener noreferrer">
+					Photography on Flickr
+				</a>
+				<a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+					Instagram
+				</a>
+			</div>
+		</section>
 	);
 }

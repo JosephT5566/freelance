@@ -49,3 +49,9 @@ Implication: visual and interaction checks remain manual, and handoff notes shou
 Repository-scoped Codex roles provide planning, implementation, and independent review. Their configuration lives in `.codex/agents/`. See [their roles and usage](codex-subagents.md).
 
 Implication: run `npm run check` for handoff and report manual checks separately. Native agent reviews supplement the existing verification workflow.
+
+## The homepage summarizes evidence held on detail pages
+
+The homepage introduces professional frontend/product work and personal backend/cloud/AI projects separately. Complete employment highlights and skills live on `/experience/`. Project case studies describe implementation evidence and its limits without claiming unverified production reliability.
+
+Implication: maintain the shared records in `src/content/experience.ts` and `src/content/projects.ts` when updating summaries or detail pages. Keep the English Learning catalog anchor `english-word-cards` so existing deep links remain useful. Do not publish empty resume or project placeholders.

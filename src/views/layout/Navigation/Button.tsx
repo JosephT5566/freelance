@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { makeStyles } from 'tss-react/mui';
 import { useIndex, useUpdateIndex } from './IndexProvider';
 
@@ -21,7 +22,7 @@ const useStyle = makeStyles()((theme) => ({
 
 		color: theme.palette.primary.main,
 
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			flex: '0 1 0px',
 			alignItems: 'flex-start',
 			padding: '0.8em 0',
@@ -56,7 +57,7 @@ const useStyle = makeStyles()((theme) => ({
 			[theme.breakpoints.up('md')]: {
 				bottom: '-0.5em',
 			},
-			[theme.breakpoints.down('sm')]: {
+			[theme.breakpoints.down('md')]: {
 				bottom: '0',
 			},
 		},
@@ -79,18 +80,27 @@ const useStyle = makeStyles()((theme) => ({
 
 type ButtonProps = {
 	index: number;
+	href: string;
 	active?: boolean;
 	onClick?: (() => void) | null;
 	children: React.ReactNode;
 };
 
-export default function Button({ index, active: activeOverride, onClick = null, children }: ButtonProps) {
+export default function Button({
+	href,
+	index,
+	active: activeOverride,
+	onClick = null,
+	children,
+}: ButtonProps) {
 	const { classes } = useStyle();
 	const currentIndex = useIndex();
 	const updateIndex = useUpdateIndex();
 	const active = (activeOverride ?? index === currentIndex) ? 'active' : '';
 	return (
-		<button
+		<Link
+			href={href}
+			aria-current={active ? 'page' : undefined}
 			className={`${classes.button} ${active}`}
 			onClick={() => {
 				updateIndex(index);
@@ -98,6 +108,6 @@ export default function Button({ index, active: activeOverride, onClick = null, 
 			}}
 		>
 			{children}
-		</button>
+		</Link>
 	);
 }

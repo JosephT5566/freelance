@@ -4,7 +4,8 @@ import { makeStyles } from 'tss-react/mui';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ExperienceItem from '../../components/shared/experienceItem';
-import PopupAnimate from '../../components/shared/popupAnimate';
+import Link from 'next/link';
+import { experiences, experienceIntro, houzzSummary, skillGroups } from '../../content/experience';
 
 const useStyle = makeStyles()((theme) => ({
 	experiences: {
@@ -60,84 +61,51 @@ const useStyle = makeStyles()((theme) => ({
 	},
 }));
 
-export default function Experience() {
+export default function Experience({ full = false }: { full?: boolean }) {
 	const { classes } = useStyle();
 	return (
-		<section className={classes.experiences}>
-			<Typography variant="h1" className={classes.title}>
-				{'Experiences'}
+		<section className={classes.experiences} aria-labelledby="experience-title">
+			<Typography variant="h1" component={full ? 'h1' : 'h2'} className={classes.title} id="experience-title">
+				{full ? 'Experience' : 'Professional Experience'}
 			</Typography>
 			<div className={classes.description}>
 				<Typography variant="body1">
-					{`
-						Nearly a decade of engineering experience spanning web products, marketplace and CMS
-						platforms, embedded firmware, production tooling, quality ownership, and
-						cross-functional delivery.
-					`}
+					{full
+						? experienceIntro
+						: 'Frontend and product engineering at Houzz, grounded in earlier web application and firmware work.'}
 				</Typography>
 			</div>
-			<div className={classes.skills}>
-				<div>
-					<Typography variant="h2">{'Core Engineering'}</Typography>
-					<Typography variant="body1">
-						{'TypeScript, JavaScript, React, Next.js, SvelteKit, HTML, CSS, SQL'}
-					</Typography>
-					<Typography variant="body1">
-						{'GraphQL, Supabase, PostgreSQL, API integration, frontend architecture'}
-					</Typography>
+			{full && (
+				<div className={classes.skills}>
+					{skillGroups.map((group) => (
+						<div key={group.title}>
+							<Typography variant="h2">{group.title}</Typography>
+							{group.lines.map((line) => (
+								<Typography key={line} variant="body1">
+									{line}
+								</Typography>
+							))}
+						</div>
+					))}
 				</div>
-				<div>
-					<Typography variant="h2">{'Quality & Delivery'}</Typography>
-					<Typography variant="body1">
-						{'A/B testing, QA planning, feature flags, bug bash coordination, root-cause debugging'}
-					</Typography>
-					<Typography variant="body1">
-						{'Prismic, Amplitude, Redash, Coralogix, Jira, GitHub Actions, CI/CD'}
-					</Typography>
-				</div>
-			</div>
+			)}
 			<div className={classes.items}>
 				<Divider className={classes.divider} />
-				<PopupAnimate>
-					<ExperienceItem
-						year={'2022 - 2026'}
-						role={'Software Engineer'}
-						company={'Houzz | Marketplace, Lead Nurture, and 3D'}
-						highlights={[
-							'Delivered marketplace search and browse improvements across desktop and mobile web, including A/B-tested discovery experiences.',
-							'Built reusable Prismic CMS page patterns with GraphQL schema and resolver support for landing pages, campaigns, and event experiences.',
-							'Integrated frontend workflows with personalization, 3D, and external AI services while working across product, platform, backend, and data teams.',
-							'Improved release quality through design docs, feature flags, QA guides, bug bashes, production debugging, analytics, and release monitoring.',
-						]}
-					/>
-				</PopupAnimate>
-				<Divider className={classes.divider} />
-				<PopupAnimate>
-					<ExperienceItem
-						year={'2020 - 2022'}
-						role={'Frontend Engineer'}
-						company={'Chung Yung Consultant Company | Taipei'}
-						highlights={[
-							'Built responsive membership and administration applications using React, Next.js, TypeScript, HTML, and CSS.',
-							'Implemented authentication and state flows with XState, API integrations, form-driven interfaces, and PostgreSQL changes.',
-							'Supported GitHub-based CI/CD and GitOps deployment workflows on cloud infrastructure.',
-						]}
-					/>
-				</PopupAnimate>
-				<Divider className={classes.divider} />
-				<PopupAnimate>
-					<ExperienceItem
-						year={'2016 - 2020'}
-						role={'Firmware & Application Engineer'}
-						company={'Foxconn, Mega Design Tech, and Memoright Tech | Hsinchu'}
-						highlights={[
-							'Developed embedded firmware, memory-controller test patterns, and production application tooling using C, C++, and C#.',
-							'Established Ceedling unit tests for driver development to improve test coverage and reliability.',
-						]}
-					/>
-				</PopupAnimate>
-				<Divider className={classes.divider} />
-				<Divider className={classes.divider} />
+				{experiences.map((experience, index) => (
+					<React.Fragment key={experience.company}>
+						<ExperienceItem
+							{...experience}
+							headingComponent={full ? 'h2' : 'h3'}
+							highlights={full ? experience.highlights : index === 0 ? houzzSummary : []}
+						/>
+						<Divider className={classes.divider} />
+					</React.Fragment>
+				))}
+				{!full && (
+					<p>
+						<Link href="/experience/">View full experience and skills</Link>
+					</p>
+				)}
 			</div>
 		</section>
 	);

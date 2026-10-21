@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import Providers from './providers';
 import '../styles/globals.css';
-import { APP_NAME, SITE_DESCRIPTION, SITE_URL } from '../src/utils/static';
+import { APP_NAME, SITE_DESCRIPTION, SITE_URL, GITHUB_URL, LINKEDIN_URL } from '../src/utils/static';
 
 export const metadata: Metadata = {
 	metadataBase: new URL(SITE_URL),
@@ -63,7 +63,7 @@ const personJsonLd = {
 	name: 'Joseph Tseng',
 	url: `${SITE_URL}/`,
 	jobTitle: 'Software Engineer',
-	sameAs: ['https://github.com/JosephT5566', 'https://www.linkedin.com/in/joseph-tseng-50ba36136'],
+	sameAs: [GITHUB_URL, LINKEDIN_URL],
 	knowsAbout: [
 		'React',
 		'TypeScript',

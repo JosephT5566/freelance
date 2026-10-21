@@ -1,7 +1,7 @@
 'use client';
 
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
-import type { ComponentProps } from 'react';
+import { projectItems } from '../content/projects';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'tss-react/mui';
 
@@ -122,178 +122,12 @@ function TitleSection() {
 				Joseph&apos;s Projects
 			</Typography>
 			<Typography className={classes.description} variant="body1">
-				A collection of personal applications built by Joseph Tseng to solve everyday problems and explore better product
-				experiences.
+				A collection of personal applications built by Joseph Tseng to solve everyday problems and explore
+				better product experiences.
 			</Typography>
 		</section>
 	);
 }
-
-const projectItems = [
-	{
-		id: 'megaport-selector',
-		navLabel: 'Megaport selector',
-		title: 'Megaport selector',
-		image: 'https://i.imgur.com/MKtF24C.png',
-		description: `
-					A performance selector for Megaport Festival.
-					There are lots of shows in the two days, so I design a website
-					to make scheduling easier. And people may participate the party with only mobile device,
-					so RWD is required.
-		`,
-		url: 'https://musicfest.josephtseng-tw.com',
-		tools: ['Responsive web', 'React', 'GitHub Pages'],
-	},
-	{
-		id: 'jopie',
-		navLabel: 'JoPie',
-		title: 'JoPie',
-		eyebrow: 'Personal & Household Expenses',
-		description:
-			'JoPie is a personal and household expense tracker with a mobile-friendly Traditional Chinese interface. It brings daily records, shared-cost settlement, recurring expenses, and AI-assisted entry into one app.',
-		sections: [
-			{
-				title: 'Everyday expense tracking',
-				items: [
-					'Add and edit personal or household expenses',
-					'Browse daily records, monthly category summaries, and charts',
-					'Search expenses by keyword and settle shared household costs',
-					'Schedule one-off expenses or daily, weekly, and monthly repeats',
-				],
-			},
-			{
-				title: 'AI-assisted entry',
-				items: [
-					'Describe an expense in natural language and answer follow-up questions for missing details',
-					'View streamed analysis as valid text entries save automatically',
-					'Upload receipts, review and edit extracted items, exclude unwanted rows, and confirm before saving',
-				],
-			},
-			{
-				title: 'Built for daily use',
-				items: [
-					'Google sign-in and expense records through Supabase',
-					'IndexedDB cache for previously loaded records',
-					'Taiwan-local date and month boundaries',
-					'Installable PWA with a statically built frontend',
-				],
-			},
-		],
-		tools: [
-			'Svelte 5 / SvelteKit',
-			'TypeScript',
-			'Tailwind CSS / DaisyUI',
-			'Supabase',
-			'IndexedDB / PWA',
-			'Python / FastAPI',
-			'LangGraph / Gemini',
-			'GitHub Pages',
-		],
-	},
-	{
-		id: 'travel-split',
-		navLabel: 'Travel Split',
-		title: 'Travel Split',
-		eyebrow: 'OAuth Application',
-		placeholder: 'Travel Split',
-		description:
-			'Travel Split is a mobile-first trip expense app and travel-book companion that keeps Google Sheets as the source of truth while giving travelers a faster phone-friendly workflow.',
-		sections: [
-			{
-				title: 'Features',
-				items: [
-					'Add expenses during a trip',
-					'Choose an active trip sheet',
-					'Track date, category, payer, currency, and split amounts',
-					'Review day-based expenses',
-					'View shared-cost summaries',
-					'Open trip plan resources',
-					'Use public mobile travel-book pages',
-					'Keep loaded data available through persisted cache',
-					'Google Sign-In authentication',
-				],
-			},
-			{
-				title: 'Data notes',
-				items: [
-					'Google Sheet-backed expense records',
-					'Trip users, categories, currencies, dates, and resources from sheet config',
-					'IndexedDB cache for previously loaded data',
-					'Public travel-book routes for structured itinerary guides',
-					'Mobile-first and offline-readable travel content',
-					'No data selling',
-					'Links to Privacy / Terms',
-				],
-			},
-		],
-		links: [
-			{ label: 'Joseph Apps', href: '/joseph-apps' },
-			{ label: 'Privacy', href: '/privacy' },
-			{ label: 'Terms', href: '/terms' },
-		],
-		tools: [
-			'Next.js',
-			'TypeScript',
-			'Tailwind CSS / DaisyUI',
-			'TanStack Query',
-			'IndexedDB persistence',
-			'Cloudflare Worker auth',
-			'Google Cloud Functions',
-			'Google Sheets',
-			'PWA / static export',
-		],
-	},
-	{
-		id: 'english-word-cards',
-		navLabel: 'Word Cards',
-		title: 'English Word Cards',
-		eyebrow: 'OAuth Application',
-		placeholder: 'Word Cards',
-		description:
-			'English Word Cards is a personal English review app for daily vocabulary practice with swipe cards and spaced-repetition scheduling.',
-		sections: [
-			{
-				title: 'Features',
-				items: [
-					'Start a daily review',
-					'Review up to 10 due words',
-					'Flip cards before answering',
-					'Swipe remembered words right',
-					'Swipe forgotten words left',
-					'Submit batched review results',
-					'Update review stage and next review date',
-					'Google Sign-In authentication',
-				],
-			},
-			{
-				title: 'Data notes',
-				items: [
-					'Sheet-backed vocabulary review data',
-					'Client-side review state during a session',
-					'Five-stage spaced-repetition model',
-					'No data selling',
-					'Privacy / Terms links',
-				],
-			},
-		],
-		links: [
-			{ label: 'Joseph Apps', href: '/joseph-apps' },
-			{ label: 'Privacy', href: '/privacy' },
-			{ label: 'Terms', href: '/terms' },
-		],
-		tools: [
-			'SvelteKit',
-			'Svelte 5',
-			'TypeScript',
-			'Tailwind CSS',
-			'Google Identity Services',
-			'Google Apps Script',
-			'Google Sheets',
-			'Spaced repetition',
-			'Static hosting',
-		],
-	},
-] satisfies Array<ComponentProps<typeof Project> & { navLabel: string; id: string }>;
 
 function SectionRail({
 	items,
@@ -368,8 +202,11 @@ export default function Projects() {
 	const { classes } = useStyle();
 	const [activeId, setActiveId] = useState('projects-intro');
 	const railItems = useMemo(
-		() => [{ id: 'projects-intro', label: 'Overview' }, ...projectItems.map(({ id, navLabel }) => ({ id, label: navLabel }))],
-		[]
+		() => [
+			{ id: 'projects-intro', label: 'Overview' },
+			...projectItems.map(({ id, navLabel }) => ({ id, label: navLabel })),
+		],
+		[],
 	);
 
 	useEffect(() => {
@@ -390,7 +227,7 @@ export default function Projects() {
 			{
 				rootMargin: '-35% 0px -50% 0px',
 				threshold: [0.01, 0.2, 0.5],
-			}
+			},
 		);
 
 		sections.forEach((section) => observer.observe(section));
@@ -399,7 +236,7 @@ export default function Projects() {
 	}, [railItems]);
 
 	return (
-		<div className={classes.projectsPage}>
+		<main className={classes.projectsPage}>
 			<div className={classes.content}>
 				<TitleSection />
 				<SectionRail items={railItems} activeId={activeId} onSelect={setActiveId} />
@@ -407,6 +244,6 @@ export default function Projects() {
 					<Project key={project.id} {...project} />
 				))}
 			</div>
-		</div>
+		</main>
 	);
 }

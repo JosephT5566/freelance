@@ -3,7 +3,7 @@ import { IndexProvider } from './IndexProvider';
 import { makeStyles } from 'tss-react/mui';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import Button from './Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -48,7 +48,7 @@ const useStyle = makeStyles()((theme) => ({
 		[theme.breakpoints.up('md')]: {
 			justifyContent: 'space-between',
 		},
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			paddingTop: theme.typography.headerHeight,
 			flexDirection: 'column',
 		},
@@ -67,13 +67,13 @@ const useStyle = makeStyles()((theme) => ({
 }));
 
 const navItems = [
+	{ label: 'Experience', href: '/experience' },
 	{ label: 'Projects', href: '/projects' },
 	{ label: 'Legal', href: '/legal', activePaths: ['/legal', '/privacy', '/terms'] },
 ];
 
 const Items = (props: { btnClicked?: () => void }) => {
 	const { btnClicked = null } = props;
-	const router = useRouter();
 	const pathname = usePathname();
 
 	return (
@@ -81,12 +81,12 @@ const Items = (props: { btnClicked?: () => void }) => {
 			{navItems.map((item, index) => (
 				<Button
 					key={item.href}
+					href={`${item.href}/`}
 					index={index + 1}
 					active={(item.activePaths ?? [item.href]).some(
-						(path) => pathname === path || pathname === `${path}/`
+						(path) => pathname === path || (pathname?.startsWith(`${path}/`) ?? false),
 					)}
 					onClick={() => {
-						router.push(item.href);
 						btnClicked && btnClicked();
 					}}
 				>
@@ -109,7 +109,7 @@ const NavigatorLg = () => {
 
 		// set state based on location info (explained in more detail below)
 		setVisible(
-			(prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 30) || currentScrollPos < 10
+			(prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 30) || currentScrollPos < 10,
 		);
 
 		// set state to new scroll position
