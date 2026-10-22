@@ -1,12 +1,16 @@
 import {
 	BufferGeometry, Color, Float32BufferAttribute, Group, LineSegments, Mesh,
-	OrthographicCamera, PlaneGeometry, Points, Scene, ShaderMaterial, Vector2, Vector3, WebGLRenderer,
+	OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2, Vector3, Vector4, WebGLRenderer,
 } from 'three';
 
 import { createTerrain, terrainHeight } from './heroTerrain';
-import { contourFragmentShader, contourVertexShader, particleFragmentShader, particleVertexShader, surfaceFragmentShader, surfaceVertexShader } from './heroTerrainShaders';
+import { contourFragmentShader, contourVertexShader, surfaceFragmentShader, surfaceVertexShader } from './heroTerrainShaders';
 
 export const terrain = createTerrain(42);
+
+type Ripple = Readonly<{ origin: Vector2; emittedAt: number; strength: number }>;
+const maxRipples = 6;
+const rippleLifetime = 1.8;
 
 export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 	canvas: HTMLCanvasElement;
@@ -31,15 +35,12 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 	const minLevel = Math.min(...levels);
 	const levelRange = Math.max(...levels) - minLevel;
 	const uniforms = {
-		uPointer: { value: new Vector2(-1000, -1000) },
 		uViewport: { value: new Vector2(1, 1) },
-		uRadius: { value: 150 },
-		uActivation: { value: 0 },
-		uPixelRatio: { value: 1 },
+		uRipples: { value: Array.from({ length: maxRipples }, () => new Vector4()) },
 		uShadow: { value: new Color('#254b60') },
 		uHighlight: { value: new Color('#ad9472') },
 	};
-	const surfaceGeometry = new PlaneGeometry(1680, 1140, 120, 75);
+	const surfaceGeometry = new PlaneGeometry(1680, 1140, 168, 114);
 	const surfacePositions = surfaceGeometry.getAttribute('position');
 	for (let index = 0; index < surfacePositions.count; index++) {
 		const x = surfacePositions.getX(index) + 720;
@@ -54,9 +55,6 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 	const surface = new Mesh(surfaceGeometry, surfaceMaterial);
 	surface.renderOrder = -1;
 	group.add(surface);
-	const particlePositions: number[] = [];
-	const particleNormals: number[] = [];
-	const scatter: number[] = [];
 	const normal = new Vector3();
 	function appendNormal(destination: number[], x: number, y: number) {
 		const dx = (terrainHeight(x + 2, y, 42) - terrainHeight(x - 2, y, 42)) * 80 / levelRange;
@@ -74,18 +72,14 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 			for (let index = 0; index < count - (contour.closed ? 0 : 1); index++) {
 				const a = contour.points[index];
 				const b = contour.points[(index + 1) % count];
-				vertices.push(a.x - 720, 450 - a.y, z, b.x - 720, 450 - b.y, z);
-				appendNormal(normals, a.x, a.y);
-				appendNormal(normals, b.x, b.y);
-				const samples = Math.max(1, Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / 5));
-				for (let sample = 0; sample < samples; sample++) {
-					const fraction = sample / samples;
-					const x = a.x + (b.x - a.x) * fraction;
-					const y = a.y + (b.y - a.y) * fraction;
-					particlePositions.push(x - 720, 450 - y, z);
-					appendNormal(particleNormals, x, y);
-					const seed = x * 12.9898 + y * 78.233 + z * 3.17;
-					scatter.push(Math.sin(seed) * 18, Math.sin(seed * 1.73) * 18, Math.cos(seed * 2.31) * 32);
+				const subdivisions = Math.max(1, Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / 5));
+				for (let segment = 0; segment < subdivisions; segment++) {
+					for (const fraction of [segment / subdivisions, (segment + 1) / subdivisions]) {
+						const x = a.x + (b.x - a.x) * fraction;
+						const y = a.y + (b.y - a.y) * fraction;
+						vertices.push(x - 720, 450 - y, z);
+						appendNormal(normals, x, y);
+					}
 				}
 			}
 		}
@@ -102,24 +96,13 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 		group.add(line);
 		return { geometry, material };
 	});
-	const particleGeometry = new BufferGeometry();
-	particleGeometry.setAttribute('position', new Float32BufferAttribute(particlePositions, 3));
-	particleGeometry.setAttribute('terrainNormal', new Float32BufferAttribute(particleNormals, 3));
-	particleGeometry.setAttribute('scatter', new Float32BufferAttribute(scatter, 3));
-	const particleMaterial = new ShaderMaterial({
-		uniforms, vertexShader: particleVertexShader, fragmentShader: particleFragmentShader,
-		transparent: true, depthWrite: false, depthTest: false,
-	});
-	const particles = new Points(particleGeometry, particleMaterial);
-	particles.frustumCulled = false;
-	group.add(particles);
 	const motion = window.matchMedia('(min-width: 721px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 	const normalizedPointer = new Vector2();
 	const offset = new Vector2();
 	const target = new Vector2();
 	const imageOffset = new Vector2();
 	const imageTarget = new Vector2();
-	let activationTarget = 0;
+	let ripples: Ripple[] = [];
 	let frame = 0;
 	let lastTime = 0;
 	let lost = false;
@@ -140,16 +123,21 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 		const easing = 1 - Math.exp(-elapsed / 110);
 		offset.lerp(target, easing);
 		imageOffset.lerp(imageTarget, easing);
-		uniforms.uActivation.value += (activationTarget - uniforms.uActivation.value) * easing;
-		const moving = offset.distanceTo(target) > .001 || imageOffset.distanceTo(imageTarget) > .001 || Math.abs(uniforms.uActivation.value - activationTarget) > .001;
+		const now = time / 1000;
+		ripples = ripples.filter((ripple) => now - ripple.emittedAt < rippleLifetime);
+		for (let index = 0; index < maxRipples; index++) {
+			const ripple = ripples[index];
+			uniforms.uRipples.value[index].set(ripple?.origin.x ?? 0, ripple?.origin.y ?? 0,
+				ripple ? now - ripple.emittedAt : 0, ripple?.strength ?? 0);
+		}
+		const moving = offset.distanceTo(target) > .001 || imageOffset.distanceTo(imageTarget) > .001;
 		if (!moving) {
 			offset.copy(target);
 			imageOffset.copy(imageTarget);
-			uniforms.uActivation.value = activationTarget;
 		}
 		image.style.transform = `translate3d(${-imageOffset.x * 8}px, ${imageOffset.y * 8}px, 0)`;
 		draw();
-		if (moving) schedule();
+		if (moving || ripples.length) schedule();
 		else lastTime = 0;
 	}
 	function reset() {
@@ -157,25 +145,29 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 		offset.set(0, 0);
 		imageOffset.set(0, 0);
 		imageTarget.set(0, 0);
-		activationTarget = 0;
-		uniforms.uActivation.value = 0;
+		ripples = [];
+		for (const ripple of uniforms.uRipples.value) ripple.set(0, 0, 0, 0);
 		lastTime = 0;
 		image.style.removeProperty('transform');
 	}
 	function onPointer(event: PointerEvent) {
 		if (!motion.matches || document.hidden || lost || event.pointerType !== 'mouse') return;
 		normalizedPointer.set(event.clientX / width * 2 - 1, 1 - event.clientY / height * 2);
-		uniforms.uPointer.value.set(event.clientX, height - event.clientY);
+		const origin = new Vector2(event.clientX, height - event.clientY);
+		const now = performance.now() / 1000;
+		ripples = ripples.filter((ripple) => now - ripple.emittedAt < rippleLifetime);
+		const previous = ripples[ripples.length - 1];
+		if (ripples.length < maxRipples && (!previous || (now - previous.emittedAt >= rippleLifetime / maxRipples && origin.distanceTo(previous.origin) >= 12))) {
+			ripples.push({ origin, emittedAt: now, strength: 1 });
+		}
 		target.copy(normalizedPointer);
 		const bounds = hero.getBoundingClientRect();
 		if (event.clientY >= bounds.top && event.clientY <= bounds.bottom) {
 			imageTarget.set(normalizedPointer.x, 1 - (event.clientY - bounds.top) / bounds.height * 2);
 		} else imageTarget.set(0, 0);
-		activationTarget = 1;
 		schedule();
 	}
 	function onLeave() {
-		activationTarget = 0;
 		target.set(0, 0);
 		imageTarget.set(0, 0);
 		schedule();
@@ -191,8 +183,7 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 		camera.bottom = -height * scale / 2;
 		camera.updateProjectionMatrix();
 		uniforms.uViewport.value.set(width, height);
-		uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 1.5);
-		renderer.setPixelRatio(uniforms.uPixelRatio.value);
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 		renderer.setSize(width, height, false);
 		reset();
 		schedule();
@@ -247,8 +238,6 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 			geometry.dispose();
 			material.dispose();
 		}
-		particleGeometry.dispose();
-		particleMaterial.dispose();
 		surfaceGeometry.dispose();
 		surfaceMaterial.dispose();
 		renderer.dispose();

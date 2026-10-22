@@ -121,8 +121,8 @@ export function createTerrain(seed: number): Terrain {
 	const heights = values.flat();
 	const min = Math.min(...heights);
 	const max = Math.max(...heights);
-	const contours = Array.from({ length: 15 }, (_, index) =>
-		traceLevel(values, min + (max - min) * (index + 1) / 16, index % 5 === 0, step, margin),
+	const contours = Array.from({ length: 24 }, (_, index) =>
+		traceLevel(values, min + (max - min) * (index + 1) / 25, index % 5 === 0, step, margin),
 	).flat();
 	return { viewBox: '0 0 1440 900', contours };
 }

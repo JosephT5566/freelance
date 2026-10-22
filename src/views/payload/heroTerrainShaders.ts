@@ -11,22 +11,36 @@ void lightTerrain() {
 `;
 
 const interaction = `
-uniform vec2 uPointer;
 uniform vec2 uViewport;
-uniform float uRadius;
-uniform float uActivation;
-float influence(vec2 screenPosition) {
-	return (1.0 - smoothstep(uRadius * 0.3, uRadius, distance(screenPosition, uPointer))) * uActivation;
+uniform vec4 uRipples[6];
+vec4 projectTerrain(vec3 point) {
+	vec4 projected = projectionMatrix * modelViewMatrix * vec4(point, 1.0);
+	vec2 screenPosition = (projected.xy / projected.w * 0.5 + 0.5) * uViewport;
+	vec2 displacement = vec2(0.0);
+	for (int index = 0; index < 6; index++) {
+		vec4 ripple = uRipples[index];
+		vec2 delta = screenPosition - ripple.xy;
+		float radius = length(delta);
+		float ring = radius - ripple.z * 145.0;
+		float envelope = 1.0 - smoothstep(18.0, 48.0, abs(ring));
+		float fade = smoothstep(0.0, 0.12, ripple.z) * (1.0 - smoothstep(1.0, 1.8, ripple.z));
+		float wave = cos(ring * 0.055) * envelope * fade * ripple.w;
+		displacement += delta / max(radius, 1.0) * smoothstep(0.0, 24.0, radius) * wave * 14.0;
+	}
+	displacement *= min(1.0, 16.0 / max(length(displacement), 1.0));
+	projected.xy += displacement / uViewport * 2.0 * projected.w;
+	return projected;
 }
 `;
 
 export const surfaceVertexShader = `
+${interaction}
 varying vec3 vNormal;
 varying vec2 vUv;
 void main() {
 	vNormal = normalize(normalMatrix * normal);
 	vUv = uv;
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+	gl_Position = projectTerrain(position);
 }
 `;
 
@@ -46,49 +60,18 @@ void main() {
 
 export const contourVertexShader = `
 ${lighting}
+${interaction}
 void main() {
 	lightTerrain();
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+	gl_Position = projectTerrain(position);
 }
 `;
 
 export const contourFragmentShader = `
-${interaction}
-uniform float uPixelRatio;
 uniform float uOpacity;
 varying vec3 vColor;
 void main() {
-	float dissolve = influence(gl_FragCoord.xy / uPixelRatio);
-	gl_FragColor = vec4(vColor, uOpacity * (1.0 - dissolve));
-	#include <colorspace_fragment>
-}
-`;
-
-export const particleVertexShader = `
-${lighting}
-${interaction}
-attribute vec3 scatter;
-uniform float uPixelRatio;
-varying float vInfluence;
-void main() {
-	lightTerrain();
-	vec4 rest = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-	vec2 screenPosition = (rest.xy / rest.w * 0.5 + 0.5) * uViewport;
-	vInfluence = influence(screenPosition);
-	vec3 displaced = position + scatter * vInfluence;
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced, 1.0);
-	gl_PointSize = (1.5 + abs(scatter.z) * 0.035) * uPixelRatio;
-}
-`;
-
-export const particleFragmentShader = `
-varying float vInfluence;
-varying vec3 vColor;
-void main() {
-	float radius = length(gl_PointCoord - 0.5);
-	float alpha = (1.0 - smoothstep(0.25, 0.5, radius)) * vInfluence * 0.65;
-	if (alpha < 0.005) discard;
-	gl_FragColor = vec4(vColor, alpha);
+	gl_FragColor = vec4(vColor, uOpacity);
 	#include <colorspace_fragment>
 }
 `;
