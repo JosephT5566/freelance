@@ -27,7 +27,7 @@ const useStyles = makeStyles()((theme) => ({
 		'& h3': { margin: '22px 0 12px', fontSize: 'clamp(2rem, 3vw, 2.75rem)' },
 		'& > p': { margin: '0 0 12px' },
 	},
-	visual: { height: 250, [theme.breakpoints.down('sm')]: { height: 220 } },
+	visual: { aspectRatio: '16 / 9', overflow: 'hidden' },
 	travel: {
 		display: 'grid',
 		gridTemplateColumns: '1fr 1.5fr auto',
