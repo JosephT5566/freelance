@@ -185,7 +185,12 @@ export const featuredProjects: FeaturedProject[] = [
 			'A vocabulary app evolved into a full-stack learning project with an owner-scoped FastAPI API, PostgreSQL, and retry-safe review submissions.',
 		href: '/projects/english-learning/',
 		linkLabel: 'Read the English Learning case study',
-		visual: { kind: 'diagram', labels: ['SvelteKit', 'FastAPI', 'PostgreSQL'], caption: 'Review workflow' },
+		visual: {
+			kind: 'image',
+			src: 'https://cdn.josephtseng-tw.com/profile-website/english-learning-app.jpg',
+			alt: 'English Learning vocabulary review with a revealed answer and four recall ratings',
+			fit: 'contain',
+		},
 	},
 	{
 		id: 'jopie',
@@ -194,7 +199,12 @@ export const featuredProjects: FeaturedProject[] = [
 			'A personal and household expense app with shared-cost settlement, recurring records, and AI-assisted text and receipt entry.',
 		href: '/projects/jopie/',
 		linkLabel: 'Read the JoPie case study',
-		visual: { kind: 'image', src: '/images/projects/jopie-icon.png', alt: 'JoPie app icon', fit: 'contain' },
+		visual: {
+			kind: 'image',
+			src: 'https://cdn.josephtseng-tw.com/profile-website/jopie-app.jpg',
+			alt: 'JoPie expense entry with category choices and personal or household expense options',
+			fit: 'contain',
+		},
 	},
 	{
 		id: 'travel-split',

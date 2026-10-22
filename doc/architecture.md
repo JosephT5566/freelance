@@ -65,7 +65,7 @@ The homepage uses an in-flow landscape image and editorial project features. `Ho
 - Legal/privacy/terms copy: `src/app/InfoPages.tsx`.
 - Joseph Apps detail copy: `src/app/JosephApps.tsx`.
 
-The homepage links directly to Flickr. The hero uses the user-supplied `https://cdn.josephtseng-tw.com/profile-website/hero-2026.jpg` landscape image. The portrait and verified JoPie app icon are local assets. The original `/cover.jpg` remains the social-preview image. English Learning uses a labelled HTML review-workflow diagram rather than an invented product screenshot. The retained album module can fetch images through `src/api/flickrHook.tsx`; `src/views/payload/album.tsx` also contains static fallback image URLs. Project imagery may use remote URLs. These are browser-to-third-party requests, not Worker-proxied assets.
+The homepage links directly to Flickr. The hero uses the user-supplied `https://cdn.josephtseng-tw.com/profile-website/hero-2026.jpg` landscape image. The portrait and verified JoPie app icon are local assets. The original `/cover.jpg` remains the social-preview image. Homepage featured projects use 1280 × 720 screenshots captured from the live English Learning review and JoPie expense-entry interfaces. They load `english-learning-app.jpg` and `jopie-app.jpg` from `https://cdn.josephtseng-tw.com/profile-website/`. Their image containers preserve a 16:9 aspect ratio at every breakpoint, and the images use `contain` to avoid cropping controls. The retained album module can fetch images through `src/api/flickrHook.tsx`; `src/views/payload/album.tsx` also contains static fallback image URLs. Project imagery may use remote URLs. These are browser-to-third-party requests, not Worker-proxied assets.
 
 ## Hosting layer
 

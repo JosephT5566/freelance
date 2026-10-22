@@ -41,13 +41,9 @@ const useStyles = makeStyles()((theme) => ({
 	},
 	note: { fontSize: 12, margin: '28px 0 0' },
 	image: {
-		display: 'grid',
-		placeItems: 'center',
-		minHeight: 240,
 		background: '#e8d5c7',
 		height: '100%',
-		'& img': { width: 130, height: 130, borderRadius: 28 },
-		[theme.breakpoints.down('sm')]: { minHeight: 220 },
+		'& img': { display: 'block', width: '100%', height: '100%' },
 	},
 }));
 
@@ -59,8 +55,8 @@ export default function ProjectVisual({ visual }: { visual: ProjectVisualData })
 				<img
 					src={visual.src}
 					alt={visual.alt}
-					width={512}
-					height={512}
+					width={1280}
+					height={720}
 					style={{ objectFit: visual.fit }}
 					loading="lazy"
 				/>
