@@ -12,21 +12,19 @@ void lightTerrain() {
 
 const interaction = `
 uniform vec2 uViewport;
-uniform vec4 uRipples[6];
+uniform vec2 uCursorCenter;
+uniform float uCursorRadius;
+uniform float uCursorActivation;
+uniform float uTime;
 vec4 projectTerrain(vec3 point) {
 	vec4 projected = projectionMatrix * modelViewMatrix * vec4(point, 1.0);
 	vec2 screenPosition = (projected.xy / projected.w * 0.5 + 0.5) * uViewport;
-	vec2 displacement = vec2(0.0);
-	for (int index = 0; index < 6; index++) {
-		vec4 ripple = uRipples[index];
-		vec2 delta = screenPosition - ripple.xy;
-		float radius = length(delta);
-		float ring = radius - ripple.z * 145.0;
-		float envelope = 1.0 - smoothstep(18.0, 48.0, abs(ring));
-		float fade = smoothstep(0.0, 0.12, ripple.z) * (1.0 - smoothstep(1.0, 1.8, ripple.z));
-		float wave = cos(ring * 0.055) * envelope * fade * ripple.w;
-		displacement += delta / max(radius, 1.0) * smoothstep(0.0, 24.0, radius) * wave * 14.0;
-	}
+	vec2 local = (screenPosition - uCursorCenter) / uCursorRadius;
+	float envelope = 1.0 - smoothstep(0.35, 1.0, length(local));
+	float breathing = sin(uTime * 1.7) * 12.0;
+	float twist = sin(uTime * 1.1 + local.x * 2.2 + local.y * 1.6) * 8.0;
+	vec2 drift = vec2(sin(uTime * 1.3 + local.y * 2.0), cos(uTime * 1.5 + local.x * 2.0)) * 4.0;
+	vec2 displacement = (local * breathing + vec2(-local.y, local.x) * twist + drift) * envelope * uCursorActivation;
 	displacement *= min(1.0, 16.0 / max(length(displacement), 1.0));
 	projected.xy += displacement / uViewport * 2.0 * projected.w;
 	return projected;

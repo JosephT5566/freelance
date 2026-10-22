@@ -1,16 +1,12 @@
 import {
 	BufferGeometry, Color, Float32BufferAttribute, Group, LineSegments, Mesh,
-	OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2, Vector3, Vector4, WebGLRenderer,
+	OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2, Vector3, WebGLRenderer,
 } from 'three';
 
 import { createTerrain, terrainHeight } from './heroTerrain';
 import { contourFragmentShader, contourVertexShader, surfaceFragmentShader, surfaceVertexShader } from './heroTerrainShaders';
 
 export const terrain = createTerrain(42);
-
-type Ripple = Readonly<{ origin: Vector2; emittedAt: number; strength: number }>;
-const maxRipples = 6;
-const rippleLifetime = 1.8;
 
 export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 	canvas: HTMLCanvasElement;
@@ -34,9 +30,13 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 	const levels = terrain.contours.map((contour) => contour.level);
 	const minLevel = Math.min(...levels);
 	const levelRange = Math.max(...levels) - minLevel;
+	const cursorField = { center: new Vector2(), activation: 0, targetActivation: 0 };
 	const uniforms = {
 		uViewport: { value: new Vector2(1, 1) },
-		uRipples: { value: Array.from({ length: maxRipples }, () => new Vector4()) },
+		uCursorCenter: { value: cursorField.center },
+		uCursorRadius: { value: 180 },
+		uCursorActivation: { value: 0 },
+		uTime: { value: 0 },
 		uShadow: { value: new Color('#254b60') },
 		uHighlight: { value: new Color('#ad9472') },
 	};
@@ -98,11 +98,8 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 	});
 	const motion = window.matchMedia('(min-width: 721px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 	const normalizedPointer = new Vector2();
-	const offset = new Vector2();
-	const target = new Vector2();
 	const imageOffset = new Vector2();
 	const imageTarget = new Vector2();
-	let ripples: Ripple[] = [];
 	let frame = 0;
 	let lastTime = 0;
 	let lost = false;
@@ -110,7 +107,7 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 	let height = 1;
 
 	function draw() {
-		group.rotation.set(.64 + offset.y * .035, -.12 + offset.x * .045, -.09);
+		group.rotation.set(.64, -.12, -.09);
 		renderer.render(scene, camera);
 	}
 	function schedule() {
@@ -121,46 +118,36 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 		const elapsed = lastTime ? Math.min(64, time - lastTime) : 16;
 		lastTime = time;
 		const easing = 1 - Math.exp(-elapsed / 110);
-		offset.lerp(target, easing);
 		imageOffset.lerp(imageTarget, easing);
-		const now = time / 1000;
-		ripples = ripples.filter((ripple) => now - ripple.emittedAt < rippleLifetime);
-		for (let index = 0; index < maxRipples; index++) {
-			const ripple = ripples[index];
-			uniforms.uRipples.value[index].set(ripple?.origin.x ?? 0, ripple?.origin.y ?? 0,
-				ripple ? now - ripple.emittedAt : 0, ripple?.strength ?? 0);
+		cursorField.activation += (cursorField.targetActivation - cursorField.activation) * (1 - Math.exp(-elapsed / 90));
+		if (Math.abs(cursorField.targetActivation - cursorField.activation) < .001) {
+			cursorField.activation = cursorField.targetActivation;
 		}
-		const moving = offset.distanceTo(target) > .001 || imageOffset.distanceTo(imageTarget) > .001;
-		if (!moving) {
-			offset.copy(target);
-			imageOffset.copy(imageTarget);
-		}
+		uniforms.uCursorActivation.value = cursorField.activation;
+		uniforms.uTime.value = time / 1000;
+		const moving = imageOffset.distanceTo(imageTarget) > .001;
+		if (!moving) imageOffset.copy(imageTarget);
 		image.style.transform = `translate3d(${-imageOffset.x * 8}px, ${imageOffset.y * 8}px, 0)`;
 		draw();
-		if (moving || ripples.length) schedule();
+		if (moving || cursorField.activation > 0 || cursorField.targetActivation > 0) schedule();
 		else lastTime = 0;
 	}
 	function reset() {
-		target.set(0, 0);
-		offset.set(0, 0);
 		imageOffset.set(0, 0);
 		imageTarget.set(0, 0);
-		ripples = [];
-		for (const ripple of uniforms.uRipples.value) ripple.set(0, 0, 0, 0);
+		cursorField.center.set(0, 0);
+		cursorField.activation = 0;
+		cursorField.targetActivation = 0;
+		uniforms.uCursorActivation.value = 0;
+		uniforms.uTime.value = 0;
 		lastTime = 0;
 		image.style.removeProperty('transform');
 	}
 	function onPointer(event: PointerEvent) {
 		if (!motion.matches || document.hidden || lost || event.pointerType !== 'mouse') return;
 		normalizedPointer.set(event.clientX / width * 2 - 1, 1 - event.clientY / height * 2);
-		const origin = new Vector2(event.clientX, height - event.clientY);
-		const now = performance.now() / 1000;
-		ripples = ripples.filter((ripple) => now - ripple.emittedAt < rippleLifetime);
-		const previous = ripples[ripples.length - 1];
-		if (ripples.length < maxRipples && (!previous || (now - previous.emittedAt >= rippleLifetime / maxRipples && origin.distanceTo(previous.origin) >= 12))) {
-			ripples.push({ origin, emittedAt: now, strength: 1 });
-		}
-		target.copy(normalizedPointer);
+		cursorField.center.set(event.clientX, height - event.clientY);
+		cursorField.targetActivation = 1;
 		const bounds = hero.getBoundingClientRect();
 		if (event.clientY >= bounds.top && event.clientY <= bounds.bottom) {
 			imageTarget.set(normalizedPointer.x, 1 - (event.clientY - bounds.top) / bounds.height * 2);
@@ -168,7 +155,7 @@ export function mountTerrainScene({ canvas, hero, image, onUnavailable }: {
 		schedule();
 	}
 	function onLeave() {
-		target.set(0, 0);
+		cursorField.targetActivation = 0;
 		imageTarget.set(0, 0);
 		schedule();
 	}
