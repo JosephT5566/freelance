@@ -100,6 +100,14 @@ function traceLevel(values: readonly (readonly number[])[], level: number, major
 	return contours;
 }
 
+export function terrainHeight(x: number, y: number, seed: number) {
+	const u = (x + y * .32) / 470;
+	const v = (y - x * .24) / 470;
+	const noise = valueNoise(u, v, seed) * .65 + valueNoise(u * 2, v * 2, seed + 1) * .23 + valueNoise(u * 4, v * 4, seed + 2) * .07;
+	const ridge = Math.exp(-Math.pow((x - 690 - 140 * Math.sin(y / 300)) / 410, 2) - Math.pow((y - 310) / 530, 2));
+	return noise + ridge * .7 + x / 1440 * .12;
+}
+
 export function createTerrain(seed: number): Terrain {
 	const step = 12;
 	const margin = 24;
@@ -107,11 +115,7 @@ export function createTerrain(seed: number): Terrain {
 		Array.from({ length: (1440 + margin * 2) / step + 1 }, (_, column) => {
 			const x = column * step - margin;
 			const y = row * step - margin;
-			const u = (x + y * .32) / 470;
-			const v = (y - x * .24) / 470;
-			const noise = valueNoise(u, v, seed) * .65 + valueNoise(u * 2, v * 2, seed + 1) * .23 + valueNoise(u * 4, v * 4, seed + 2) * .07;
-			const ridge = Math.exp(-Math.pow((x - 690 - 140 * Math.sin(y / 300)) / 410, 2) - Math.pow((y - 310) / 530, 2));
-			return noise + ridge * .7 + x / 1440 * .12;
+			return terrainHeight(x, y, seed);
 		}),
 	);
 	const heights = values.flat();
